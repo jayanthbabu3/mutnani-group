@@ -117,6 +117,29 @@ export default function Hero() {
               className="stage-bleed relative aspect-[4/3] w-full bg-ground sm:aspect-[16/11]"
             >
               <BuildSceneLazy progress={progress} seq={seq} active={active} />
+              {/* The one affordance the stage needs. It is a turntable now
+                  (see Rig in three/BuildScene.tsx), and nothing about a
+                  rendered building says "grab me" — this does. */}
+              <p
+                aria-hidden
+                className="pointer-events-none absolute right-3 bottom-3 flex items-center gap-2 rounded-full border border-line/60 bg-ground/60 px-3 py-1.5 tech-sm text-heading/70 backdrop-blur-sm motion-reduce:hidden"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="size-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  aria-hidden
+                >
+                  <path
+                    d="M3 12h18M6 8l-3 4 3 4M18 8l3 4-3 4"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                Drag to rotate
+              </p>
             </div>
 
             {/* The caption strip. Six dots, the live one filled, and the name

@@ -128,14 +128,75 @@ function Sky() {
  * Camera work. It orbits a few degrees while the building goes up and settles
  * as it finishes — enough to read the structure as three-dimensional, not
  * enough to make anyone seasick. Nothing here is scroll-scrubbed.
+ *
+ * Drag to orbit, on top of that. A horizontal drag on the canvas adds yaw
+ * with inertia (same feel as the living-walls villa), so a visitor can walk
+ * round the shed and look at the far gable; let go and it coasts, then the
+ * slow idle orbit takes back over. Vertical is left to the page —
+ * `touch-action: pan-y` on the canvas — so a thumb swiping down a phone
+ * scrolls instead of spinning the building. Reduced motion: no drag either;
+ * the still frame stays still.
  */
 function Rig({ progress, active }: { progress: { current: number }; active: boolean }) {
-  const { camera } = useThree()
+  const { camera, gl } = useThree()
   const still = prefersReducedMotion()
+  const orbit = useRef({ y: 0, vel: 0, dragging: false })
+
+  useEffect(() => {
+    if (still) return
+    const el = gl.domElement
+    const o = orbit.current
+    let lastX = 0
+    let lastT = 0
+
+    const down = (e: PointerEvent) => {
+      o.dragging = true
+      o.vel = 0
+      lastX = e.clientX
+      lastT = performance.now()
+      el.setPointerCapture(e.pointerId)
+      el.style.cursor = 'grabbing'
+    }
+    const move = (e: PointerEvent) => {
+      if (!o.dragging) return
+      const now = performance.now()
+      const dx = e.clientX - lastX
+      const dt = Math.max(now - lastT, 1)
+      // Dragging right walks the camera left round the building, so the shed
+      // turns the way the hand moves.
+      o.y -= dx * 0.006
+      o.vel = -(dx / dt) * 0.1
+      lastX = e.clientX
+      lastT = now
+    }
+    const up = () => {
+      o.dragging = false
+      el.style.cursor = 'grab'
+    }
+
+    el.style.cursor = 'grab'
+    el.style.touchAction = 'pan-y'
+    el.addEventListener('pointerdown', down)
+    el.addEventListener('pointermove', move)
+    el.addEventListener('pointerup', up)
+    el.addEventListener('pointercancel', up)
+    return () => {
+      el.removeEventListener('pointerdown', down)
+      el.removeEventListener('pointermove', move)
+      el.removeEventListener('pointerup', up)
+      el.removeEventListener('pointercancel', up)
+    }
+  }, [gl, still])
 
   useFrame((state) => {
     if (!active) return
     const t = progress.current
+    const o = orbit.current
+    if (!o.dragging) {
+      // Coast after a release, then the idle orbit below is all that is left.
+      o.y += o.vel
+      o.vel *= 0.94
+    }
 
     /**
      * Framing, derived rather than dialled in.
@@ -164,7 +225,9 @@ function Rig({ progress, active }: { progress: { current: number }; active: bool
      * so the steel renders as black plates. Between the eave and the ridge,
      * tipped slightly down, is the only place both read.
      */
-    const angle = still ? 0.78 : 0.66 + Math.sin(state.clock.elapsedTime * 0.09) * 0.1 + t * 0.14
+    const angle = still
+      ? 0.78
+      : 0.66 + Math.sin(state.clock.elapsedTime * 0.09) * 0.1 + t * 0.14 + o.y
     camera.position.set(
       Math.cos(angle) * radius,
       derived.ridge * 0.8 + t * 1.1 + (still ? 0 : Math.sin(state.clock.elapsedTime * 0.13) * 0.4),
@@ -654,10 +717,8 @@ function WallPanels({ progress }: { progress: { current: number } }) {
       // for the far long wall and +z for the near gable. Signing this off the
       // panel's own position keeps the two walls consistent if either moves.
       const outward = (1 - local) * 5
-      mesh.position.x =
-        panel.pos[0] + (panel.slide === 'x' ? Math.sign(panel.pos[0]) * outward : 0)
-      mesh.position.z =
-        panel.pos[2] + (panel.slide === 'z' ? Math.sign(panel.pos[2]) * outward : 0)
+      mesh.position.x = panel.pos[0] + (panel.slide === 'x' ? Math.sign(panel.pos[0]) * outward : 0)
+      mesh.position.z = panel.pos[2] + (panel.slide === 'z' ? Math.sign(panel.pos[2]) * outward : 0)
       mesh.position.y = panel.pos[1] + (1 - local) * 0.6
       // Shared material — the horizontal slide is what says "fitted", so
       // nothing here needs a fade.
@@ -779,7 +840,11 @@ function Yard({ progress }: { progress: { current: number } }) {
       </mesh>
 
       {/* The apron: the concrete skirt a lorry actually stands on. */}
-      <mesh position={[0, 0.02, derived.length / 2 + 9]} rotation={[-Math.PI / 2, 0, 0]} material={MAT.drive}>
+      <mesh
+        position={[0, 0.02, derived.length / 2 + 9]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        material={MAT.drive}
+      >
         <planeGeometry args={[BUILDING.span + 8, 20]} />
       </mesh>
 
@@ -1038,8 +1103,16 @@ function Person({ vest, alt }: { vest: boolean; alt: boolean }) {
   const h = PERSON_HEIGHT
   return (
     <group>
-      <mesh geometry={GEO.leg} material={alt ? MAT.clothesAlt : MAT.clothes} position={[0.1, h * 0.22, 0]} />
-      <mesh geometry={GEO.leg} material={alt ? MAT.clothesAlt : MAT.clothes} position={[-0.1, h * 0.22, 0]} />
+      <mesh
+        geometry={GEO.leg}
+        material={alt ? MAT.clothesAlt : MAT.clothes}
+        position={[0.1, h * 0.22, 0]}
+      />
+      <mesh
+        geometry={GEO.leg}
+        material={alt ? MAT.clothesAlt : MAT.clothes}
+        position={[-0.1, h * 0.22, 0]}
+      />
       <mesh
         geometry={GEO.torso}
         material={alt ? MAT.clothesAlt : MAT.clothes}
