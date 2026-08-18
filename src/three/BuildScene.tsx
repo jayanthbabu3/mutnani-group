@@ -125,14 +125,13 @@ function Sky() {
 }
 
 /**
- * Camera work. It orbits a few degrees while the building goes up and settles
- * as it finishes — enough to read the structure as three-dimensional, not
- * enough to make anyone seasick. Nothing here is scroll-scrubbed.
+ * Camera work. Held on one three-quarter view while the building goes up —
+ * it rises a little with the ridge, nothing else moves on its own. Nothing
+ * here is scroll-scrubbed.
  *
- * Drag to orbit, on top of that. A horizontal drag on the canvas adds yaw
- * with inertia (same feel as the living-walls villa), so a visitor can walk
- * round the shed and look at the far gable; let go and it coasts, then the
- * slow idle orbit takes back over. Vertical is left to the page —
+ * Drag to orbit. A horizontal drag on the canvas adds yaw with inertia (same
+ * feel as the living-walls villa), so a visitor can walk round the shed and
+ * look at the far gable; let go and it coasts to a stop where they left it. Vertical is left to the page —
  * `touch-action: pan-y` on the canvas — so a thumb swiping down a phone
  * scrolls instead of spinning the building. Reduced motion: no drag either;
  * the still frame stays still.
@@ -190,12 +189,12 @@ function Rig({ progress, active }: { progress: { current: number }; active: bool
     }
   }, [gl, still])
 
-  useFrame((state) => {
+  useFrame(() => {
     if (!active) return
     const t = progress.current
     const o = orbit.current
     if (!o.dragging) {
-      // Coast after a release, then the idle orbit below is all that is left.
+      // Coast after a release, then stop where the hand left it.
       o.y += o.vel
       o.vel *= 0.94
     }
@@ -227,12 +226,13 @@ function Rig({ progress, active }: { progress: { current: number }; active: bool
      * so the steel renders as black plates. Between the eave and the ridge,
      * tipped slightly down, is the only place both read.
      */
-    const angle = still
-      ? 0.78
-      : 0.66 + Math.sin(state.clock.elapsedTime * 0.09) * 0.1 + t * 0.14 + o.y
+    // No idle drift: the camera only moves when a hand moves it. It used to
+    // sway on a slow sine and creep round as the build progressed, which
+    // fought the drag — let go, and the building kept turning by itself.
+    const angle = still ? 0.78 : 0.72 + o.y
     camera.position.set(
       Math.cos(angle) * radius,
-      derived.ridge * 0.8 + t * 1.1 + (still ? 0 : Math.sin(state.clock.elapsedTime * 0.13) * 0.4),
+      derived.ridge * 0.8 + t * 1.1,
       Math.sin(angle) * radius,
     )
     // Aims at the middle of the building's height, so it sits centred in the
