@@ -1215,8 +1215,13 @@ function Signage({ progress }: { progress: { current: number } }) {
   return (
     <group ref={ref} position={[0, BUILDING.eave * 0.76, derived.length / 2 + 0.3]}>
       {/* The tray the sign sits in, a hair larger than the face, so the panel
-          has an edge instead of floating on the cladding. */}
-      <mesh position={[0, 0, -0.05]} material={MAT.signPlate}>
+          has an edge instead of floating on the cladding.
+
+          Its front face must sit BEHIND the sign face, not on it. At z=-0.05
+          with a 0.1 depth the box's front was at exactly z=0, coplanar with
+          the plane, and the two fought for the depth buffer — the artwork
+          shimmered and tore as the camera moved. 3 cm of clearance ends it. */}
+      <mesh position={[0, 0, -0.08]} material={MAT.signPlate}>
         <boxGeometry args={[width + 0.16, height + 0.16, 0.1]} />
       </mesh>
       <mesh material={material}>
