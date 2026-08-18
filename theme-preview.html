@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Theme preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- PHASE 3: swap for the pairings being proposed -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Cormorant+Garamond:wght@300;400&family=Manrope:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ══ PHASE 3 EDITS THIS BLOCK ONLY ══════════════════════════════════
+         One entry per option being proposed. Contrast is computed live from
+         these values, so the numbers can never drift from the swatches. */
+      :root {
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        background: var(--ground);
+        color: var(--heading);
+        font-family: var(--body-font);
+        font-weight: 300;
+        transition:
+          background 0.4s var(--ease),
+          color 0.4s var(--ease);
+      }
+      .wrap {
+        max-width: 74rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 5rem;
+      }
+      .tech {
+        font-family: var(--body-font);
+        font-size: 0.62rem;
+        font-weight: 500;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+      }
+
+      /* ── option switcher ─────────────────────────────────────────── */
+      .switch {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 1rem 1.5rem;
+        background: var(--ground);
+        border-bottom: 1px solid var(--line);
+      }
+      .switch button {
+        font: inherit;
+        font-size: 0.8rem;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--body);
+        transition: all 0.25s var(--ease);
+      }
+      .switch button[aria-pressed='true'] {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--ground);
+        font-weight: 600;
+      }
+
+      h2.sec {
+        font-family: var(--body-font);
+        font-size: 0.62rem;
+        font-weight: 500;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--body);
+        margin: 3.5rem 0 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      /* ── swatches ────────────────────────────────────────────────── */
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+        gap: 0.75rem;
+      }
+      .sw {
+        border: 1px solid var(--line);
+        border-radius: 0.75rem;
+        overflow: hidden;
+      }
+      .sw .chip {
+        height: 4.5rem;
+      }
+      .sw .meta {
+        padding: 0.6rem 0.7rem 0.75rem;
+        background: var(--raised);
+      }
+      .sw .name {
+        font-size: 0.78rem;
+        color: var(--heading);
+      }
+      .sw .hex {
+        font-size: 0.7rem;
+        color: var(--body);
+        font-variant-numeric: tabular-nums;
+      }
+      .ratio {
+        display: inline-block;
+        margin-top: 0.35rem;
+        font-size: 0.62rem;
+        letter-spacing: 0.06em;
+        padding: 0.15rem 0.45rem;
+        border-radius: 999px;
+        font-variant-numeric: tabular-nums;
+      }
+      .pass {
+        background: color-mix(in oklab, green 18%, transparent);
+        color: var(--heading);
+      }
+      .fail {
+        background: color-mix(in oklab, red 22%, transparent);
+        color: var(--heading);
+      }
+
+      /* ── the mock ────────────────────────────────────────────────── */
+      .hero {
+        border: 1px solid var(--line);
+        border-radius: 1.25rem;
+        padding: 3rem 2rem;
+        background: var(--ground);
+      }
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--accent);
+      }
+      .eyebrow span.rule {
+        width: 1.5rem;
+        height: 1px;
+        background: color-mix(in oklab, var(--accent) 50%, transparent);
+      }
+      h1 {
+        font-family: var(--display-font);
+        font-weight: 300;
+        font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+        line-height: 1.04;
+        letter-spacing: -0.02em;
+        margin-top: 1.25rem;
+      }
+      h1 em {
+        color: var(--accent);
+      }
+      .lede {
+        margin-top: 1.25rem;
+        max-width: 34rem;
+        color: var(--body);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .ctas {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+      .btn {
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        padding: 0.85rem 1.6rem;
+        border-radius: 999px;
+        text-decoration: none;
+        transition: all 0.25s var(--ease);
+      }
+      .btn.solid {
+        background: var(--accent);
+        color: var(--ground);
+        font-weight: 600;
+      }
+      .btn.ghost {
+        border: 1px solid var(--line);
+        color: var(--heading);
+      }
+      .stats {
+        display: flex;
+        gap: 2.5rem;
+        margin-top: 2.75rem;
+        padding-top: 1.75rem;
+        border-top: 1px solid var(--line);
+      }
+      .stats b {
+        font-size: 2rem;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+      .stats b i {
+        font-style: normal;
+        font-weight: 300;
+        color: var(--accent);
+      }
+      .stats p {
+        color: var(--body);
+        margin-top: 0.4rem;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+        gap: 1rem;
+      }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        padding: 1.75rem;
+        background: var(--raised);
+      }
+      .card h3 {
+        font-family: var(--display-font);
+        font-weight: 300;
+        font-size: 1.6rem;
+        margin-top: 1rem;
+      }
+      .card p {
+        color: var(--body);
+        line-height: 1.7;
+        margin-top: 0.6rem;
+        font-size: 0.92rem;
+      }
+      .pill {
+        display: inline-block;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.3rem 0.7rem;
+        margin: 0.75rem 0.35rem 0 0;
+        color: var(--body);
+      }
+
+      /* ── phone with the tab bar ──────────────────────────────────── */
+      .phone {
+        width: 320px;
+        border: 1px solid var(--line);
+        border-radius: 1.75rem;
+        overflow: hidden;
+        background: var(--ground);
+      }
+      .phone .screen {
+        height: 190px;
+        padding: 1.5rem 1.25rem;
+      }
+      .phone h4 {
+        font-family: var(--display-font);
+        font-weight: 300;
+        font-size: 1.7rem;
+        line-height: 1.1;
+        margin-top: 0.6rem;
+      }
+      .phone h4 em {
+        color: var(--accent);
+      }
+      .bar {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        align-items: end;
+        border-top: 1px solid var(--line);
+        background: color-mix(in oklab, var(--ground) 92%, transparent);
+      }
+      .bar a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.65rem 0;
+        text-decoration: none;
+        color: color-mix(in oklab, var(--heading) 60%, transparent);
+        font-size: 0.58rem;
+        letter-spacing: 0.04em;
+      }
+      .bar a.on {
+        color: var(--accent);
+      }
+      .bar .raised {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        margin-top: -1.5rem;
+        color: var(--accent);
+        font-size: 0.58rem;
+        font-weight: 600;
+      }
+      .bar .raised span {
+        display: grid;
+        place-items: center;
+        width: 3.25rem;
+        height: 3.25rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--ground);
+        box-shadow: 0 0 0 4px var(--ground);
+      }
+      .row {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+      .note {
+        color: var(--body);
+        font-size: 0.85rem;
+        line-height: 1.7;
+        max-width: 26rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="switch" id="switch" aria-label="Theme options"></nav>
+
+    <div class="wrap">
+      <h2 class="sec">Palette · contrast measured live</h2>
+      <div class="swatches" id="swatches"></div>
+
+      <h2 class="sec">Hero</h2>
+      <div class="hero">
+        <p class="eyebrow tech"><span class="rule"></span><span id="eyebrow"></span></p>
+        <h1>A promise, first line<br /><em>second line in the accent</em></h1>
+        <p class="lede">
+          Two sentences. The first says what happens; the second earns trust with something
+          specific — a number, a place, a named thing.
+        </p>
+        <div class="ctas">
+          <a class="btn solid" href="#">Start a project →</a>
+          <a class="btn ghost" href="#">See the work →</a>
+        </div>
+        <div class="stats">
+          <div><b>120<i>+</i></b><p class="tech">Projects</p></div>
+          <div><b>9<i> yrs</i></b><p class="tech">Doing this</p></div>
+          <div><b>14</b><p class="tech">Cities</p></div>
+        </div>
+      </div>
+
+      <h2 class="sec">Cards</h2>
+      <div class="cards">
+        <div class="card">
+          <span class="tech" style="color: var(--body)">From ₹00,000</span>
+          <h3>First service</h3>
+          <p>One paragraph in the words a customer would use, not the words the trade uses.</p>
+          <div>
+            <span class="pill tech">What is included</span><span class="pill tech">And this</span>
+          </div>
+        </div>
+        <div class="card">
+          <span class="tech" style="color: var(--body)">From ₹00,000</span>
+          <h3>Second service</h3>
+          <p>Same shape, so the eye compares the offer and not the layout.</p>
+          <div>
+            <span class="pill tech">What is included</span><span class="pill tech">And this</span>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="sec">Phone · the tab bar themes itself</h2>
+      <div class="row">
+        <div class="phone">
+          <div class="screen">
+            <p class="eyebrow tech"><span class="rule"></span><span>Available</span></p>
+            <h4>A promise<br /><em>in the accent</em></h4>
+          </div>
+          <div class="bar">
+            <a href="#"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM5 20a7 7 0 0 1 14 0"/></svg>About</a>
+            <a href="#" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 4.5h6.5V11H4zM13.5 4.5H20V11h-6.5zM4 13.5h6.5V20H4zM13.5 13.5H20V20h-6.5z"/></svg>Work</a>
+            <div style="display: flex; justify-content: center">
+              <a href="#" class="raised" style="text-decoration: none">
+                <span><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg></span>
+                Enquire
+              </a>
+            </div>
+            <a href="#"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 6.5h16M4 12h16M4 17.5h10"/></svg>Services</a>
+            <a href="#"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M4 6.5h16v11H4zM4 7l8 6 8-6"/></svg>Contact</a>
+          </div>
+        </div>
+        <p class="note" id="note"></p>
+      </div>
+    </div>
+
+    <script>
+      /* ══ PHASE 3 EDITS THIS ARRAY ═══════════════════════════════════════
+         One entry per option. Keep 2–3 — more is a menu, not a decision. */
+      const THEMES = [
+        {
+          name: 'B · Gold on Mutnani navy — CHOSEN',
+          note: 'The live palette. Both hexes are measured off the client\'s logo artwork, not guessed from it: ground #011d3f, accent #d69d3e, 7.0:1. Chosen over the light default because the group\'s own identity is navy + gold, because steel and PUF read better on a dark ground, and because the hero\'s 3D assembly is far stronger against it. Fraunces rather than Cormorant so the combination does not repeat master-shivji\'s navy + gold + Cormorant.',
+          ground: '#011d3f',
+          raised: '#08294f',
+          line: '#1a3c69',
+          accent: '#d69d3e',
+          heading: '#f2f6fc',
+          body: '#9fb4d8',
+          display: "'Fraunces', serif",
+          bodyFont: "'Manrope', sans-serif",
+          eyebrow: 'Building · Manufacturing · Global trade',
+        },
+        {
+          name: 'A · Brass on white — rejected',
+          note: 'The house light default. Brass #8a6a16 is the logo gold darkened until it can legally carry text on white (5.1:1) — the literal logo gold measures 2.4:1 there and can never be a link or a label. Rejected because at that lightness the brass reads olive rather than gold, and the client\'s identity stops being recognisable.',
+          ground: '#ffffff',
+          raised: '#f5f6f9',
+          line: '#ccd2de',
+          accent: '#8a6a16',
+          heading: '#011d3f',
+          body: '#56607a',
+          display: "'Fraunces', serif",
+          bodyFont: "'Manrope', sans-serif",
+          eyebrow: 'Building · Manufacturing · Global trade',
+        },
+        {
+          name: 'C · Steel on white — rejected',
+          note: 'White ground, accent steel #0a4d8c (8.6:1) — the brand navy lifted to action strength, with the gold held back for full-bleed navy bands. The safe option, and the closest to the mock the consultancy showed. Rejected as the least distinctive of the three against a light, generic competitor set.',
+          ground: '#ffffff',
+          raised: '#f4f7fb',
+          line: '#c2cfe2',
+          accent: '#0a4d8c',
+          heading: '#011d3f',
+          body: '#55617a',
+          display: "'Fraunces', serif",
+          bodyFont: "'Manrope', sans-serif",
+          eyebrow: 'Building · Manufacturing · Global trade',
+        },
+      ]
+
+      const lin = (c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)
+      const lum = (hex) => {
+        const h = hex.replace('#', '')
+        const [r, g, b] = [0, 2, 4].map((i) => lin(parseInt(h.slice(i, i + 2), 16) / 255))
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b
+      }
+      const ratio = (a, b) => {
+        const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m)
+        return (x + 0.05) / (y + 0.05)
+      }
+
+      function apply(t) {
+        const r = document.documentElement.style
+        r.setProperty('--ground', t.ground)
+        r.setProperty('--raised', t.raised)
+        r.setProperty('--line', t.line)
+        r.setProperty('--accent', t.accent)
+        r.setProperty('--heading', t.heading)
+        r.setProperty('--body', t.body)
+        r.setProperty('--display-font', t.display)
+        r.setProperty('--body-font', t.bodyFont)
+        document.getElementById('eyebrow').textContent = t.eyebrow
+        document.getElementById('note').textContent = t.note
+
+        const rows = [
+          ['Ground', t.ground, null],
+          ['Raised', t.raised, null],
+          ['Hairline', t.line, 1.5, 'decorative'],
+          ['Accent', t.accent, 4.5],
+          ['Heading', t.heading, 4.5],
+          ['Body', t.body, 4.5],
+        ]
+        document.getElementById('swatches').innerHTML = rows
+          .map(([name, hex, min, soft]) => {
+            const cr = ratio(hex, t.ground)
+            const badge =
+              min === null
+                ? ''
+                : `<span class="ratio ${cr >= min || soft ? 'pass' : 'fail'}">${cr.toFixed(1)}:1 ${
+                    cr >= min ? 'pass' : soft ? 'below gate — decorative only' : 'FAIL'
+                  }</span>`
+            return `<div class="sw"><div class="chip" style="background:${hex}"></div>
+              <div class="meta"><div class="name">${name}</div>
+              <div class="hex">${hex}</div>${badge}</div></div>`
+          })
+          .join('')
+      }
+
+      const sw = document.getElementById('switch')
+      sw.innerHTML = THEMES.map(
+        (t, i) => `<button aria-pressed="${i === 0}" data-i="${i}">${t.name}</button>`,
+      ).join('')
+      sw.addEventListener('click', (e) => {
+        const b = e.target.closest('button')
+        if (!b) return
+        sw.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b))
+        apply(THEMES[+b.dataset.i])
+      })
+      apply(THEMES[0])
+    </script>
+  </body>
+</html>

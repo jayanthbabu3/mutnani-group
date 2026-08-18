@@ -1,0 +1,763 @@
+{
+  "site": {
+    "name": "Mutnani",
+    "role": "Group of Companies",
+    "city": "Hyderabad",
+    "basedLine": "Hyderabad · Mumbai · shipping to 20 countries",
+    "phone": "+917831012345",
+    "phoneDisplay": "+91 78310 12345",
+    "phoneAlt": "+919396979494",
+    "phoneAltDisplay": "+91 93969 79494",
+    "email": "info@balajiprefab.com",
+    "emailAlt": "balajiprefab@gmail.com",
+    "instagram": "https://instagram.com/balaji_prefab_official",
+    "linkedin": "https://www.linkedin.com/",
+    "whatsappMessage": "Hi Mutnani Group, I'd like to talk about a prefab / roofing requirement.",
+    "founded": 2000,
+    "founder": "M. Madhu Sudhan"
+  },
+  "nav": [
+    {
+      "href": "#divisions",
+      "label": "Divisions"
+    },
+    {
+      "href": "#products",
+      "label": "Products"
+    },
+    {
+      "href": "#partners",
+      "label": "Partners"
+    },
+    {
+      "href": "#contact",
+      "label": "Contact"
+    }
+  ],
+  "navExtra": [
+    {
+      "href": "#prefab",
+      "label": "Prefab"
+    },
+    {
+      "href": "#line",
+      "label": "Roofing"
+    },
+    {
+      "href": "#trade",
+      "label": "Global trade"
+    },
+    {
+      "href": "#videos",
+      "label": "Videos"
+    }
+  ],
+  "hero": {
+    "eyebrow": "Building · Manufacturing · Global trade",
+    "headline": {
+      "line1": "The building is made",
+      "line2": "before the slab cures."
+    },
+    "sub": "Three companies under one group: pre-engineered structures, our own PUF panel line, and the import desk that sources what neither can make. Fabrication runs in parallel with your foundation, so the shed is closed in weeks rather than seasons.",
+    "primaryCta": "Get a quote",
+    "secondaryCta": "See how it goes up",
+    "stats": [
+      {
+        "value": 26,
+        "suffix": " yrs",
+        "label": "Since 2000"
+      },
+      {
+        "value": 1000,
+        "suffix": "+",
+        "label": "Projects closed"
+      },
+      {
+        "value": 20,
+        "suffix": "+",
+        "label": "Countries served"
+      }
+    ]
+  },
+  "stageStages": [
+    {
+      "id": "slab",
+      "label": "Foundation",
+      "note": "Bolts cast to the fabrication drawing"
+    },
+    {
+      "id": "columns",
+      "label": "Columns",
+      "note": "Tapered built-up sections, plumbed and braced"
+    },
+    {
+      "id": "rafters",
+      "label": "Rafters",
+      "note": "Clear span, no internal column"
+    },
+    {
+      "id": "purlins",
+      "label": "Purlins",
+      "note": "Z-sections at 1.5 m centres"
+    },
+    {
+      "id": "walls",
+      "label": "PUF walls",
+      "note": "60 mm panels, our own line"
+    },
+    {
+      "id": "roof",
+      "label": "Roof & handover",
+      "note": "Trapezoidal sheet, ridge, gutters"
+    }
+  ],
+  "group": {
+    "eyebrow": "The group",
+    "title": "Three companies, one schedule",
+    "lede": "Each company could run on its own. Together they cover the design, the panels and the shipping."
+  },
+  "divisions": [
+    {
+      "id": "prefab",
+      "company": "Balaji Prefab Solutions",
+      "kind": "Prefabricated construction",
+      "lede": "We design the building, make it in our shop, and put it up on your site.",
+      "offers": [
+        "Pre-engineered buildings (PEB)",
+        "Industrial sheds & workshops",
+        "Warehouses & godowns",
+        "Turnkey project execution"
+      ],
+      "image": "/divisions/prefab.webp",
+      "imageAlt": "A long pre-engineered steel building under construction: bare portal frames and purlins with a mobile crane alongside.",
+      "imagePlaceholder": true
+    },
+    {
+      "id": "roofing",
+      "company": "Balaji Roofing Pvt. Ltd.",
+      "kind": "Manufacturing",
+      "lede": "We make the PUF panels and roofing sheets ourselves, in our own factory.",
+      "offers": [
+        "PUF insulated wall & roof panels",
+        "Trapezoidal & tile-profile sheets",
+        "Flashings, gutters, accessories",
+        "Custom profiles to drawing"
+      ],
+      "image": "/divisions/roofing.webp",
+      "imageAlt": "Stacked white insulated PUF panels on roller conveyors inside a panel manufacturing hall.",
+      "imagePlaceholder": true
+    },
+    {
+      "id": "trade",
+      "company": "Balaji Prefab Import & Exports",
+      "kind": "Global trade",
+      "lede": "We buy what the other two do not make, and ship what they do.",
+      "offers": [
+        "Import of building materials",
+        "Export to overseas projects",
+        "International sourcing",
+        "Logistics & supply chain"
+      ],
+      "image": "/divisions/trade.webp",
+      "imageAlt": "A container ship loaded with stacked shipping containers at sea.",
+      "imagePlaceholder": true
+    }
+  ],
+  "build": {
+    "eyebrow": "How a building goes up",
+    "title": "Six steps, two at the same time",
+    "lede": "Your slab cures on site while our shop fabricates the structure.",
+    "steps": [
+      {
+        "n": "01",
+        "title": "Drawing & approval",
+        "days": "7–10 days",
+        "body": "Structural drawings against your layout and load case. Nothing is cut until you have signed the fabrication drawing.",
+        "short": "Drawing",
+        "image": "/build/01-drawing.webp",
+        "imageAlt": "Steel fabrication drawings of a portal-frame building spread across an engineer’s desk.",
+        "imagePlaceholder": true,
+        "where": "Our office"
+      },
+      {
+        "n": "02",
+        "title": "Foundation on site",
+        "days": "runs in parallel",
+        "body": "Your civil team casts the pedestals and anchor bolts to our template while the steel is being fabricated.",
+        "short": "Foundation",
+        "image": "/build/02-foundation.webp",
+        "imageAlt": "Concrete pedestal footings with protruding anchor bolts, set out in a row across a cleared site.",
+        "imagePlaceholder": true,
+        "where": "Your site"
+      },
+      {
+        "n": "03",
+        "title": "Fabrication in shop",
+        "days": "runs in parallel",
+        "body": "Columns, rafters, purlins and panels cut, welded, drilled and painted under cover — no weather, no site wastage.",
+        "short": "Fabrication",
+        "image": "/build/03-fabrication.webp",
+        "imageAlt": "Steel sections being welded and prepared inside a fabrication workshop.",
+        "imagePlaceholder": true,
+        "where": "Our shop"
+      },
+      {
+        "n": "04",
+        "title": "Delivery",
+        "days": "2–4 days",
+        "body": "Sequenced to the erection order, so the crane lifts what it needs next instead of shifting stacks around the yard.",
+        "short": "Delivery",
+        "image": "/build/04-delivery.webp",
+        "imageAlt": "A flatbed trailer loaded with bundled steel sections arriving at site.",
+        "imagePlaceholder": true,
+        "where": "In transit"
+      },
+      {
+        "n": "05",
+        "title": "Erection",
+        "days": "2–5 weeks",
+        "body": "Bolted, not welded, on site. Columns plumbed, rafters landed, purlins run, then panels and sheeting close the envelope.",
+        "short": "Erection",
+        "image": "/build/05-erection.webp",
+        "imageAlt": "A crane lifting a steel rafter into place on a partly erected frame.",
+        "imagePlaceholder": true,
+        "where": "Your site"
+      },
+      {
+        "n": "06",
+        "title": "Handover",
+        "days": "3–5 days",
+        "body": "Gutters, ridge, flashings, doors and ventilators. You get as-built drawings and the panel specification on paper.",
+        "short": "Handover",
+        "image": "/build/06-handover.webp",
+        "imageAlt": "The completed clad building with gutters and ridge finished.",
+        "imagePlaceholder": true,
+        "where": "Your site"
+      }
+    ]
+  },
+  "prefab": {
+    "eyebrow": "Vertical 01",
+    "title": "Balaji Prefab Solutions",
+    "sub": "We draw it, make it, erect it",
+    "capabilities": [
+      {
+        "name": "Pre-engineered buildings",
+        "body": "Clear spans to 42 m with no internal column, designed to the load your state code asks for."
+      },
+      {
+        "name": "Industrial sheds & workshops",
+        "body": "Crane gantries, mezzanines and service penetrations set in the drawing, not cut on site."
+      },
+      {
+        "name": "Warehouses & godowns",
+        "body": "Long bays, dock heights and roof pitch worked back from how the shed will actually be loaded."
+      },
+      {
+        "name": "Turnkey execution",
+        "body": "Foundations, structure, cladding and handover on one contract, against one programme."
+      }
+    ],
+    "figures": [
+      {
+        "value": "42",
+        "unit": "m",
+        "label": "Clear span, no column"
+      },
+      {
+        "value": "6",
+        "unit": "wks",
+        "label": "Typical shed, drawing to handover"
+      },
+      {
+        "value": "1",
+        "unit": "team",
+        "label": "Design, shop and site"
+      }
+    ],
+    "note": "Structural drawings are ours and stay yours — issued at handover, not held to force a return visit.",
+    "image": "/prefab/erection.webp",
+    "imageAlt": "A steel portal frame going up at dusk, a crane setting the last rafter under the site lights.",
+    "imagePlaceholder": true
+  },
+  "products": {
+    "eyebrow": "What you can order",
+    "title": "Everything the three divisions make",
+    "lede": "If it is on this list, it is drawn, fabricated or sourced by one of the three companies — not sub-let to a contractor you never meet.",
+    "groups": [
+      {
+        "id": "structures",
+        "name": "Structures",
+        "items": [
+          "Pre-engineered buildings",
+          "Industrial sheds & workshops",
+          "Warehouses & godowns",
+          "Mezzanine flooring",
+          "Site offices & labour camps",
+          "Guard cabins & kiosks"
+        ],
+        "image": "/products/structures.webp",
+        "imageAlt": "A completed pre-engineered steel building at dusk, its roller shutter open on the lit portal frame inside.",
+        "imagePlaceholder": true
+      },
+      {
+        "id": "panels",
+        "name": "Panels & sheeting",
+        "items": [
+          "PUF wall panels, 40–100 mm",
+          "PUF roof panels",
+          "Trapezoidal roofing sheet",
+          "Tile-profile sheet",
+          "Aerocon partition panels",
+          "Flashings, gutters, ridges"
+        ],
+        "image": "/products/panels.webp",
+        "imageAlt": "A stack of finished PUF sandwich panels in the works yard, the insulation core visible along the cut ends, profiled roofing sheet beside them.",
+        "imagePlaceholder": true
+      },
+      {
+        "id": "rooms",
+        "name": "Rooms & enclosures",
+        "items": [
+          "Cold rooms & freezer rooms",
+          "Clean rooms",
+          "Portable cabins & containers",
+          "Readymade toilet blocks",
+          "Classrooms & guest houses",
+          "Canteens & rest shelters"
+        ],
+        "image": "/products/rooms.webp",
+        "imageAlt": "The interior of a newly finished modular cold room, panel walls and coved joints, its insulated door standing open onto the yard.",
+        "imagePlaceholder": true
+      },
+      {
+        "id": "trade",
+        "name": "Trade desk",
+        "items": [
+          "Steel coil & sheet import",
+          "Insulation core sourcing",
+          "Fasteners & accessories",
+          "Machinery import",
+          "Export to overseas projects",
+          "Freight & documentation"
+        ],
+        "image": "/products/trade.webp",
+        "imageAlt": "Coils of pre-painted steel on a quay at dusk, container stacks and a gantry crane behind, a vessel alongside.",
+        "imagePlaceholder": true
+      }
+    ]
+  },
+  "projects": {
+    "eyebrow": "Work on the ground",
+    "title": "Where the group's steel is standing",
+    "lede": "Executed with and for the infrastructure companies below across Andhra Pradesh, Telangana and beyond. Areas and durations are the group's own records — confirm the ones you want to quote.",
+    "items": [
+      {
+        "id": "ntpc",
+        "name": "NTPC power plant",
+        "scope": "Site structures & partition work",
+        "place": "Andhra Pradesh",
+        "figure": "Utility scale"
+      },
+      {
+        "id": "meil",
+        "name": "Megha Engineering (MEIL)",
+        "scope": "Prefabricated site buildings",
+        "place": "Telangana",
+        "figure": "Multi-site"
+      },
+      {
+        "id": "navyug",
+        "name": "Navyug Engineering",
+        "scope": "Industrial sheds & stores",
+        "place": "Andhra Pradesh",
+        "figure": "Multi-phase"
+      },
+      {
+        "id": "hil",
+        "name": "Hyderabad Industries Ltd.",
+        "scope": "Authorised dealership since 2000",
+        "place": "Hyderabad",
+        "figure": "26 years"
+      }
+    ]
+  },
+  "partners": {
+    "eyebrow": "Strategic partners",
+    "title": "Trusted by industry leaders",
+    "lede": "Executed with and for infrastructure companies across Andhra Pradesh, Telangana and beyond — site buildings, sheds, panels and stores.",
+    "items": [
+      {
+        "id": "meil",
+        "name": "Megha Engineering & Infrastructures Ltd.",
+        "logo": "/partners/meil.webp",
+        "logoAlt": "MEIL logo",
+        "sector": "Infrastructure & EPC"
+      },
+      {
+        "id": "vishwa-samudra",
+        "name": "Vishwa Samudra Engineering",
+        "logo": "/partners/vishwa-samudra.webp",
+        "logoAlt": "Vishwa Samudra Engineering logo",
+        "sector": "Engineering & infrastructure"
+      },
+      {
+        "id": "navayuga",
+        "name": "Navayuga Engineering Company Ltd.",
+        "logo": "/partners/navayuga.webp",
+        "logoAlt": "Navayuga Engineering Company logo",
+        "sector": "Engineering & construction"
+      },
+      {
+        "id": "bekem",
+        "name": "BEKEM Infra Projects Pvt. Ltd.",
+        "logo": "/partners/bekem.webp",
+        "logoAlt": "BEKEM Infra Projects logo",
+        "sector": "Infrastructure projects"
+      }
+    ]
+  },
+  "videos": {
+    "eyebrow": "From the sites",
+    "title": "Watch it go up",
+    "lede": "Straight from the group’s own sites — frames landing, panels going on, sheds closing in. Shot by the crews, not a production house.",
+    "sites": [
+      {
+        "id": "belgaum",
+        "name": "Belgaum",
+        "place": "Karnataka",
+        "videos": [
+          {
+            "youtubeId": "L-6VQPIg4cA"
+          },
+          {
+            "youtubeId": "Fc9uZwlOUJs"
+          },
+          {
+            "youtubeId": "JnVep5K1r0E"
+          }
+        ]
+      },
+      {
+        "id": "kodangal",
+        "name": "Kodangal",
+        "place": "Telangana",
+        "videos": [
+          {
+            "youtubeId": "bXKoRgWXr-8"
+          }
+        ]
+      },
+      {
+        "id": "mp-ncc",
+        "name": "NCC site, Madhya Pradesh",
+        "place": "Madhya Pradesh",
+        "videos": [
+          {
+            "youtubeId": "Fzp88IefRU8"
+          },
+          {
+            "youtubeId": "Xv6S9UB18mk"
+          }
+        ]
+      },
+      {
+        "id": "sileru",
+        "name": "Sileru",
+        "place": "Andhra Pradesh",
+        "videos": [
+          {
+            "youtubeId": "BIzpl9xe9pg"
+          },
+          {
+            "youtubeId": "k3lI7RrQ7Tk"
+          }
+        ]
+      },
+      {
+        "id": "shimla",
+        "name": "Shimla",
+        "place": "Himachal Pradesh",
+        "videos": [
+          {
+            "youtubeId": "ELZaqrbISO0"
+          },
+          {
+            "youtubeId": "OT13TxRJOUg"
+          }
+        ]
+      },
+      {
+        "id": "site-footage",
+        "name": "Site footage",
+        "place": "",
+        "videos": [
+          {
+            "youtubeId": "0QHIhl7YLiE"
+          },
+          {
+            "youtubeId": "TZ_NSsdJUcg"
+          }
+        ]
+      },
+      {
+        "id": "yerpedu",
+        "name": "Yerpedu",
+        "place": "Andhra Pradesh",
+        "videos": [
+          {
+            "youtubeId": "mAUMmFEYp74"
+          }
+        ]
+      }
+    ]
+  },
+  "trust": {
+    "eyebrow": "Why the group gets asked back",
+    "title": "Twenty-six years, and the same phone number",
+    "points": [
+      {
+        "title": "Founded 2000",
+        "body": "Started by M. Madhu Sudhan as an authorised dealer of Hyderabad Industries Ltd., and still run by the same family."
+      },
+      {
+        "title": "We make what we fit",
+        "body": "The PUF panels on your wall came off our own line. There is no supplier in the middle to blame for a slipped date."
+      },
+      {
+        "title": "One team, drawing to handover",
+        "body": "Design, fabrication, transport and erection sit inside the group. You sign one contract and call one number."
+      },
+      {
+        "title": "Two offices, one schedule",
+        "body": "Hyderabad runs execution, Mumbai runs the trade desk. A project in either region is somebody's day job, not a trip."
+      }
+    ]
+  },
+  "offices": [
+    {
+      "id": "hyd",
+      "name": "Head office · Hyderabad",
+      "lines": [
+        "Flat 504, B Block, Mathrubhoomi Pearl Apartments",
+        "Gajularamaram Road, near Sai Baba Mahadevpuram",
+        "Kukatpally, Hyderabad, Telangana 500055"
+      ],
+      "role": "Execution, fabrication & erection",
+      "mapQuery": "Mathrubhoomi Pearl Apartments, Gajularamaram Road, Kukatpally, Hyderabad 500055"
+    },
+    {
+      "id": "mum",
+      "name": "Branch office · Mumbai",
+      "lines": [
+        "Flat 105, Tower 04, Olive, Godrej Emerald",
+        "Ghodbunder Road, Bhainderpada, Thane (West)",
+        "Mumbai, Maharashtra 400615"
+      ],
+      "role": "Import, export & logistics",
+      "mapQuery": "Godrej Emerald, Ghodbunder Road, Bhainderpada, Thane West 400615"
+    }
+  ],
+  "contact": {
+    "eyebrow": "Get in touch",
+    "title": "Tell us the span and the use",
+    "lede": "Those two facts are enough for a first number. Fill this in and it opens WhatsApp with your details already written out — or call the Hyderabad desk directly."
+  },
+  "line": {
+    "eyebrow": "Vertical 02 · Balaji Roofing",
+    "title": "A panel in six minutes, not six weeks",
+    "lede": "Coil in one end, a finished cut-to-length panel out the other.",
+    "note": "Line speed and cure times vary with core thickness and ambient temperature. Figures on the fabrication drawing are the ones that count.",
+    "stations": [
+      {
+        "id": "coil",
+        "label": "Coil",
+        "note": "Pre-painted steel, 0.5 mm, off the decoiler"
+      },
+      {
+        "id": "form",
+        "label": "Roll-form",
+        "note": "Rolled to the rib profile, both skins at once"
+      },
+      {
+        "id": "foam",
+        "label": "Foam",
+        "note": "Polyurethane injected between the skins"
+      },
+      {
+        "id": "press",
+        "label": "Press",
+        "note": "Laminated under heat and pressure"
+      },
+      {
+        "id": "cut",
+        "label": "Cut",
+        "note": "Cut to your length — site trims nothing"
+      },
+      {
+        "id": "stack",
+        "label": "Stack",
+        "note": "Stacked, wrapped and loaded"
+      }
+    ],
+    "figures": [
+      {
+        "value": "40–100",
+        "unit": "mm",
+        "label": "Core thickness"
+      },
+      {
+        "value": "1000",
+        "unit": "mm",
+        "label": "Cover width"
+      },
+      {
+        "value": "12",
+        "unit": "m",
+        "label": "Max panel length"
+      }
+    ]
+  },
+  "routes": {
+    "eyebrow": "Vertical 03 · Balaji Prefab Import & Exports",
+    "title": "What leaves, and what arrives",
+    "lede": "We ship what the line makes, and buy what it needs.",
+    "modes": [
+      {
+        "id": "out",
+        "label": "We export",
+        "lede": "Finished panels and knocked-down buildings, strapped and sealed in our own yard.",
+        "caption": "Loaded at our yard and away."
+      },
+      {
+        "id": "in",
+        "label": "We import",
+        "lede": "Pre-painted coil, insulation core and line machinery, bought direct at source.",
+        "caption": "Off the quay and straight into the works."
+      }
+    ],
+    "note": "Both desks are ours — {origin} for the works, {second} for clearing and freight.",
+    "origin": {
+      "name": "Hyderabad",
+      "sub": "Head office & works"
+    },
+    "second": {
+      "name": "Mumbai",
+      "sub": "Trade & logistics desk"
+    },
+    "markets": [
+      {
+        "id": "ae",
+        "country": "United Arab Emirates",
+        "city": "Jebel Ali",
+        "region": "The Gulf",
+        "dir": "out",
+        "note": "PUF panels and knocked-down structures for Gulf industrial parks"
+      },
+      {
+        "id": "om",
+        "country": "Oman",
+        "city": "Sohar",
+        "region": "The Gulf",
+        "dir": "out",
+        "note": "Roofing sheet and accessories"
+      },
+      {
+        "id": "qa",
+        "country": "Qatar",
+        "city": "Doha",
+        "region": "The Gulf",
+        "dir": "out",
+        "note": "Cold-room panels and site buildings"
+      },
+      {
+        "id": "sa",
+        "country": "Saudi Arabia",
+        "city": "Dammam",
+        "region": "The Gulf",
+        "dir": "out",
+        "note": "Pre-engineered warehouse structures"
+      },
+      {
+        "id": "ke",
+        "country": "Kenya",
+        "city": "Mombasa",
+        "region": "East Africa",
+        "dir": "out",
+        "note": "Warehouse kits and roofing sheet"
+      },
+      {
+        "id": "tz",
+        "country": "Tanzania",
+        "city": "Dar es Salaam",
+        "region": "East Africa",
+        "dir": "out",
+        "note": "Industrial sheds, knocked down for sea freight"
+      },
+      {
+        "id": "et",
+        "country": "Ethiopia",
+        "city": "Addis Ababa",
+        "region": "East Africa",
+        "dir": "out",
+        "note": "Panels for agro-processing stores"
+      },
+      {
+        "id": "sg",
+        "country": "Singapore",
+        "city": "Singapore",
+        "region": "South-East Asia",
+        "dir": "both",
+        "note": "Transhipment both ways, and a sourcing desk"
+      },
+      {
+        "id": "my",
+        "country": "Malaysia",
+        "city": "Port Klang",
+        "region": "South-East Asia",
+        "dir": "both",
+        "note": "Panels out; fasteners and sealants in"
+      },
+      {
+        "id": "vn",
+        "country": "Vietnam",
+        "city": "Hai Phong",
+        "region": "South-East Asia",
+        "dir": "both",
+        "note": "Sheet out; roll-formed sections in"
+      },
+      {
+        "id": "de",
+        "country": "Germany",
+        "city": "Hamburg",
+        "region": "Europe",
+        "dir": "in",
+        "note": "Polyurethane core chemistry"
+      },
+      {
+        "id": "it",
+        "country": "Italy",
+        "city": "Milan",
+        "region": "Europe",
+        "dir": "in",
+        "note": "Roll-forming and laminating machinery"
+      },
+      {
+        "id": "cn",
+        "country": "China",
+        "city": "Shanghai",
+        "region": "East Asia",
+        "dir": "in",
+        "note": "Pre-painted steel coil and line spares"
+      },
+      {
+        "id": "kr",
+        "country": "South Korea",
+        "city": "Busan",
+        "region": "East Asia",
+        "dir": "in",
+        "note": "Coil and coated sheet"
+      }
+    ]
+  }
+}

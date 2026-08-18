@@ -1,0 +1,394 @@
+# Sveltia CMS — the client edits content/site.json through this.
+#
+# Setup, once per project:
+#   1. repo: <owner>/<name> below
+#   2. GitHub OAuth: either Netlify's free git-gateway or a Cloudflare Worker
+#      running sveltia-cms-auth (free tier is plenty)
+#   3. invite the client to the repo as a collaborator
+#   4. they visit mutnanigroup.com/admin
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# IMPORTANT — why EVERY key in site.json is declared below, even the structural
+# ones the client has no business editing:
+#
+# Sveltia (like Netlify CMS before it) writes back only the fields it knows
+# about. A key that exists in site.json but is missing from this file is
+# silently DELETED the first time the client presses Save, and the next build
+# then fails zod validation in src/data/site.ts. That failure is the good
+# outcome; the bad one is not noticing.
+#
+# So: if you add anything to content/site.json, add it here in the same commit.
+# `npm run build` will not catch the omission — only a client save will.
+# ─────────────────────────────────────────────────────────────────────────────
+
+backend:
+  name: github
+  repo: OWNER/REPO # TODO before handover
+  branch: main
+
+media_folder: public/work
+public_folder: /work
+
+collections:
+  - name: site
+    label: Website
+    files:
+      - name: content
+        label: All website content
+        file: content/site.json
+        fields:
+          # ── Contact details — the ones that change most often ───────────
+          - name: site
+            label: Contact details
+            widget: object
+            fields:
+              - { name: name, label: Group name, widget: string }
+              - { name: role, label: Descriptor, widget: string }
+              - { name: city, label: City, widget: string }
+              - { name: basedLine, label: Location line, widget: string }
+              - {
+                  name: phone,
+                  label: Main phone (international, e.g. +919849078678),
+                  widget: string,
+                  pattern: ['^\+\d{10,15}$', 'Must start with + and country code'],
+                }
+              - { name: phoneDisplay, label: Main phone as shown, widget: string }
+              - {
+                  name: phoneAlt,
+                  label: Second phone (international),
+                  widget: string,
+                  pattern: ['^\+\d{10,15}$', 'Must start with + and country code'],
+                }
+              - { name: phoneAltDisplay, label: Second phone as shown, widget: string }
+              - { name: email, label: Email, widget: string }
+              - { name: instagram, label: Instagram URL, widget: string }
+              - { name: linkedin, label: LinkedIn URL, widget: string }
+              - { name: whatsappMessage, label: Default WhatsApp message, widget: text }
+              - { name: founded, label: Year founded, widget: number, value_type: int }
+              - { name: founder, label: Founder, widget: string }
+
+          # ── Navigation. Structural: the hrefs must match section ids. ────
+          - name: nav
+            label: Main navigation (exactly 4 — these are the phone tab bar)
+            widget: list
+            min: 4
+            max: 4
+            fields:
+              - { name: href, label: Section anchor, widget: string }
+              - { name: label, label: Label, widget: string }
+          - name: navExtra
+            label: Extra desktop links
+            widget: list
+            fields:
+              - { name: href, label: Section anchor, widget: string }
+              - { name: label, label: Label, widget: string }
+
+          # ── Hero ────────────────────────────────────────────────────────
+          - name: hero
+            label: Hero
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line above the headline, widget: string }
+              - name: headline
+                label: Headline
+                widget: object
+                fields:
+                  - { name: line1, label: First line, widget: string }
+                  - {
+                      name: line2,
+                      label: Second line (shown in gold),
+                      widget: string,
+                    }
+              - { name: sub, label: Intro paragraph, widget: text }
+              - { name: primaryCta, label: Main button, widget: string }
+              - { name: secondaryCta, label: Second button, widget: string }
+              - name: stats
+                label: Numbers
+                widget: list
+                max: 4
+                fields:
+                  - { name: value, label: Number, widget: number, value_type: int }
+                  - { name: suffix, label: After the number, widget: string, required: false }
+                  - { name: label, label: Caption, widget: string }
+
+          # ── The hero animation's captions. Six, matching the 3D stages. ──
+          - name: stageStages
+            label: Hero animation captions (must stay at 6)
+            widget: list
+            min: 6
+            max: 6
+            fields:
+              - { name: id, label: ID (do not change), widget: string }
+              - { name: label, label: Stage name, widget: string }
+              - { name: note, label: Stage note, widget: string }
+
+          # ── The heading over the three company cards ────────────────────
+          - name: group
+            label: Group heading
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line, widget: string }
+              - { name: title, label: Heading, widget: string }
+              - { name: lede, label: Intro, widget: text }
+
+          # ── The three companies ─────────────────────────────────────────
+          - name: divisions
+            label: The three companies (must stay at 3)
+            widget: list
+            min: 3
+            max: 3
+            fields:
+              - { name: id, label: ID (do not change), widget: string }
+              - { name: company, label: Company name, widget: string }
+              - { name: kind, label: What kind of business, widget: string }
+              - { name: lede, label: Summary, widget: text }
+              - { name: offers, label: What it offers (3–5), widget: list, min: 3, max: 5 }
+              # Leave the image EMPTY to keep the technical drawing, which is a
+              # finished treatment — not a placeholder. Only put the group's own
+              # photography here, never stock.
+              - { name: image, label: Photo (optional), widget: image, required: false }
+              - {
+                  name: imageAlt,
+                  label: Photo description (required if a photo is set),
+                  widget: string,
+                  required: false,
+                }
+              # Tick this OFF once the photo is the group's own. It records that
+              # the current image is generated and not real project work.
+              - {
+                  name: imagePlaceholder,
+                  label: This photo is a placeholder (not our own work),
+                  widget: boolean,
+                  default: true,
+                }
+
+          # ── Vertical 01 · Balaji Prefab Solutions ───────────────────────
+          # The three companies each have one section, numbered in the eyebrow.
+          # Keep the "Vertical 0n ·" prefix on all three or the sequence stops
+          # reading as a sequence.
+          - name: prefab
+            label: Vertical 01 — Balaji Prefab Solutions
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line above the name (e.g. "Vertical 01"), widget: string }
+              - { name: title, label: Company name — this is the heading, widget: string }
+              - { name: sub, label: One-line strapline under the name (shown in gold), widget: string }
+              - name: capabilities
+                label: What this company does (3–6)
+                widget: list
+                min: 3
+                max: 6
+                fields:
+                  - { name: name, label: Capability, widget: string }
+                  - { name: body, label: What it means, widget: text }
+              - name: figures
+                label: Figures (2–4)
+                widget: list
+                min: 2
+                max: 4
+                fields:
+                  - { name: value, label: Value, widget: string }
+                  - { name: unit, label: Unit, widget: string }
+                  - { name: label, label: Caption, widget: string }
+              - { name: note, label: Small print, widget: text }
+              - { name: image, label: Photo, widget: image }
+              - { name: imageAlt, label: Photo description, widget: string }
+              - {
+                  name: imagePlaceholder,
+                  label: This photo is a placeholder (not our own work),
+                  widget: boolean,
+                  default: true,
+                }
+
+          # ── How a building goes up ──────────────────────────────────────
+          - name: build
+            label: Build process section
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line, widget: string }
+              - { name: title, label: Heading, widget: string }
+              - { name: lede, label: Intro, widget: text }
+              - name: steps
+                label: Steps
+                widget: list
+                fields:
+                  - { name: n, label: Number (e.g. 03), widget: string }
+                  - { name: title, label: Step title, widget: string }
+                  - {
+                      name: days,
+                      label: 'Duration — type exactly "runs in parallel" for the overlapping steps',
+                      widget: string,
+                    }
+                  - { name: body, label: Description, widget: text }
+                  - { name: short, label: Short label for the step rail, widget: string }
+                  - { name: where, label: Where it happens (e.g. Our shop / Your site), widget: string }
+                  - { name: image, label: Photo, widget: image }
+                  - { name: imageAlt, label: Photo description, widget: string }
+                  - {
+                      name: imagePlaceholder,
+                      label: This photo is a placeholder (not our own work),
+                      widget: boolean,
+                      default: true,
+                    }
+
+          # ── Product list ────────────────────────────────────────────────
+          - name: products
+            label: Product list section
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line, widget: string }
+              - { name: title, label: Heading, widget: string }
+              - { name: lede, label: Intro, widget: text }
+              - name: groups
+                label: Groups
+                widget: list
+                fields:
+                  - { name: id, label: ID (do not change), widget: string }
+                  - { name: name, label: Group name, widget: string }
+                  - { name: items, label: Items, widget: list }
+                  - { name: image, label: Photo, widget: image }
+                  - { name: imageAlt, label: Photo description, widget: string }
+                  # Tick this OFF once the photo is the group's own work. It
+                  # records that the current image is generated, not real.
+                  - {
+                      name: imagePlaceholder,
+                      label: This photo is a placeholder (not our own work),
+                      widget: boolean,
+                      default: true,
+                    }
+
+          # ── Projects ────────────────────────────────────────────────────
+          - name: projects
+            label: Projects section
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line, widget: string }
+              - { name: title, label: Heading, widget: string }
+              - { name: lede, label: Intro, widget: text }
+              - name: items
+                label: Projects
+                widget: list
+                fields:
+                  - { name: id, label: ID (do not change), widget: string }
+                  - { name: name, label: Client or project name, widget: string }
+                  - { name: scope, label: What was supplied, widget: string }
+                  - { name: place, label: Where, widget: string }
+                  - { name: figure, label: Figure shown on the right, widget: string }
+
+          # ── Balaji Roofing's line ───────────────────────────────────────
+          - name: line
+            label: Panel line section
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line, widget: string }
+              - { name: title, label: Heading, widget: string }
+              - { name: lede, label: Intro, widget: text }
+              - { name: note, label: Small print, widget: text }
+              - name: stations
+                label: The six stations (must stay at 6 — the 3D scene indexes into these)
+                widget: list
+                min: 6
+                max: 6
+                fields:
+                  - { name: id, label: ID (do not change), widget: string }
+                  - { name: label, label: Station name, widget: string }
+                  - { name: note, label: What happens here, widget: string }
+              - name: figures
+                label: Figures shown under the line
+                widget: list
+                fields:
+                  - { name: value, label: Value, widget: string }
+                  - { name: unit, label: Unit, widget: string }
+                  - { name: label, label: Caption, widget: string }
+
+          # ── Global trade markets ────────────────────────────────────────
+          - name: routes
+            label: Global trade section
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line, widget: string }
+              - { name: title, label: Heading, widget: string }
+              - { name: lede, label: Intro, widget: text }
+              # These two blocks describe how the trade actually runs. They are
+              # claims about the business — check them with the client before
+              # launch rather than trusting the wording that shipped.
+              - name: modes
+                label: The two directions (must stay at 2)
+                widget: list
+                min: 2
+                max: 2
+                fields:
+                  - { name: id, label: 'ID — must be "out" or "in" (do not change)', widget: string }
+                  - { name: label, label: Button label, widget: string }
+                  - { name: lede, label: What moves in this direction, widget: text }
+                  - { name: caption, label: Caption under the animation, widget: string }
+              - {
+                  name: note,
+                  label: 'Small print. {origin} and {second} fill in the two desk names',
+                  widget: text,
+                }
+              - name: origin
+                label: Head office
+                widget: object
+                fields:
+                  - { name: name, label: City, widget: string }
+                  - { name: sub, label: What it does, widget: string }
+              - name: second
+                label: Second desk
+                widget: object
+                fields:
+                  - { name: name, label: City, widget: string }
+                  - { name: sub, label: What it does, widget: string }
+              # `city` is the PORT the load clears through, not the capital.
+              # `region` is the heading the market is listed under; markets
+              # sharing one are grouped together, in the order they appear
+              # here. `dir` picks which side of the section it shows on —
+              # "both" lists it under exports AND imports.
+              - name: markets
+                label: Markets
+                widget: list
+                fields:
+                  - { name: id, label: ID (do not change), widget: string }
+                  - { name: country, label: Country, widget: string }
+                  - { name: city, label: Port or city, widget: string }
+                  - { name: region, label: Region (the heading it is listed under), widget: string }
+                  - {
+                      name: dir,
+                      label: Direction,
+                      widget: select,
+                      options: ['in', 'out', 'both'],
+                    }
+                  - { name: note, label: What moves through it, widget: text }
+
+          # ── Why the group gets asked back ───────────────────────────────
+          - name: trust
+            label: Trust section
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line, widget: string }
+              - { name: title, label: Heading, widget: string }
+              - name: points
+                label: Points
+                widget: list
+                fields:
+                  - { name: title, label: Title, widget: string }
+                  - { name: body, label: Body, widget: text }
+
+          # ── Offices ─────────────────────────────────────────────────────
+          - name: offices
+            label: Offices
+            widget: list
+            fields:
+              - { name: id, label: ID (do not change), widget: string }
+              - { name: name, label: Office name, widget: string }
+              - { name: lines, label: Address lines, widget: list }
+              - { name: role, label: What this office does, widget: string }
+
+          # ── Enquiry section ─────────────────────────────────────────────
+          - name: contact
+            label: Enquiry section
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line, widget: string }
+              - { name: title, label: Heading, widget: string }
+              - { name: lede, label: Intro, widget: text }

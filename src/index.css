@@ -1,0 +1,518 @@
+@import 'tailwindcss';
+
+/* ─────────────────────────────────────────────────────────────────────────
+   TOKENS — the only place colour is defined.
+
+   Names are ROLES, not colours: `ground` is the page background in both
+   families, `heading` is always the heading colour. A component never knows
+   which family it is in, so swapping the block below repaints the whole site
+   including the mobile tab bar.
+
+   ACTIVE: dark / luxury — the Mutnani navy, sampled from the logo.
+
+   Chosen over the light default deliberately: the group's own identity is
+   navy + gold, steel and PUF photography sits better on a dark ground than on
+   white, and the hero's 3D assembly reads far stronger against it. Argued and
+   approved at phase 3.
+
+   Both hexes are measured off `MUTNANI - Group of Companies.png`, not guessed
+   from it — ground #011d3f, accent #d69d3e, 7.0:1.
+
+   `static` matters: a plain @theme drops any token Tailwind cannot see used
+   in a class name, so a token read from JS resolves to nothing.
+   ───────────────────────────────────────────────────────────────────────── */
+@theme static {
+  --color-ground: #011d3f; /* the logo navy — page background */
+  --color-raised: #08294f; /* cards, raised surfaces */
+  --color-line: #1a3c69; /* hairlines — 1.5:1 on the ground */
+
+  --color-accent: #d69d3e; /* the logo gold — 7.0:1 on the ground */
+  --color-accent-dim: #9a6f26;
+  --color-accent-glow: #e9bb6e;
+
+  --color-heading: #f2f6fc; /* headings — 15.5:1. Cool, not warm ivory: this
+                              is steel and site light, not candlelight. */
+  --color-body: #9fb4d8; /* body copy — 8.0:1, a tint of the ground */
+  --color-alert: #ff7b6e;
+
+  /* Fraunces over Cormorant: still a serif, but the optical-size axis lets a
+     headline carry weight, and it breaks the navy+gold+Cormorant recipe that
+     master-shivji already owns. */
+  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --font-body: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+
+  /* Easing vocabulary. Five, deliberately — a page with nine easings reads as
+     nine hands. Assignment rules in references/motion.md.
+       entrance  things arriving from off-stage, 900ms–1.1s
+       exit      things leaving; always faster than they arrived
+       micro     hover, focus, colour, 150–250ms
+       snap      a control landing in a detent — toggles, tabs, magnets
+       inout     A→B where both ends are on screen, e.g. a pinned transition */
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1); /* expo.out */
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0); /* expo.in */
+  --ease-micro: cubic-bezier(0.33, 1, 0.68, 1); /* cubic.out */
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1); /* slight overshoot */
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Kept as an alias: components written before the vocabulary existed. */
+  --ease-out-expo: var(--ease-entrance);
+
+  /* Travel distance for staged elements. motion.ts reads these off the root,
+     so the CSS pre-state and the GSAP tween can never disagree — a 2px
+     mismatch is a visible pop at the start of every reveal. */
+  --reveal-y: 24px;
+  --entrance-y: 22px;
+}
+
+/* ── LIGHT / CORPORATE — the starter default, kept here as the escape hatch.
+   Swap it in by making it the live `@theme static` block, set color-scheme to
+   light below, and drop `grain vignette` off the root element in App.tsx.
+
+   If this is ever swapped in, note that the logo gold #d69d3e measures 2.4:1
+   on white and cannot carry text there — the accent would have to become
+   brass #8a6a16 (5.1:1) and the real gold confined to the navy bands.
+
+@theme static {
+  --color-ground: #ffffff;
+  --color-raised: #f5f6f9;
+  --color-line: #ccd2de;
+
+  --color-accent: #8a6a16;
+  --color-accent-dim: #6b5210;
+  --color-accent-glow: #a8831f;
+
+  --color-heading: #011d3f;
+  --color-body: #56607a;
+  --color-alert: #c2331f;
+}
+   ───────────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    /* Clears the mobile tab bar so the last section is never trapped behind
+       it. 5.25rem = icon row + label + the raised button's overhang. */
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+    background-color: var(--color-ground);
+    color: var(--color-heading);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  @media (width >= 64rem) {
+    body {
+      padding-bottom: 0;
+    }
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ground);
+  }
+
+  /* Lenis */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  /* Tailwind v4 dropped preflight's pointer cursor on buttons. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  label[for],
+  summary {
+    cursor: pointer;
+  }
+
+  /* 44px hit area on small round controls without changing how they look. */
+  .tap-44 {
+    position: relative;
+  }
+  .tap-44::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    min-width: 44px;
+    min-height: 44px;
+    width: 100%;
+    height: 100%;
+  }
+
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+}
+
+/* Technical labels — the body font doing a mono's job, so no third family. */
+.tech {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.tech-sm {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* Fraunces is variable on an optical-size axis, and ignoring it wastes the
+   face — at `opsz 96` the joints tighten and the strokes gain the weight a
+   steel fabricator's headline needs. Applied only at display sizes; smaller
+   text keeps the default, which is what the axis is for. */
+.display-opsz {
+  font-variation-settings: 'opsz' 96;
+}
+
+/* Blueprint field — the faint grid behind the hero stage and the panel
+   mechanism. Two hairline grids at different pitches, so it reads as drawing
+   paper rather than as a CSS pattern. */
+.blueprint {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-line) 60%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-line) 60%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-line) 28%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-line) 28%, transparent) 1px,
+      transparent 1px
+    );
+  background-size:
+    96px 96px,
+    96px 96px,
+    24px 24px,
+    24px 24px;
+}
+
+/* ── The hero stage's edge ─────────────────────────────────────────────────
+   The 3D used to sit in a rounded, hairline-bordered card. With a grid inside
+   it that read as a drawing pinned to the page; with a sky and a horizon inside
+   it, it read as a bright box stuck on a dark page — the card edge became the
+   most prominent line in the hero.
+
+   So there is no border and no radius. Instead the canvas is masked: fully
+   opaque through the middle, falling to transparent before it reaches any edge,
+   so the scene dissolves into the page ground rather than stopping at a line.
+   Paired with the sky's zenith being the ground token exactly (three/skyTexture)
+   there is nothing left to read as a container.
+
+   Off-centre on purpose — the building sits right of centre and slightly low,
+   so the opaque core follows it rather than the box.
+
+   `-webkit-mask-image` is still needed: Safari only unprefixed `mask-image` in
+   15.4, and this is a phone-first site. */
+.stage-bleed {
+  /*
+    Narrow edge feathers, composited — NOT one big radial.
+
+    A radial was the first attempt and it cannot work here: the building fills
+    most of the frame, so any radial tight enough to reach zero alpha at the top
+    edge is also eating the roof, and any radial loose enough to spare the roof
+    leaves the edges 40% opaque, which is still a visible rectangle. Two linear
+    ramps intersected fade only a thin band at each edge and leave the middle —
+    where the building is — completely untouched.
+
+    `mask-composite: intersect` is the standard property; WebKit needs the older
+    `source-in` keyword alongside it.
+  */
+  --fade-x: linear-gradient(to right, transparent 0%, #000 13%, #000 90%, transparent 100%);
+  --fade-y: linear-gradient(to bottom, transparent 0%, #000 11%, #000 91%, transparent 100%);
+
+  -webkit-mask-image: var(--fade-x), var(--fade-y);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--fade-x), var(--fade-y);
+  mask-composite: intersect;
+}
+
+/* The one glow per viewport — a gold wash behind the hero stage. */
+.accent-glow-field {
+  /* 9%, down from 16%. The hero already carries gold in the sign, the eyebrow,
+     the CTA and the crew's vests; at 16% this wash was adding a warm haze
+     across the whole left of the frame on top of all of them, which is how the
+     accent quietly stops being an accent. */
+  background: radial-gradient(
+    60% 55% at 62% 42%,
+    color-mix(in oklab, var(--color-accent) 9%, transparent),
+    transparent 70%
+  );
+}
+
+/* ── Reveal primitives ─────────────────────────────────────────────────────
+   Staging is CSS, so un-staging must be CSS too.
+
+   `clearProps: 'transform'` only removes the INLINE transform. If the staged
+   value lives in a stylesheet rule, the rule reasserts the instant GSAP clears
+   the inline one, and the element snaps back down by exactly its stage offset
+   at the moment its animation finishes. That is the jerk.
+
+   The fix is the `[data-revealed]` rule below: motion.ts stamps the attribute
+   on completion, so the staged transform stops applying before the inline one
+   is cleared. Computed transform then settles at `none` — no snap, and no
+   lingering compositing layer to break image repaints.
+
+   An attribute, not a class: React owns `className` and would re-add `reveal`
+   on the next render, re-staging an element that has already animated. */
+.reveal {
+  opacity: 0;
+  /* One source of truth — motion.ts reads this, so the two can never drift. */
+  transform: translate3d(0, var(--reveal-y), 0);
+}
+.reveal[data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Masked lines, for headlines that slide out from behind a matte. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+.line-mask > span {
+  display: block;
+}
+
+/* SplitText's own mask wrapper, when `mask: 'lines'` is used instead of the
+   hand-rolled .line-mask above. Same job, but it re-splits on resize. */
+.split-line {
+  display: block;
+  will-change: transform;
+}
+
+/* ── Entrance staging ──────────────────────────────────────────────────────
+   Anything marked data-entrance starts invisible so it cannot flash in its
+   final position before the load timeline picks it up.
+
+   Gated on html.js, which main.tsx sets before React mounts. If the bundle
+   fails to load, the class never lands and the page is simply visible —
+   never a blank screen. */
+html.js [data-entrance] {
+  opacity: 0;
+}
+html.js [data-entrance='rise'] {
+  transform: translate3d(0, var(--entrance-y), 0);
+}
+/* Same reason as .reveal[data-revealed] above — without this the hero
+   paragraph, CTAs and stats each drop back 22px as their tween ends. */
+html.js [data-entrance][data-entered] {
+  opacity: 1;
+  transform: none;
+}
+
+.hairline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--color-accent) 40%, transparent),
+    transparent
+  );
+}
+
+/* Film grain — dark grounds ONLY. On white it reads as a dirty screen.
+   Applied via the `grain` class in App.tsx; remove the class on light sites. */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  animation: grain-shift 8s steps(6) infinite;
+}
+
+.vignette::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 45%, transparent 40%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+@keyframes grain-shift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2%, 1%);
+  }
+  50% {
+    transform: translate(1%, -2%);
+  }
+  75% {
+    transform: translate(2%, 1%);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.3334%);
+  }
+}
+
+/* The site-video playlist scrolls inside the section. The system scrollbar
+   is a grey slab on the navy; this is a hairline in the palette — thin, on a
+   transparent track, thumb in the line colour, gold on hover — plus a fade at
+   the bottom so the cut-off reads as "more below" instead of "clipped". */
+.playlist-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--color-line) 90%, transparent) transparent;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 3rem), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 3rem), transparent);
+}
+.playlist-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.playlist-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.playlist-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-line) 90%, transparent);
+  border-radius: 999px;
+}
+.playlist-scroll:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-accent) 70%, transparent);
+}
+
+/* The three-bar "now playing" mark on the active clip in SiteVideos. */
+@keyframes eq {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.eq-bar {
+  transform-origin: bottom;
+  animation: eq 900ms ease-in-out infinite;
+}
+
+/* Office map tiles (Trust.tsx). Google's keyless embed only ships the light
+   style, so the iframe is inverted and re-hued to sit on the navy: invert
+   turns the cream land dark and the blue water pale, hue-rotate swings the
+   whole thing back toward blue, and the low saturation stops road labels
+   glowing. A navy wash on top pulls it the last step into the palette. */
+.map-dark iframe {
+  filter: invert(0.92) hue-rotate(195deg) saturate(0.55) brightness(0.85) contrast(1.05);
+}
+.map-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: color-mix(in oklab, var(--color-ground) 35%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-line) 70%, transparent);
+}
+
+/* The strip dissolves into the page ground at each edge instead of clipping
+   logos mid-card — same reasoning as `.stage-bleed` above, one axis only. */
+.partners-fade {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+/* Partners logo strip. The track holds the item list three times back to
+   back — `marquee` above walks it exactly one copy's width, so the seam is
+   invisible and the loop never has to jump. It never pauses: a strip that
+   stops every time a cursor drifts near it reads as broken, not helpful.
+   Slow: cards this wide at 60s per copy is a walk, not a scroll. */
+.partners-track {
+  animation: marquee 60s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* The global rule above collapses the animation to ~0s but leaves it
+     running once, which snaps the track straight to translateX(-33.3334%) —
+     two thirds of the strip would render blank. Turning the animation off
+     entirely instead keeps the track at its rest position, and the
+     duplicate copies are hidden so what is left reads as one static,
+     wrapped row rather than a frozen scroller. */
+  .partners-track {
+    animation: none !important;
+    transform: none !important;
+    flex-wrap: wrap;
+  }
+  .partners-track-dup {
+    display: none;
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(300%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal,
+  .reveal[data-revealed],
+  html.js [data-entrance],
+  html.js [data-entrance][data-entered],
+  html.js [data-entrance] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
