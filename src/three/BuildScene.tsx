@@ -162,10 +162,12 @@ function Rig({ progress, active }: { progress: { current: number }; active: bool
       const now = performance.now()
       const dx = e.clientX - lastX
       const dt = Math.max(now - lastT, 1)
-      // Dragging right walks the camera left round the building, so the shed
-      // turns the way the hand moves.
-      o.y -= dx * 0.006
-      o.vel = -(dx / dt) * 0.1
+      // Sign matters: the camera sits at (cos a, sin a) with x to the right,
+      // so a bigger yaw walks it toward +z and the shed appears to turn with
+      // the hand. Got this backwards once — the building ran away from the
+      // drag.
+      o.y += dx * 0.006
+      o.vel = (dx / dt) * 0.1
       lastX = e.clientX
       lastT = now
     }
