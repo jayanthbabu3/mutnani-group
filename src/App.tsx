@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import About from './components/About'
 import BuildSteps from './components/BuildSteps'
 import Divisions from './components/Divisions'
 import Enquiry from './components/Enquiry'
@@ -21,7 +22,7 @@ import { ScrollTrigger, useSmoothScroll } from './lib/motion'
  * Mutnani Group of Companies.
  *
  * Section order is the buyer's order of questions: what do you do (hero) → who
- * are you three (divisions) → how does this actually go up (build) → what is in
+ * are you (about) → who are you three (divisions) → how does this actually go up (build) → what is in
  * the panel (mechanism) → what can I order (products) → who else has bought
  * (the partners logo strip) → show me (site videos) → why you (trust) →
  * talk to me (enquiry).
@@ -45,6 +46,9 @@ export default function App() {
 
       <main>
         <Hero />
+        {/* Who the group is, and the only section with its own photography. */}
+        <About />
+        <Divider />
         <Divisions />
         <Divider />
 

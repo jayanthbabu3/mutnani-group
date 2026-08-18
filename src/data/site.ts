@@ -64,6 +64,50 @@ const schema = z.object({
    */
   stageStages: z.array(z.object({ id: z.string(), label: z.string(), note: z.string() })).length(6),
   /**
+   * CLIENT · the group's own story, and the only place on the page where its
+   * OWN photography appears.
+   *
+   * `award` and `gallery` are real photographs taken from the group's own
+   * site — not stock, not generated. That is the whole reason this section
+   * earns pictures when the rest of the page deliberately refuses them; if
+   * these are ever swapped, swap them for other real ones or drop the
+   * section, never for stock.
+   */
+  about: z.object({
+    eyebrow: z.string(),
+    title: z.string(),
+    /** One paragraph per entry. Two reads best; three is the ceiling. */
+    body: z.array(z.string()).min(1).max(3),
+    figures: z.array(z.object({ value: z.string(), label: z.string() })).min(2).max(4),
+    cta: z.string(),
+    award: z.object({
+      image: z.string().min(1),
+      imageAlt: z.string().min(1),
+      /** Who gave it. Set on the plate across the foot of the photograph. */
+      caption: z.string(),
+      /** The year, set in gold beside it. */
+      year: z.string(),
+    }),
+    /**
+     * The three site photographs under the award.
+     *
+     * `label` and `note` are what each one IS — an unlabelled photograph of a
+     * shed is decoration, a labelled one is a record. Keep both to two or
+     * three words; they set on one line each.
+     */
+    gallery: z
+      .array(
+        z.object({
+          id: z.string(),
+          image: z.string().min(1),
+          imageAlt: z.string().min(1),
+          label: z.string().min(1),
+          note: z.string().min(1),
+        }),
+      )
+      .length(3),
+  }),
+  /**
    * The heading over the three cards.
    *
    * It was hardcoded in Divisions.tsx. Any sentence a client might want to
@@ -376,6 +420,7 @@ export const NAV_LINKS = CONTENT.nav
 export const NAV_EXTRA = CONTENT.navExtra
 export const HERO = CONTENT.hero
 export const STAGES = CONTENT.stageStages
+export const ABOUT = CONTENT.about
 export const GROUP = CONTENT.group
 export const DIVISIONS = CONTENT.divisions
 export const BUILD = CONTENT.build

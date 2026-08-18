@@ -25,7 +25,7 @@ export default function Trust() {
   const ref = useReveal<HTMLElement>({ stagger: 0.08 })
 
   return (
-    <Section id="about" ref={ref}>
+    <Section id="why-us" ref={ref}>
       <Eyebrow>{TRUST.eyebrow}</Eyebrow>
       <SectionTitle>{TRUST.title}</SectionTitle>
 

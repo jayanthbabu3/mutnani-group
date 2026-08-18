@@ -36,6 +36,10 @@
   ],
   "navExtra": [
     {
+      "href": "#about",
+      "label": "About"
+    },
+    {
       "href": "#prefab",
       "label": "Prefab"
     },
@@ -111,6 +115,58 @@
       "note": "Trapezoidal sheet, ridge, gutters"
     }
   ],
+  "about": {
+    "eyebrow": "About us",
+    "title": "We are an authorised dealer of Hyderabad Industries Ltd.",
+    "body": [
+      "Balaji Agencies was established in 2000 by M. Madhu Sudhan. Since its inception it has handled corporate projects across Andhra Pradesh and other parts of India.",
+      "The group has had the opportunity to work with well-established names in Indian infrastructure — Navyug Engineering Company Ltd, Megha Engineering & Infrastructures Ltd and the NTPC power plant among them."
+    ],
+    "figures": [
+      {
+        "value": "2000",
+        "label": "Founded"
+      },
+      {
+        "value": "26",
+        "label": "Years in trade"
+      },
+      {
+        "value": "20+",
+        "label": "Countries served"
+      }
+    ],
+    "cta": "Talk to the group",
+    "award": {
+      "image": "/about/award.webp",
+      "imageAlt": "M. Madhu Sudhan and the Balaji team receiving a Birla Aerocon HIL Achievers Club award on stage.",
+      "caption": "Birla Aerocon · HIL Achievers Club",
+      "year": "2018–19"
+    },
+    "gallery": [
+      {
+        "id": "frame",
+        "image": "/about/frame.webp",
+        "imageAlt": "A steel-framed industrial building under erection, with the portal frames and roof trusses standing.",
+        "label": "Steel frame",
+        "note": "In erection"
+      },
+      {
+        "id": "panels",
+        "image": "/about/panels.webp",
+        "imageAlt": "A two-storey building clad in prefabricated panels, part-complete with scaffolding in place.",
+        "label": "PUF-clad building",
+        "note": "Two storeys"
+      },
+      {
+        "id": "shed",
+        "image": "/about/shed.webp",
+        "imageAlt": "A finished single-storey prefabricated site building on a cleared plot.",
+        "label": "Site building",
+        "note": "Handed over"
+      }
+    ]
+  },
   "group": {
     "eyebrow": "The group",
     "title": "Three companies, one schedule",
