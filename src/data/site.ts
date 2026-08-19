@@ -64,48 +64,50 @@ const schema = z.object({
    */
   stageStages: z.array(z.object({ id: z.string(), label: z.string(), note: z.string() })).length(6),
   /**
-   * CLIENT · the group's own story, and the only place on the page where its
-   * OWN photography appears.
+   * CLIENT · the group's story, and its awards.
    *
-   * `award` and `gallery` are real photographs taken from the group's own
-   * site — not stock, not generated. That is the whole reason this section
-   * earns pictures when the rest of the page deliberately refuses them; if
-   * these are ever swapped, swap them for other real ones or drop the
-   * section, never for stock.
+   * The awards are the reason this section exists in the form it does. They
+   * are real, recent and named — Global Leaders 2025, two GIBF awards, an
+   * India–China summit, CEO of the Year — and a photograph of somebody being
+   * handed a certificate on a stage is the one kind of picture a construction
+   * buyer reads as third-party proof rather than as marketing. Replace one
+   * only with another real award; the moment a stock trophy goes in here the
+   * whole section stops being evidence.
    */
   about: z.object({
     eyebrow: z.string(),
     title: z.string(),
     /** One paragraph per entry. Two reads best; three is the ceiling. */
     body: z.array(z.string()).min(1).max(3),
-    figures: z.array(z.object({ value: z.string(), label: z.string() })).min(2).max(4),
+    figures: z
+      .array(z.object({ value: z.string(), label: z.string() }))
+      .min(2)
+      .max(4),
     cta: z.string(),
-    award: z.object({
-      image: z.string().min(1),
-      imageAlt: z.string().min(1),
-      /** Who gave it. Set on the plate across the foot of the photograph. */
-      caption: z.string(),
-      /** The year, set in gold beside it. */
-      year: z.string(),
-    }),
+    awardsEyebrow: z.string(),
     /**
-     * The three site photographs under the award.
+     * Newest first — the mosaic reads top-left to bottom-right and the most
+     * recent award should be the one the eye lands on.
      *
-     * `label` and `note` are what each one IS — an unlabelled photograph of a
-     * shed is decoration, a labelled one is a record. Keep both to two or
-     * three words; they set on one line each.
+     * `kind` decides what the tile mounts: an <img>, or a <video> that plays
+     * in the lightbox. A video needs no poster field — the browser paints its
+     * first frame, which for these ceremony clips is the stage.
      */
-    gallery: z
+    awards: z
       .array(
         z.object({
           id: z.string(),
-          image: z.string().min(1),
-          imageAlt: z.string().min(1),
-          label: z.string().min(1),
-          note: z.string().min(1),
+          kind: z.enum(['image', 'video']),
+          src: z.string().min(1),
+          alt: z.string().min(1),
+          /** What was won. */
+          title: z.string().min(1),
+          /** Who gave it. */
+          body: z.string().min(1),
+          date: z.string().min(1),
         }),
       )
-      .length(3),
+      .min(3),
   }),
   /**
    * The heading over the three cards.
@@ -381,7 +383,11 @@ const schema = z.object({
           name: z.string(),
           place: z.string(),
           videos: z
-            .array(z.object({ youtubeId: z.string().regex(/^[\w-]{11}$/, 'a YouTube id is 11 characters') }))
+            .array(
+              z.object({
+                youtubeId: z.string().regex(/^[\w-]{11}$/, 'a YouTube id is 11 characters'),
+              }),
+            )
             .min(1),
         }),
       )
