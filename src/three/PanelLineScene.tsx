@@ -50,8 +50,22 @@ const MAT = {
   machineDark: new THREE.MeshStandardMaterial({ color: '#41608f', metalness: 0.35, roughness: 0.65 }),
   /** Bare steel strip, before the core goes in. */
   strip: new THREE.MeshStandardMaterial({ color: '#cfdcf0', metalness: 0.8, roughness: 0.22 }),
-  /** The finished sandwich panel. */
-  panel: new THREE.MeshStandardMaterial({ color: COLOR.panel, metalness: 0.1, roughness: 0.6 }),
+  /**
+   * The finished sandwich panel.
+   *
+   * Blue, and deliberately NOT `COLOR.panel`.
+   *
+   * `COLOR.panel` is the off-white the hero building is clad in, and that is
+   * right there — the group's own site photographs are all white-walled
+   * buildings. But this line's output, coming off a coating line and stacked
+   * on a pallet, is the coated sheet they actually sell, and that is blue in
+   * every one of those same photographs. Rendering it white made the whole
+   * end of the line read as bare, unfinished stock.
+   *
+   * Keep these two apart. Pointing both at one token turns the hero's walls
+   * blue the next time somebody adjusts this.
+   */
+  panel: new THREE.MeshStandardMaterial({ color: COLOR.roof, metalness: 0.25, roughness: 0.5 }),
   /** The exposed core at the cut end — the one warm note in the scene. */
   core: new THREE.MeshStandardMaterial({ color: '#e8d9bc', roughness: 0.95 }),
   accent: new THREE.MeshStandardMaterial({
