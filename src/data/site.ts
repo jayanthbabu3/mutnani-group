@@ -105,6 +105,18 @@ const schema = z.object({
           /** Who gave it. */
           body: z.string().min(1),
           date: z.string().min(1),
+          /**
+           * The file's own pixel dimensions.
+           *
+           * Required, because the gallery lays itself out from the aspect
+           * ratio BEFORE anything downloads. Measuring the images once they
+           * land would mean a visible reflow every time this section scrolls
+           * into view, and cropping to a fixed tile — the alternative — cut
+           * people's faces in half, which is unusable on photographs whose
+           * subject is who is standing on the stage.
+           */
+          width: z.number().int().positive(),
+          height: z.number().int().positive(),
         }),
       )
       .min(3),

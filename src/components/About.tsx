@@ -17,42 +17,68 @@ import { CtaLink, Eyebrow, Section, SectionTitle } from './ui'
  * being handed over on a stage is third-party proof. Nobody has to take the
  * group's word for it, which is the whole job of an About section.
  *
- * ── Why a mosaic and not a rail ──────────────────────────────────────────
+ * ── Why a justified gallery, and not a grid ─────────────────────────────
  * The six files are wildly different shapes — two 3:2 landscapes off a DSLR,
- * two phone portraits, a vertical video. A uniform grid crops the portraits
- * to strips and beheads people; a same-height rail leaves the landscapes
- * enormous next to the phone shots. The mosaic gives each tile a span chosen
- * for its own aspect, so nothing important is ever cropped out, and the
- * result is deliberately irregular — a wall of framed things, which is what
- * it is.
+ * two phone portraits, a 16:9 video. Any layout with fixed tile heights has
+ * to `object-cover` them, and on photographs whose entire subject is WHO is
+ * standing on the stage, cover cut people's faces in half. A mosaic of
+ * hand-chosen spans was the first attempt and it cropped just as badly, only
+ * less predictably.
  *
- * Tile spans live here rather than in content: they are a composition, not a
- * fact about an award, and a client reordering the list in a CMS should not
- * have to think about a grid.
+ * So nothing is cropped here at all. Items are packed into rows whose widths
+ * are proportional to each item's own aspect ratio — the newspaper/Flickr
+ * trick: give every child `flex-grow: aspect` off a zero basis and set
+ * `aspect-ratio` on the media, and the arithmetic falls out so that every
+ * item in a row lands on exactly the same height while keeping its true
+ * proportions. Rows are then full-bleed to the column with no ragged edge.
+ *
+ * Row breaks are computed, not hand-placed, so the client can add or remove
+ * an award in the CMS without anyone re-composing a grid.
  *
  * ── The lightbox ─────────────────────────────────────────────────────────
- * Tiles are cropped to fit the mosaic, so there has to be a way to see the
- * whole frame — and the certificate in `excellence` is only legible full
- * size. Escape and the arrow keys work, the backdrop closes it, and focus is
+ * Nothing is cropped in the gallery, but the certificate in `excellence` is
+ * still only legible at full size, and the video has to play somewhere. Escape and the arrow keys work, the backdrop closes it, and focus is
  * put on the dialog so a keyboard is never stranded behind it.
  */
 
-/** Grid spans per tile, by index. See the note above on why these are here. */
-const TILE = [
-  // The framed certificate — portrait, and the one worth reading, so it gets
-  // the full-height column on the left.
-  'col-span-2 row-span-2',
-  // Global Leaders, landscape.
-  'col-span-4 row-span-1',
-  // India–Asia, landscape.
-  'col-span-4 row-span-1',
-  // The video, portrait.
-  'col-span-2 row-span-1',
-  // India–China, portrait-ish.
-  'col-span-2 row-span-1',
-  // HIL 2018–19, landscape — the oldest, so it closes the wall.
-  'col-span-2 row-span-1',
-]
+/**
+ * Target aspect-sum for one row — effectively "how many landscape photos wide
+ * a row should be". The container is ~950px in this column, so 3.9 puts rows
+ * near 240px tall, which is enough to recognise a face and small enough that
+ * six awards still sit inside one screen.
+ */
+const ROW_ASPECT = 3.9
+
+type Award = (typeof ABOUT.awards)[number]
+
+/**
+ * Greedy row packer.
+ *
+ * Walks the list in order and closes a row when adding the next item would
+ * take it further from ROW_ASPECT than stopping would. Order is preserved —
+ * these are dated awards and reordering them to pack tighter would put 2018
+ * before 2026.
+ */
+function packRows(items: readonly Award[]) {
+  const rows: Award[][] = []
+  let row: Award[] = []
+  let sum = 0
+
+  for (const item of items) {
+    const aspect = item.width / item.height
+    if (row.length && Math.abs(sum + aspect - ROW_ASPECT) > Math.abs(sum - ROW_ASPECT)) {
+      rows.push(row)
+      row = []
+      sum = 0
+    }
+    row.push(item)
+    sum += aspect
+  }
+  if (row.length) rows.push(row)
+  return rows
+}
+
+const ROWS = packRows(ABOUT.awards)
 
 export default function About() {
   const ref = useReveal<HTMLElement>({ stagger: 0.06 })
@@ -129,63 +155,79 @@ export default function About() {
             </p>
           </div>
 
-          <ul className="reveal mt-5 grid auto-rows-[7.5rem] grid-cols-4 gap-2.5 sm:auto-rows-[8.5rem] sm:grid-cols-6 sm:gap-3">
-            {ABOUT.awards.map((award, i) => (
-              <li key={award.id} className={TILE[i] ?? 'col-span-2 row-span-1'}>
-                <button
-                  type="button"
-                  onClick={() => setOpen(i)}
-                  aria-label={`${award.title}, ${award.body}, ${award.date}. Open larger.`}
-                  className="group relative block size-full overflow-hidden rounded-lg border border-line/50 bg-raised transition-colors duration-300 ease-micro hover:border-accent/60"
-                >
-                  {award.kind === 'video' ? (
-                    <video
-                      src={award.src}
-                      muted
-                      playsInline
-                      preload="metadata"
-                      aria-label={award.alt}
-                      className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-micro group-hover:scale-[1.05]"
-                    />
-                  ) : (
-                    <img
-                      src={award.src}
-                      alt={award.alt}
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-micro group-hover:scale-[1.05]"
-                    />
-                  )}
-
-                  {/* Enough wash to carry the date at any exposure — these are
-                      stage photographs and their corners are unpredictable. */}
-                  <span className="absolute inset-0 bg-gradient-to-t from-ground/90 via-ground/15 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-75" />
-
-                  <span className="absolute inset-x-0 bottom-0 p-2.5 text-left sm:p-3">
-                    <span className="tech-sm block text-accent">{award.date}</span>
-                    <span className="mt-1 block truncate text-[0.78rem] leading-tight font-medium text-heading">
-                      {award.title}
-                    </span>
-                  </span>
-
-                  {award.kind === 'video' ? (
-                    <span
-                      aria-hidden
-                      className="absolute top-2 right-2 grid size-7 place-items-center rounded-full border border-heading/40 bg-ground/60 text-heading backdrop-blur-sm transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-ground"
+          <div className="reveal mt-5 space-y-2.5 sm:space-y-3">
+            {ROWS.map((row, r) => (
+              <div key={r} className="flex flex-col gap-2.5 sm:flex-row sm:gap-3">
+                {row.map((award) => {
+                  const i = ABOUT.awards.indexOf(award)
+                  const aspect = award.width / award.height
+                  return (
+                    <button
+                      key={award.id}
+                      type="button"
+                      onClick={() => setOpen(i)}
+                      aria-label={`${award.title}, ${award.body}, ${award.date}. Open larger.`}
+                      // The two arbitrary properties are what justify the row:
+                      // width proportional to aspect off a zero basis, which
+                      // lands every item in the row on one height.
+                      style={{ ['--aspect' as string]: aspect }}
+                      className="group relative block w-full overflow-hidden rounded-lg border border-line/50 bg-raised transition-colors duration-300 ease-micro hover:border-accent/60 sm:w-auto sm:[flex-basis:0] sm:[flex-grow:var(--aspect)]"
                     >
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="size-3 translate-x-px"
-                        fill="currentColor"
-                      >
-                        <path d="M8 5.5v13l11-6.5z" />
-                      </svg>
-                    </span>
-                  ) : null}
-                </button>
-              </li>
+                      {award.kind === 'video' ? (
+                        <video
+                          src={award.src}
+                          muted
+                          playsInline
+                          preload="metadata"
+                          aria-label={award.alt}
+                          style={{ aspectRatio: aspect }}
+                          className="block w-full object-cover"
+                        />
+                      ) : (
+                        <img
+                          src={award.src}
+                          alt={award.alt}
+                          width={award.width}
+                          height={award.height}
+                          loading="lazy"
+                          decoding="async"
+                          style={{ aspectRatio: aspect }}
+                          className="block w-full object-cover brightness-[0.92] transition-[filter] duration-500 ease-micro group-hover:brightness-100"
+                        />
+                      )}
+
+                      {/* Shallow, and only over the bottom third: a full-height
+                          wash on an uncropped photograph hides the faces the
+                          crop was removed to protect. */}
+                      <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ground/92 via-ground/45 to-transparent" />
+
+                      <span className="absolute inset-x-0 bottom-0 p-2.5 text-left sm:p-3">
+                        <span className="tech-sm block text-accent">{award.date}</span>
+                        <span className="mt-1 line-clamp-2 block text-[0.78rem] leading-tight font-medium text-heading">
+                          {award.title}
+                        </span>
+                      </span>
+
+                      {award.kind === 'video' ? (
+                        <span
+                          aria-hidden
+                          className="absolute top-2 right-2 grid size-7 place-items-center rounded-full border border-heading/40 bg-ground/60 text-heading backdrop-blur-sm transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-ground"
+                        >
+                          <svg
+                            viewBox="0 0 24 24"
+                            className="size-3 translate-x-px"
+                            fill="currentColor"
+                          >
+                            <path d="M8 5.5v13l11-6.5z" />
+                          </svg>
+                        </span>
+                      ) : null}
+                    </button>
+                  )
+                })}
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
 

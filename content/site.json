@@ -146,7 +146,9 @@
         "alt": "Madhusudhan Mutnani holding the framed Global India Business Forum Business Excellence Award certificate.",
         "title": "Business Excellence Award",
         "body": "Global India Business Forum · presented by the Governor of Telangana",
-        "date": "Aug 2026"
+        "date": "Aug 2026",
+        "width": 1050,
+        "height": 1400
       },
       {
         "id": "global-leaders-2025",
@@ -155,7 +157,9 @@
         "alt": "The Balaji Prefab team receiving the Global Leaders Award on stage at the 2025 conclave.",
         "title": "Global Leaders Award",
         "body": "Global Leaders Awards Conclave & Summit",
-        "date": "Nov 2025"
+        "date": "Nov 2025",
+        "width": 1600,
+        "height": 1066
       },
       {
         "id": "india-asia-2026",
@@ -164,7 +168,9 @@
         "alt": "The award certificate being presented on stage at the GIBF India–Asia Business Conclave in Hyderabad.",
         "title": "India–Asia Business Conclave",
         "body": "Global India Business Forum, Hyderabad",
-        "date": "Aug 2026"
+        "date": "Aug 2026",
+        "width": 1600,
+        "height": 1066
       },
       {
         "id": "ceo-2025",
@@ -173,7 +179,9 @@
         "alt": "Footage of the MSME Business Awards ceremony where the group's chairman was named CEO of the Year.",
         "title": "CEO of the Year",
         "body": "MSME Business Awards",
-        "date": "Apr 2025"
+        "date": "Apr 2025",
+        "width": 640,
+        "height": 360
       },
       {
         "id": "india-china-2025",
@@ -182,7 +190,9 @@
         "alt": "Madhusudhan Mutnani on stage at the GIBF India–China Business Summit receiving a National Business Excellence Award.",
         "title": "National Business Excellence",
         "body": "GIBF India–China Business Summit",
-        "date": "Dec 2025"
+        "date": "Dec 2025",
+        "width": 903,
+        "height": 1400
       },
       {
         "id": "hil-2019",
@@ -191,7 +201,9 @@
         "alt": "M. Madhu Sudhan and the Balaji team receiving a Birla Aerocon HIL Achievers Club award on stage.",
         "title": "HIL Achievers Club",
         "body": "Birla Aerocon · Hyderabad Industries Ltd.",
-        "date": "2018–19"
+        "date": "2018–19",
+        "width": 1400,
+        "height": 1050
       }
     ]
   },
