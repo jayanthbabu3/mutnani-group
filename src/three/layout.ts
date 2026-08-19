@@ -23,7 +23,21 @@ export const COLOR = {
   steelDark: '#7893c0',
   panel: '#e4ecf8',
   panelEdge: '#b9c9e2',
-  roof: '#c3d1e6',
+  /**
+   * The roof sheet.
+   *
+   * Blue, not the off-white it was. Every one of the group's own site
+   * photographs — Belgaum, Kodangal, Sileru — is a white-clad building under a
+   * blue trapezoidal roof, because that is the sheet this industry actually
+   * coats and sells. A white roof over white walls also gave the model no
+   * silhouette from above: the two planes met and the building lost its edge.
+   *
+   * Lifted well clear of the ground navy (#011d3f) so the roof reads against
+   * the sky rather than sinking into it.
+   */
+  roof: '#3f86bf',
+  /** The shaded slope, so the two pitches never read as one flat plane. */
+  roofDark: '#2f6b9d',
   accent: '#d69d3e',
   accentDim: '#9a6f26',
 

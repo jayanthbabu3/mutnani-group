@@ -280,6 +280,20 @@ const MAT = {
     roughness: 0.45,
     transparent: true,
   }),
+  /**
+   * The away-facing slope.
+   *
+   * A second material rather than a second colour on one: the key light is
+   * almost along the ridge, so both pitches came back at nearly the same value
+   * and a blue roof read as one flat blue kite. Darkening the far slope by
+   * hand is what puts the fold back in.
+   */
+  roofDark: new THREE.MeshStandardMaterial({
+    color: COLOR.roofDark,
+    metalness: 0.35,
+    roughness: 0.45,
+    transparent: true,
+  }),
   slab: new THREE.MeshStandardMaterial({
     color: COLOR.slab,
     metalness: 0.05,
@@ -608,9 +622,16 @@ function Purlins({ progress }: { progress: { current: number } }) {
  * unfinished shed with missing walls, and the last caption says "handover".
  *
  * The frame is not lost by closing it: phases 02 to 04 spend six of the eleven
- * seconds building the columns, rafters and purlins in full view, and the
- * gable triangles above the eave stay open, so the rafter pair and the ridge
- * are still readable in the finished frame.
+ * seconds building the columns, rafters and purlins in full view.
+ *
+ * The gable TRIANGLES above the eave are clad too. They were left open — the
+ * argument being that an open apex keeps the rafter pair and the ridge
+ * readable in the finished frame — but on a shed whose last caption reads
+ * "handover" a hole in the end wall reads as unfinished work, not as a
+ * cutaway. Real rake-cut cladding is what closes a gable, so that is what
+ * this is: one trapezoid per module, cut on the roof line, with the module
+ * straddling the ridge carrying the apex as a fifth point so the peak is not
+ * chamfered off.
  *
  * Order matters. The far long wall goes on first, then the two gables, and the
  * NEAR long wall last — so the cladding closes toward the camera and the
@@ -629,6 +650,12 @@ function WallPanels({ progress }: { progress: { current: number } }) {
       /** Which axis this panel slides in along. Its sign comes from `pos`. */
       slide: 'x' | 'z'
       order: number
+      /**
+       * Set on the gable infill only. A rectangle cannot follow a roof rake,
+       * so those modules carry an explicit outline instead of `w`/`h`, in
+       * coordinates local to the module's own bottom centre.
+       */
+      shape?: THREE.Shape
     }[] = []
     let order = 0
 
@@ -681,6 +708,10 @@ function WallPanels({ progress }: { progress: { current: number } }) {
       }
     }
 
+    /** Underside of the roof at any x — eave at the walls, ridge at centre. */
+    const roofY = (x: number) =>
+      BUILDING.eave + BUILDING.rise * (1 - Math.abs(x) / derived.half)
+
     const gable = (dir: number) => {
       for (let n = 0; n < gableCount; n++) {
         const x = -derived.half + n * BUILDING.panelWidth + BUILDING.panelWidth / 2
@@ -694,6 +725,32 @@ function WallPanels({ progress }: { progress: { current: number } }) {
           h,
           slide: 'z',
           order: order++,
+        })
+
+        // ── The rake-cut piece above the eave ──────────────────────────
+        const hw = BUILDING.panelWidth / 2
+        // Overshoot into the roof build-up. Stopping exactly on the rafter
+        // line leaves a hairline of sky along the rake, because the sheeting
+        // sits a purlin's depth above it.
+        const tuck = 0.25
+        const shape = new THREE.Shape()
+        shape.moveTo(-hw, 0)
+        shape.lineTo(hw, 0)
+        shape.lineTo(hw, roofY(x + hw) - BUILDING.eave + tuck)
+        // The module straddling the ridge needs the apex as its own point;
+        // a straight line between its two edges would chamfer the peak off.
+        if (x - hw < 0 && x + hw > 0) shape.lineTo(-x, roofY(0) - BUILDING.eave + tuck)
+        shape.lineTo(-hw, roofY(x - hw) - BUILDING.eave + tuck)
+        shape.closePath()
+
+        out.push({
+          pos: [x, BUILDING.eave, dir * (derived.length / 2 + 0.22)],
+          rotY: 0,
+          w: BUILDING.panelWidth,
+          h: 0,
+          slide: 'z',
+          order: order++,
+          shape,
         })
       }
     }
@@ -740,8 +797,15 @@ function WallPanels({ progress }: { progress: { current: number } }) {
           rotation={[0, panel.rotY, 0]}
           material={MAT.panel}
         >
-          {/* 60 mm thick, to scale: the depth here is the panel thickness. */}
-          <boxGeometry args={[panel.w - 0.02, panel.h, 0.06]} />
+          {/* 60 mm thick either way, to scale: the depth is the panel
+              thickness. The extrusion runs +z from the outline, which is 30 mm
+              off centre — invisible at this scale, and it errs outward on the
+              near gable and inward on the far one, never into the frame. */}
+          {panel.shape ? (
+            <extrudeGeometry args={[panel.shape, { depth: 0.06, bevelEnabled: false }]} />
+          ) : (
+            <boxGeometry args={[panel.w - 0.02, panel.h, 0.06]} />
+          )}
         </mesh>
       ))}
     </>
@@ -797,7 +861,10 @@ function Roof({ progress }: { progress: { current: number } }) {
           position={[sheet.x, sheet.y, 0]}
           rotation={[0, 0, -sheet.dir * derived.pitch]}
         >
-          <mesh position={[(-sheet.dir * derived.slope) / 2, 0, 0]} material={MAT.roof}>
+          <mesh
+            position={[(-sheet.dir * derived.slope) / 2, 0, 0]}
+            material={sheet.dir === 1 ? MAT.roof : MAT.roofDark}
+          >
             <boxGeometry args={[derived.slope, 0.09, derived.length + 0.9]} />
           </mesh>
         </group>
