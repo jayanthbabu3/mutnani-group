@@ -709,8 +709,7 @@ function WallPanels({ progress }: { progress: { current: number } }) {
     }
 
     /** Underside of the roof at any x — eave at the walls, ridge at centre. */
-    const roofY = (x: number) =>
-      BUILDING.eave + BUILDING.rise * (1 - Math.abs(x) / derived.half)
+    const roofY = (x: number) => BUILDING.eave + BUILDING.rise * (1 - Math.abs(x) / derived.half)
 
     const gable = (dir: number) => {
       for (let n = 0; n < gableCount; n++) {
@@ -820,9 +819,47 @@ function WallPanels({ progress }: { progress: { current: number } }) {
  * centred box scaled in x grows out of its own middle in both directions, so
  * the sheet would appear in mid-air over the purlins and expand toward the
  * eave and the ridge at once.
+ *
+ * PROFILED, not a plain slab. The caption on this phase says "trapezoidal
+ * sheet" and the slab said "flat plate" — on the one section of the model
+ * that IS Balaji Roofing's product, the profile is the product. Ribs run down
+ * the slope, which is the way the sheet is laid and the way the water has to
+ * leave; the flats between them catch the key light at a different angle from
+ * the rib tops, so the roof now reads as sheeting from any camera position
+ * instead of as a coloured plane.
+ *
+ * Rib pitch here is 750 mm against a real sheet's ~200 mm. At the size this
+ * building renders, true pitch turns into a moiré of near-pixel-wide lines
+ * that aliases as the camera turns — worse than no profile at all. This is
+ * the coarsest spacing that still reads unmistakably as trapezoidal sheet.
  */
 function Roof({ progress }: { progress: { current: number } }) {
   const refs = useRef<(THREE.Group | null)[]>([])
+
+  /** Deck, rib and sheet dimensions, in metres. */
+  const SHEET = { deck: 0.05, ribHeight: 0.11, ribWidth: 0.18, ribPitch: 0.75 } as const
+
+  /**
+   * One geometry for every rib on both slopes.
+   *
+   * Fifty-odd ribs each carrying their own BoxGeometry is fifty buffers
+   * describing an identical box. They differ only in position, which is what
+   * the mesh transform is for.
+   */
+  const ribGeometry = useMemo(
+    () => new THREE.BoxGeometry(derived.slope, SHEET.ribHeight, SHEET.ribWidth),
+    [SHEET.ribHeight, SHEET.ribWidth],
+  )
+  useEffect(() => () => ribGeometry.dispose(), [ribGeometry])
+
+  /** Rib centres along the length, centred on the building. */
+  const ribZ = useMemo(() => {
+    const span = derived.length + 0.9
+    const count = Math.floor(span / SHEET.ribPitch)
+    // Spread the remainder rather than leaving a wide flat at one verge.
+    const pitch = span / count
+    return Array.from({ length: count }, (_, i) => -span / 2 + pitch * (i + 0.5))
+  }, [SHEET.ribPitch])
 
   const sheets = useMemo(
     () =>
@@ -861,12 +898,25 @@ function Roof({ progress }: { progress: { current: number } }) {
           position={[sheet.x, sheet.y, 0]}
           rotation={[0, 0, -sheet.dir * derived.pitch]}
         >
+          {/* The deck the ribs stand on. */}
           <mesh
             position={[(-sheet.dir * derived.slope) / 2, 0, 0]}
             material={sheet.dir === 1 ? MAT.roof : MAT.roofDark}
           >
-            <boxGeometry args={[derived.slope, 0.09, derived.length + 0.9]} />
+            <boxGeometry args={[derived.slope, SHEET.deck, derived.length + 0.9]} />
           </mesh>
+
+          {/* The ribs. Each runs the full slope, so the group's x-scale
+              unrolls them from the eave with the deck rather than popping
+              them in at the end. */}
+          {ribZ.map((z) => (
+            <mesh
+              key={z}
+              geometry={ribGeometry}
+              material={sheet.dir === 1 ? MAT.roof : MAT.roofDark}
+              position={[(-sheet.dir * derived.slope) / 2, SHEET.deck / 2 + SHEET.ribHeight / 2, z]}
+            />
+          ))}
         </group>
       ))}
     </>
