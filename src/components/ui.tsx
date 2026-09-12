@@ -120,7 +120,7 @@ export function SectionTitle({
 }) {
   return (
     <h2
-      className={`reveal mt-4 max-w-3xl font-display text-[clamp(1.9rem,3.2vw,2.7rem)] leading-[1.12] font-light tracking-[-0.015em] text-heading ${className}`}
+      className={`reveal mt-4 max-w-3xl font-display text-[clamp(1.9rem,3.2vw,2.7rem)] leading-[1.12] font-semibold tracking-[-0.015em] text-heading ${className}`}
     >
       {children}
     </h2>
@@ -159,7 +159,7 @@ export function CtaLink({
     'group inline-flex items-center gap-2.5 rounded-full px-5 py-3 text-[0.78rem] font-medium tracking-[0.04em] transition-all duration-300 ease-micro sm:px-7 sm:py-3.5 sm:text-[0.82rem]'
   const skin =
     variant === 'solid'
-      ? 'bg-accent font-semibold text-ground hover:bg-accent-glow hover:shadow-[0_0_38px_-8px_var(--color-accent)]'
+      ? 'bg-accent font-semibold text-ground hover:bg-accent-glow hover:shadow-[0_10px_24px_-10px_rgba(0,84,168,0.55)]'
       : 'border border-line text-heading/85 hover:border-accent/60 hover:text-accent'
 
   return (

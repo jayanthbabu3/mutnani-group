@@ -59,8 +59,8 @@
   "hero": {
     "eyebrow": "Building · Manufacturing · Global trade",
     "headline": {
-      "line1": "The building is made",
-      "line2": "before the slab cures."
+      "line1": "Your building is ready",
+      "line2": "before the ground is."
     },
     "sub": "Three companies under one group: pre-engineered structures, our own PUF panel line, and the import desk that sources what neither can make. Fabrication runs in parallel with your foundation, so the shed is closed in weeks rather than seasons.",
     "primaryCta": "Get a quote",
@@ -224,8 +224,8 @@
         "Warehouses & godowns",
         "Turnkey project execution"
       ],
-      "image": "/divisions/prefab.webp",
-      "imageAlt": "A long pre-engineered steel building under construction: bare portal frames and purlins with a mobile crane alongside.",
+      "image": "/divisions/prefab-completed.png",
+      "imageAlt": "A completed pre-engineered steel warehouse in an industrial park during the day.",
       "imagePlaceholder": true
     },
     {
@@ -239,8 +239,8 @@
         "Flashings, gutters, accessories",
         "Custom profiles to drawing"
       ],
-      "image": "/divisions/roofing.webp",
-      "imageAlt": "Blue coated PUF sandwich panels stacked on the roller conveyor of a panel manufacturing line, the cream foam core visible at the cut ends.",
+      "image": "/divisions/roofing-collection.png",
+      "imageAlt": "A collection of PUF sandwich panels and colored trapezoidal roofing sheets stacked neatly on a warehouse floor.",
       "imagePlaceholder": true
     },
     {
@@ -335,7 +335,7 @@
   "prefab": {
     "eyebrow": "Vertical 01",
     "title": "Balaji Prefab Solutions",
-    "sub": "We draw it, make it, erect it",
+    "sub": "Pre-engineered buildings, made easy.",
     "capabilities": [
       {
         "name": "Pre-engineered buildings",
@@ -372,8 +372,8 @@
       }
     ],
     "note": "Structural drawings are ours and stay yours — issued at handover, not held to force a return visit.",
-    "image": "/prefab/erection.webp",
-    "imageAlt": "A steel portal frame going up at dusk, a crane setting the last rafter under the site lights.",
+    "image": "/prefab/completed-godowns.png",
+    "imageAlt": "Aerial view of multiple completed pre-engineered godowns with bright blue roofing on a large industrial site.",
     "imagePlaceholder": true
   },
   "products": {

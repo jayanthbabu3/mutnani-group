@@ -50,7 +50,12 @@ export default function Partners() {
             <figure
               key={`${item.id}-${i}`}
               aria-hidden={i >= PARTNERS.items.length}
-              className={`flex w-[17rem] shrink-0 flex-col items-center justify-between rounded-3xl border border-line/30 bg-[#fafaf8] px-8 pt-9 pb-7 shadow-[0_24px_48px_-20px_rgba(0,0,0,0.6)] transition-transform duration-300 ease-micro hover:-translate-y-1.5 sm:w-[20rem] sm:px-10 sm:pt-11 sm:pb-8 ${
+              // White, not the raised tint: three of these marks are supplied as
+              // PNGs with their own white box baked in, and on any tinted card
+              // that box shows up as a pale rectangle around the logo. On a
+              // white card it disappears, so the border and the shadow — not a
+              // fill — are what separate the card from the page.
+              className={`flex w-[17rem] shrink-0 flex-col items-center justify-between rounded-3xl border border-line bg-ground px-8 pt-9 pb-7 shadow-[0_12px_32px_-18px_rgba(13,33,54,0.28)] transition-transform duration-300 ease-micro hover:-translate-y-1.5 sm:w-[20rem] sm:px-10 sm:pt-11 sm:pb-8 ${
                 i >= PARTNERS.items.length ? 'partners-track-dup' : ''
               }`}
             >
@@ -62,9 +67,9 @@ export default function Partners() {
                   className="max-h-full w-auto max-w-full object-contain"
                 />
               </div>
-              <figcaption className="mt-7 w-full border-t border-ground/10 pt-5 text-center">
-                <p className="text-[0.92rem] leading-snug font-medium text-ground">{item.name}</p>
-                <p className="tech-sm mt-2 text-ground/55">{item.sector}</p>
+              <figcaption className="mt-7 w-full border-t border-line pt-5 text-center">
+                <p className="text-[0.92rem] leading-snug font-medium text-heading">{item.name}</p>
+                <p className="tech-sm mt-2 text-body">{item.sector}</p>
               </figcaption>
             </figure>
           ))}

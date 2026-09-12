@@ -71,7 +71,7 @@ export default function SiteVideos() {
       <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-10">
         {/* The stage. */}
         <div className="reveal">
-          <div className="relative aspect-video overflow-hidden rounded-2xl border border-line/70 bg-ground shadow-[0_32px_64px_-28px_rgba(0,0,0,0.7)]">
+          <div className="relative aspect-video overflow-hidden rounded-2xl border border-line/70 bg-ground shadow-[0_24px_56px_-28px_rgba(13,33,54,0.35)]">
             {armed ? (
               <iframe
                 key={active.youtubeId}
@@ -104,9 +104,9 @@ export default function SiteVideos() {
                   decoding="async"
                   className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-entrance group-hover:scale-[1.03]"
                 />
-                <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ground/70 to-transparent" />
+                <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0b1c30]/70 to-transparent" />
                 <span className="absolute inset-0 flex items-center justify-center">
-                  <span className="flex size-[4.5rem] items-center justify-center rounded-full border border-heading/40 bg-ground/45 text-heading backdrop-blur-sm transition-all duration-300 ease-micro group-hover:border-accent group-hover:bg-accent group-hover:text-ground">
+                  <span className="flex size-[4.5rem] items-center justify-center rounded-full border border-white/50 bg-[#0b1c30]/45 text-white backdrop-blur-sm transition-all duration-300 ease-micro group-hover:border-accent group-hover:bg-accent group-hover:text-white">
                     <PlayIcon />
                   </span>
                 </span>
@@ -175,7 +175,7 @@ export default function SiteVideos() {
                               isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
                             }`}
                           />
-                          <span className="absolute bottom-1 left-1.5 rounded bg-ground/75 px-1.5 py-0.5 text-[0.6rem] font-medium tracking-[0.12em] text-heading/85 tabular-nums">
+                          <span className="absolute bottom-1 left-1.5 rounded bg-[#0b1c30]/75 px-1.5 py-0.5 text-[0.6rem] font-medium tracking-[0.12em] text-white/90 tabular-nums">
                             {String(i + 1).padStart(2, '0')}
                           </span>
                           {isActive && armed ? (

@@ -54,21 +54,17 @@ export default function PrefabSolutions() {
           {/* `mt-auto` on the list's wrapper would push it to the bottom; it is
               the NOTE that takes the slack instead, so the capabilities stay
               tight under the heading and the column still fills its height. */}
-          <ol className="mt-9 divide-y divide-line/50 border-y border-line/50">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {PREFAB.capabilities.map((c, i) => (
-              <li key={c.name} className="reveal flex gap-5 py-5">
-                <span className="mt-1 text-[0.72rem] font-semibold text-accent/80 tabular-nums">
+              <div key={c.name} className="reveal rounded-xl border border-line/50 bg-raised p-5 transition-colors hover:border-accent/50">
+                <span className="mb-3 flex size-8 items-center justify-center rounded-full bg-accent/10 text-[0.75rem] font-semibold tabular-nums text-accent">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="min-w-0">
-                  <span className="block text-[1rem] leading-tight text-heading">{c.name}</span>
-                  <span className="mt-1.5 block text-[0.88rem] leading-[1.6] text-body">
-                    {c.body}
-                  </span>
-                </span>
-              </li>
+                <h3 className="text-[0.95rem] font-semibold leading-tight text-heading">{c.name}</h3>
+                <p className="mt-2 text-[0.85rem] leading-[1.6] text-body">{c.body}</p>
+              </div>
             ))}
-          </ol>
+          </div>
 
           <p className="reveal mt-5 text-[0.82rem] leading-[1.6] text-body/70 lg:mt-auto lg:pt-5">
             {PREFAB.note}
@@ -84,7 +80,7 @@ export default function PrefabSolutions() {
             constrained, so the aspect ratio takes over and the image keeps a
             sane shape on a phone.
           */}
-          <div className="min-h-0 flex-1 overflow-hidden rounded-2xl border border-line/60">
+          <div className="overflow-hidden rounded-2xl border border-line/60 shadow-lg">
             <img
               src={PREFAB.image}
               alt={PREFAB.imageAlt}
@@ -92,21 +88,23 @@ export default function PrefabSolutions() {
               height={1000}
               loading="lazy"
               decoding="async"
-              className="aspect-[7/5] size-full object-cover lg:aspect-auto"
+              className="w-full h-auto object-cover"
             />
           </div>
-
-          <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-5">
-            {PREFAB.figures.map((f) => (
-              <div key={f.label}>
-                <dd className="text-[1.6rem] leading-none font-semibold text-heading tabular-nums">
-                  {f.value}
-                  <span className="ml-1 text-[0.8rem] font-light text-accent">{f.unit}</span>
-                </dd>
-                <dt className="tech-sm mt-2.5 text-body/60">{f.label}</dt>
-              </div>
-            ))}
-          </dl>
+          
+          <div className="reveal mt-6 rounded-2xl border border-line/50 bg-raised p-6 sm:p-8">
+            <dl className="grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3">
+              {PREFAB.figures.map((f) => (
+                <div key={f.label}>
+                  <dd className="text-[1.6rem] font-semibold leading-none tabular-nums text-heading">
+                    {f.value}
+                    <span className="ml-1 text-[0.8rem] font-light text-accent">{f.unit}</span>
+                  </dd>
+                  <dt className="tech-sm mt-2.5 text-body/70">{f.label}</dt>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </div>
     </Section>

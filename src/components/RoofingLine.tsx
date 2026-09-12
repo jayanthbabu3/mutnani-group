@@ -1,8 +1,12 @@
-import { useState } from 'react'
-import PanelLineSceneLazy from '../three/PanelLineSceneLazy'
 import { LINE } from '../data/site'
-import { prefersReducedMotion, useInView, useReveal } from '../lib/motion'
+import { useReveal } from '../lib/motion'
 import { Eyebrow, Lede, Section, SectionTitle } from './ui'
+
+const MASK = [
+  'radial-gradient(82% 86% at 50% 50%, #000 58%, rgba(0,0,0,0.85) 80%, transparent 100%)',
+  'linear-gradient(to right, transparent 0%, #000 3%, #000 97%, transparent 100%)',
+  'linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%)',
+].join(', ')
 
 /**
  * Balaji Roofing's signature — the line itself.
@@ -31,12 +35,6 @@ import { Eyebrow, Lede, Section, SectionTitle } from './ui'
  */
 export default function RoofingLine() {
   const reveal = useReveal<HTMLElement>({ stagger: 0.07 })
-  const [stageRef, active] = useInView<HTMLDivElement>('240px')
-  // Reduced motion pins the caption at the end of the line — the finished,
-  // stacked panel — rather than leaving it at "Coil" forever.
-  const [station, setStation] = useState(() =>
-    prefersReducedMotion() ? LINE.stations.length - 1 : 0,
-  )
 
   return (
     <Section id="line" ref={reveal}>
@@ -74,38 +72,21 @@ export default function RoofingLine() {
               the stage and reads as a sequence. */}
           <ol className="mt-4 grid grid-cols-2 gap-x-6 lg:grid-cols-1 lg:gap-x-0">
             {LINE.stations.map((s, i) => {
-              const isActive = i === station
-              const isDone = i < station
               return (
                 <li
                   key={s.id}
-                  aria-current={isActive ? 'step' : undefined}
                   className={`flex gap-3.5 border-line/50 py-3 lg:border-t ${
                     i === 0 ? 'lg:border-t-0' : ''
                   }`}
                 >
-                  <span
-                    className={`mt-0.5 text-[0.7rem] font-semibold tabular-nums transition-colors duration-300 ease-micro ${
-                      isActive || isDone ? 'text-accent' : 'text-body/40'
-                    }`}
-                  >
+                  <span className="mt-0.5 text-[0.7rem] font-semibold tabular-nums text-accent">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span className="min-w-0">
-                    <span
-                      className={`block text-[0.92rem] leading-tight transition-colors duration-300 ease-micro ${
-                        isActive ? 'text-accent' : 'text-heading/85'
-                      }`}
-                    >
+                    <span className="block text-[0.92rem] leading-tight text-heading/85">
                       {s.label}
                     </span>
-                    {/* The note only shows for the live station. Six notes at
-                        once is the wall of text this layout exists to avoid. */}
-                    <span
-                      className={`block overflow-hidden text-[0.82rem] leading-snug text-body transition-all duration-400 ease-micro ${
-                        isActive ? 'mt-1 max-h-16 opacity-100' : 'max-h-0 opacity-0'
-                      }`}
-                    >
+                    <span className="mt-1 block text-[0.82rem] leading-snug text-body opacity-80">
                       {s.note}
                     </span>
                   </span>
@@ -128,11 +109,21 @@ export default function RoofingLine() {
             line filling the frame instead of floating in the middle of a
             letterbox at one breakpoint and overflowing at another.
           */}
-          <div
-            ref={stageRef}
-            className="stage-bleed relative aspect-[16/10] w-full bg-ground sm:aspect-[16/9] lg:aspect-[3/2]"
-          >
-            <PanelLineSceneLazy active={active} onStation={setStation} />
+          <div className="relative aspect-[16/10] w-full sm:aspect-[16/9] lg:aspect-[3/2] flex items-center justify-center">
+            <video
+              src="/roofing-line.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="size-full object-cover"
+              style={{
+                WebkitMaskImage: MASK,
+                maskImage: MASK,
+                WebkitMaskComposite: 'source-in',
+                maskComposite: 'intersect',
+              }}
+            />
           </div>
 
           <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-4">

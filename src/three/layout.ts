@@ -9,55 +9,66 @@ import { gsap, prefersReducedMotion } from '../lib/motion'
  * palette is ever repainted, this file changes with it or the 3D stops
  * matching the page.
  *
- *   STEEL      derived from --color-body   (#9fb4d8) — cool structural steel
- *   PANEL      derived from --color-heading (#f2f6fc) — off-white cladding
- *   ACCENT     --color-accent              (#d69d3e) — the gold, used as the
- *                                          rim light and on the signage only
- *   GROUND     --color-ground              (#011d3f)
+ *   STEEL      cool structural steel, read against a daylight sky
+ *   PANEL      off-white cladding — the group's buildings really are white
+ *   ACCENT     --color-accent              (#0054a8) — the brand blue, on the
+ *                                          roof sheet and the signage
+ *   INK        --color-heading             (#0d2136) — type on the sign
+ *   GROUND     --color-ground              (#ffffff)
+ *
+ * One thing that does NOT mirror the page: every metal here is close to
+ * dielectric. There is no environment map in this project, so a high
+ * `metalness` has nothing to reflect and resolves toward black — which passed
+ * for moody steel against navy and came back as charcoal sticks against a
+ * daylight sky.
  */
 export const COLOR = {
-  ground: '#011d3f',
-  slab: '#0b2c54',
-  slabEdge: '#1a3c69',
-  steel: '#a9bddb',
-  steelDark: '#7893c0',
-  panel: '#e4ecf8',
-  panelEdge: '#b9c9e2',
-  /**
-   * The roof sheet.
-   *
-   * Blue, not the off-white it was. Every one of the group's own site
-   * photographs — Belgaum, Kodangal, Sileru — is a white-clad building under a
-   * blue trapezoidal roof, because that is the sheet this industry actually
-   * coats and sells. A white roof over white walls also gave the model no
-   * silhouette from above: the two planes met and the building lost its edge.
-   *
-   * Lifted well clear of the ground navy (#011d3f) so the roof reads against
-   * the sky rather than sinking into it.
-   */
-  roof: '#3f86bf',
-  /** The shaded slope, so the two pitches never read as one flat plane. */
-  roofDark: '#2f6b9d',
-  accent: '#d69d3e',
-  accentDim: '#9a6f26',
+  ground: '#ffffff',
+  slab: '#ccd5df',
+  slabEdge: '#aab7c6',
+
+  /* Structural steel. Darker than it was: on the navy page a pale steel was
+     the lightest thing in frame, and on a white one the same value vanishes
+     into the sky. These read as galvanised section against daylight. */
+  steel: '#8496ad',
+  steelDark: '#61758f',
+
+  /* Cladding. Barely off-white — the group's buildings really are white, and
+     the separation from the page comes from the sky behind and the shading
+     across the faces, not from tinting the panel into a grey it is not. */
+  panel: '#f4f7fb',
+  panelEdge: '#ccd8e6',
+
+  /* Roof sheet, in the brand blue. Lifted a step off `accent` so the shaded
+     slope still has somewhere to go before it reads black. */
+  roof: '#1163bd',
+  roofDark: '#0b4e9b',
+
+  accent: '#0054a8',
+  accentDim: '#003c90',
+  /** Mirrors --color-heading. The sign sets type on a white plate now, so the
+      scene needs the page's ink as well as its accent. */
+  ink: '#0d2136',
 
   /* ── The yard ──────────────────────────────────────────────────────────
-     The building used to float on a slab with nothing under it, which read
-     as a product render rather than a site. These are all tints of the
-     ground token so the yard recedes and the building stays the subject. */
-  yard: '#04234a',
-  drive: '#0a2d58',
-  kerb: '#123763',
+     Tints of the page, as before, so the yard recedes and the building stays
+     the subject — but now they descend from white instead of climbing out of
+     navy, and they have to stay clearly separated from each other or the
+     lower half of the frame goes back to being one flat smear. */
+  yard: '#e7ecf2',
+  drive: '#dae1ea',
+  kerb: '#c3ccd8',
 
   /* ── Things that give it scale ──────────────────────────────────────────
      A 8.5 m eave means nothing until there is a 1.75 m person beside it. */
-  skin: '#c9d6ea',
-  clothes: '#4d6b9e',
-  clothesAlt: '#38527d',
-  /* Hi-vis. The only place other than the signage where the accent appears in
-     the model, and it is a few hundred pixels — a site crew in gold vests is
-     what the accent is FOR here, not decoration. */
-  hiVis: '#d69d3e',
+  skin: '#b08d72',
+  clothes: '#40587f',
+  clothesAlt: '#2f4466',
+  /* Hi-vis, and the one place the logo's lime belongs in the model: it is
+     literally a high-visibility colour, it is 2.21:1 so it can never be asked
+     to carry text, and a crew in lime vests is what that half of the mark is
+     FOR here rather than decoration. */
+  hiVis: '#84c000',
 } as const
 
 /**

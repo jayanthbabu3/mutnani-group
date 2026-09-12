@@ -3,42 +3,57 @@
 /* ─────────────────────────────────────────────────────────────────────────
    TOKENS — the only place colour is defined.
 
-   Names are ROLES, not colours: `ground` is the page background in both
-   families, `heading` is always the heading colour. A component never knows
-   which family it is in, so swapping the block below repaints the whole site
-   including the mobile tab bar.
+   Names are ROLES, not colours: `ground` is the page background, `heading` is
+   always the heading colour. A component never knows which family it is in,
+   so swapping this block repaints the whole site including the mobile tab bar.
 
-   ACTIVE: dark / luxury — the Mutnani navy, sampled from the logo.
+   ACTIVE: light / brand — white, blue and green, from the 2026 logo.
 
-   Chosen over the light default deliberately: the group's own identity is
-   navy + gold, steel and PUF photography sits better on a dark ground than on
-   white, and the hero's 3D assembly reads far stronger against it. Argued and
-   approved at phase 3.
+   This replaced the navy + gold family when the group changed its mark. Every
+   hex below is measured off the new logo artwork, not guessed from it:
+   blue #0054a8 and #003c90 off the M's left face and the MUTNANI wordmark,
+   lime #84c000 and green #3c900c off its right face and the GROUP wordmark.
 
-   Both hexes are measured off `MUTNANI - Group of Companies.png`, not guessed
-   from it — ground #011d3f, accent #d69d3e, 7.0:1.
+   ── The one trap in this palette ────────────────────────────────────────
+   The logo's lime is 2.21:1 on white. It CANNOT carry text — not a label,
+   not an eyebrow, not a 12px caption. It is a fill and a graphic colour
+   only, which is why it is `--color-brand-lime` and not an accent: the name
+   is there to stop it being reached for as one. Where green has to carry
+   text, `--color-secondary` (5.37:1) is the one to use.
+
+   Measured against the ground, all AA or better:
+     accent      #0054a8   7.41:1    heading  #0d2136  16.31:1
+     secondary   #2f7a0a   5.37:1    body     #4b5c70   6.85:1
 
    `static` matters: a plain @theme drops any token Tailwind cannot see used
    in a class name, so a token read from JS resolves to nothing.
    ───────────────────────────────────────────────────────────────────────── */
 @theme static {
-  --color-ground: #011d3f; /* the logo navy — page background */
-  --color-raised: #08294f; /* cards, raised surfaces */
-  --color-line: #1a3c69; /* hairlines — 1.5:1 on the ground */
+  --color-ground: #ffffff; /* the page */
+  --color-raised: #f2f6fb; /* cards, raised surfaces — a cool tint of the blue */
+  --color-line: #d5e0ec; /* hairlines */
 
-  --color-accent: #d69d3e; /* the logo gold — 7.0:1 on the ground */
-  --color-accent-dim: #9a6f26;
-  --color-accent-glow: #e9bb6e;
+  /* Blue is the primary. It is the only brand colour that both carries text
+     on white AND takes white text on itself, so it does all the work the gold
+     used to: eyebrows, links, CTAs, the active state in every control. */
+  --color-accent: #0054a8;
+  /* Emphasis. On a DARK ground this went lighter, hence the name; on a light
+     ground emphasis is darker, so every `hover:*-accent-glow` still reads as
+     "more", just in the other direction. Renaming it would touch every
+     component for nothing. */
+  --color-accent-glow: #00408c;
+  --color-accent-dim: #6d9acb; /* receded blue — de-emphasis, not text */
 
-  --color-heading: #f2f6fc; /* headings — 15.5:1. Cool, not warm ivory: this
-                              is steel and site light, not candlelight. */
-  --color-body: #9fb4d8; /* body copy — 8.0:1, a tint of the ground */
-  --color-alert: #ff7b6e;
+  /* Green is the secondary, and the half of the mark that says "group". */
+  --color-secondary: #2f7a0a;
+  --color-brand-lime: #84c000; /* FILLS AND GRAPHICS ONLY — see the note above */
 
-  /* Fraunces over Cormorant: still a serif, but the optical-size axis lets a
-     headline carry weight, and it breaks the navy+gold+Cormorant recipe that
-     master-shivji already owns. */
-  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --color-heading: #0d2136; /* near-black with the blue's temperature in it */
+  --color-body: #4b5c70;
+  --color-alert: #c2331f;
+
+  /* Montserrat: a geometric sans-serif that brings an architectural, industrial strength to headings. */
+  --font-display: 'Montserrat', sans-serif;
   --font-body: 'Manrope', ui-sans-serif, system-ui, sans-serif;
 
   /* Easing vocabulary. Five, deliberately — a page with nine easings reads as
@@ -64,32 +79,9 @@
   --entrance-y: 22px;
 }
 
-/* ── LIGHT / CORPORATE — the starter default, kept here as the escape hatch.
-   Swap it in by making it the live `@theme static` block, set color-scheme to
-   light below, and drop `grain vignette` off the root element in App.tsx.
-
-   If this is ever swapped in, note that the logo gold #d69d3e measures 2.4:1
-   on white and cannot carry text there — the accent would have to become
-   brass #8a6a16 (5.1:1) and the real gold confined to the navy bands.
-
-@theme static {
-  --color-ground: #ffffff;
-  --color-raised: #f5f6f9;
-  --color-line: #ccd2de;
-
-  --color-accent: #8a6a16;
-  --color-accent-dim: #6b5210;
-  --color-accent-glow: #a8831f;
-
-  --color-heading: #011d3f;
-  --color-body: #56607a;
-  --color-alert: #c2331f;
-}
-   ───────────────────────────────────────────────────────────────────────── */
-
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   html {
@@ -183,13 +175,6 @@
   text-transform: uppercase;
 }
 
-/* Fraunces is variable on an optical-size axis, and ignoring it wastes the
-   face — at `opsz 96` the joints tighten and the strokes gain the weight a
-   steel fabricator's headline needs. Applied only at display sizes; smaller
-   text keeps the default, which is what the axis is for. */
-.display-opsz {
-  font-variation-settings: 'opsz' 96;
-}
 
 /* Blueprint field — the faint grid behind the hero stage and the panel
    mechanism. Two hairline grids at different pitches, so it reads as drawing
@@ -263,17 +248,24 @@
   mask-composite: intersect;
 }
 
-/* The one glow per viewport — a gold wash behind the hero stage. */
+/* The one wash per viewport, behind the hero stage.
+
+   Two stops, not one: the mark is a blue-to-green gradient, and echoing that
+   behind the building ties the stage to the logo without putting either
+   colour anywhere it has to be legible. Both are far too faint to affect the
+   contrast of anything sitting on them. */
 .accent-glow-field {
-  /* 9%, down from 16%. The hero already carries gold in the sign, the eyebrow,
-     the CTA and the crew's vests; at 16% this wash was adding a warm haze
-     across the whole left of the frame on top of all of them, which is how the
-     accent quietly stops being an accent. */
-  background: radial-gradient(
-    60% 55% at 62% 42%,
-    color-mix(in oklab, var(--color-accent) 9%, transparent),
-    transparent 70%
-  );
+  background:
+    radial-gradient(
+      55% 50% at 68% 38%,
+      color-mix(in oklab, var(--color-brand-lime) 10%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      60% 55% at 38% 52%,
+      color-mix(in oklab, var(--color-accent) 9%, transparent),
+      transparent 70%
+    );
 }
 
 /* ── Reveal primitives ─────────────────────────────────────────────────────
@@ -348,45 +340,6 @@ html.js [data-entrance][data-entered] {
   );
 }
 
-/* Film grain — dark grounds ONLY. On white it reads as a dirty screen.
-   Applied via the `grain` class in App.tsx; remove the class on light sites. */
-.grain::after {
-  content: '';
-  position: fixed;
-  inset: -50%;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-  animation: grain-shift 8s steps(6) infinite;
-}
-
-.vignette::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 55;
-  pointer-events: none;
-  background: radial-gradient(120% 90% at 50% 45%, transparent 40%, rgba(0, 0, 0, 0.45) 100%);
-}
-
-@keyframes grain-shift {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(-2%, 1%);
-  }
-  50% {
-    transform: translate(1%, -2%);
-  }
-  75% {
-    transform: translate(2%, 1%);
-  }
-}
-
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -397,8 +350,8 @@ html.js [data-entrance][data-entered] {
 }
 
 /* The site-video playlist scrolls inside the section. The system scrollbar
-   is a grey slab on the navy; this is a hairline in the palette — thin, on a
-   transparent track, thumb in the line colour, gold on hover — plus a fade at
+   is a grey slab; this is a hairline in the palette — thin, on a transparent
+   track, thumb in the line colour, blue on hover — plus a fade at
    the bottom so the cut-off reads as "more below" instead of "clipped". */
 .playlist-scroll {
   scrollbar-width: thin;
@@ -435,21 +388,18 @@ html.js [data-entrance][data-entered] {
   animation: eq 900ms ease-in-out infinite;
 }
 
-/* Office map tiles (Trust.tsx). Google's keyless embed only ships the light
-   style, so the iframe is inverted and re-hued to sit on the navy: invert
-   turns the cream land dark and the blue water pale, hue-rotate swings the
-   whole thing back toward blue, and the low saturation stops road labels
-   glowing. A navy wash on top pulls it the last step into the palette. */
-.map-dark iframe {
-  filter: invert(0.92) hue-rotate(195deg) saturate(0.55) brightness(0.85) contrast(1.05);
-}
-.map-dark::after {
+/* Office map tiles (Trust.tsx).
+
+   Google's embed only ships the light style, which used to punch a white hole
+   in the navy page and had to be inverted and re-hued to sit on it. On a white
+   ground the tiles are already right, so the filter is gone and all that is
+   left is a hairline to seat the tile in its card. */
+.map-frame::after {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: color-mix(in oklab, var(--color-ground) 35%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-line) 70%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-line) 90%, transparent);
 }
 
 /* The strip dissolves into the page ground at each edge instead of clipping

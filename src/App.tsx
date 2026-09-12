@@ -1,15 +1,15 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import About from './components/About'
 import BuildSteps from './components/BuildSteps'
 import Divisions from './components/Divisions'
 import Enquiry from './components/Enquiry'
+import FontOptions from './components/FontOptions'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import MobileTabBar from './components/MobileTabBar'
 import Partners from './components/Partners'
 import PrefabSolutions from './components/PrefabSolutions'
-import Products from './components/Products'
 import RoofingLine from './components/RoofingLine'
 import SiteVideos from './components/SiteVideos'
 import TradeRoutes from './components/TradeRoutes'
@@ -27,21 +27,31 @@ import { ScrollTrigger, useSmoothScroll } from './lib/motion'
  * (the partners logo strip) → show me (site videos) → why you (trust) →
  * talk to me (enquiry).
  *
- * `grain vignette` are on the root because this is a dark-family site. They are
- * what stops the large flat navy fields reading as dead space, and they belong
- * on dark grounds only — on white, grain reads as a dirty screen.
+ * No grain or vignette on the root: both were dark-ground effects holding the
+ * large flat navy fields together, and on white grain reads as a dirty screen.
  */
 export default function App() {
+  const [showFonts, setShowFonts] = useState(false)
+
   useSmoothScroll()
 
   useEffect(() => {
+    if (window.location.search.includes('fonts')) {
+      setShowFonts(true)
+      return
+    }
+
     // Fonts land after first paint and shift every measurement ScrollTrigger
     // already took. Re-measure once they are in.
     document.fonts?.ready.then(() => ScrollTrigger.refresh())
   }, [])
 
+  if (showFonts) {
+    return <FontOptions />
+  }
+
   return (
-    <div className="grain vignette relative min-h-screen">
+    <div className="relative min-h-screen">
       <Header />
 
       <main>
@@ -70,7 +80,6 @@ export default function App() {
         <TradeRoutes />
         <Divider />
 
-        <Products />
         <Partners />
         <SiteVideos />
         <Trust />

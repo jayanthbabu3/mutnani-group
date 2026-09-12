@@ -81,27 +81,27 @@ const MAT = {
     and of the background, and the whole lower half of the frame read as one
     dark smear with a shed sitting on nothing.
   */
-  apron: new THREE.MeshStandardMaterial({ color: '#072a54', roughness: 1 }),
-  drive: new THREE.MeshStandardMaterial({ color: '#0e3765', roughness: 1 }),
-  kerb: new THREE.MeshStandardMaterial({ color: '#1d4a7d', roughness: 1 }),
+  apron: new THREE.MeshStandardMaterial({ color: '#dfe6ee', roughness: 1 }),
+  drive: new THREE.MeshStandardMaterial({ color: '#d2dae4', roughness: 1 }),
+  kerb: new THREE.MeshStandardMaterial({ color: '#bcc7d4', roughness: 1 }),
   panel: new THREE.MeshStandardMaterial({ color: COLOR.panel, roughness: 0.62 }),
   panelEdge: new THREE.MeshStandardMaterial({ color: COLOR.panelEdge, roughness: 0.7 }),
   roof: new THREE.MeshStandardMaterial({ color: COLOR.roof, roughness: 0.6 }),
-  steel: new THREE.MeshStandardMaterial({ color: COLOR.steel, metalness: 0.55, roughness: 0.45 }),
+  steel: new THREE.MeshStandardMaterial({ color: COLOR.steel, metalness: 0.16, roughness: 0.45 }),
   steelDark: new THREE.MeshStandardMaterial({
     color: COLOR.steelDark,
-    metalness: 0.5,
+    metalness: 0.15,
     roughness: 0.55,
   }),
   dark: new THREE.MeshStandardMaterial({ color: '#06264c', roughness: 0.9 }),
   tyre: new THREE.MeshStandardMaterial({ color: '#0a1c33', roughness: 0.95 }),
   glass: new THREE.MeshStandardMaterial({
     color: '#123f6c',
-    metalness: 0.6,
+    metalness: 0.16,
     roughness: 0.15,
   }),
   /** Bare coil stock — warmer than the finished panel, which is the point. */
-  coil: new THREE.MeshStandardMaterial({ color: '#cfdcf0', metalness: 0.82, roughness: 0.24 }),
+  coil: new THREE.MeshStandardMaterial({ color: '#cfdcf0', metalness: 0.2, roughness: 0.24 }),
   coilCore: new THREE.MeshStandardMaterial({ color: '#5b7db3', roughness: 0.8 }),
   container: new THREE.MeshStandardMaterial({ color: '#2d5488', roughness: 0.75 }),
   containerAlt: new THREE.MeshStandardMaterial({ color: '#1d4070', roughness: 0.75 }),
@@ -129,10 +129,10 @@ export default function TradeYardScene({ mode, active }: Props) {
       <fog attach="fog" args={[HORIZON, 60, 260]} />
       <Sky />
 
-      <hemisphereLight args={['#dce8ff', '#123c72', 2] as const} />
-      <directionalLight position={[26, 34, 22]} intensity={2.6} color="#fff4e0" />
-      <directionalLight position={[-28, 16, -18]} intensity={1} color="#8fb0e4" />
-      <directionalLight position={[12, 5, 30]} intensity={0.7} color="#c9dcff" />
+      <hemisphereLight args={['#eaf3ff', '#c6d2e0', 1.4] as const} />
+      <directionalLight position={[26, 34, 22]} intensity={2.2} color="#fff8ef" />
+      <directionalLight position={[-28, 16, -18]} intensity={0.75} color="#a7c3e8" />
+      <directionalLight position={[12, 5, 30]} intensity={0.5} color="#d7e6ff" />
 
       <Rig />
 

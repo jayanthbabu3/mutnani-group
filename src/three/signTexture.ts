@@ -68,7 +68,7 @@ export function createSignTexture({ title, subtitle, anisotropy = 4 }: SignOptio
     ctx.fillStyle = COLOR.ground
     ctx.fillRect(0, 0, W, H)
 
-    // A gold hairline around it, which is what makes it read as a fabricated
+    // A blue hairline around it, which is what makes it read as a fabricated
     // sign panel rather than a painted rectangle.
     ctx.strokeStyle = COLOR.accent
     ctx.lineWidth = 8
@@ -106,7 +106,7 @@ export function createSignTexture({ title, subtitle, anisotropy = 4 }: SignOptio
     const sans = '"Manrope", ui-sans-serif, system-ui, sans-serif'
 
     ctx.textBaseline = 'alphabetic'
-    ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = COLOR.ink
     ctx.font = `700 118px ${sans}`
     ctx.letterSpacing = '10px'
     ctx.fillText(title.toUpperCase(), textX, 196)

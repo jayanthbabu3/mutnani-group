@@ -62,12 +62,12 @@ export default function BuildScene({ progress, seq, active }: Props) {
       {/* Site light. The hemisphere's second colour is the bounce off the
           slab, so it must be a lit navy rather than the ground token — with
           near-black there, every downward-facing surface renders as a hole. */}
-      <hemisphereLight args={['#d6e4ff', '#0d3260', 1.5] as const} />
-      <directionalLight position={[18, 26, 14]} intensity={2.3} color="#fff4e0" />
-      <directionalLight position={[-20, 12, -14]} intensity={0.9} color="#8fb0e4" />
+      <hemisphereLight args={['#eaf3ff', '#c6d2e0', 1.15] as const} />
+      <directionalLight position={[18, 26, 14]} intensity={2.0} color="#fff8ef" />
+      <directionalLight position={[-20, 12, -14]} intensity={0.7} color="#a7c3e8" />
       {/* Low fill from the camera side, so the near faces of the columns are
           not silhouettes against the lit roof. */}
-      <directionalLight position={[14, 3, 20]} intensity={0.55} color="#c9dcff" />
+      <directionalLight position={[14, 3, 20]} intensity={0.4} color="#d7e6ff" />
 
       {/* No y offset: the camera aims at the building's own mid-height, so
           shifting the model down as well would double the correction. */}
@@ -258,13 +258,13 @@ function Rig({ progress, active }: { progress: { current: number }; active: bool
 const MAT = {
   steel: new THREE.MeshStandardMaterial({
     color: COLOR.steel,
-    metalness: 0.72,
+    metalness: 0.18,
     roughness: 0.38,
     transparent: true,
   }),
   steelDark: new THREE.MeshStandardMaterial({
     color: COLOR.steelDark,
-    metalness: 0.6,
+    metalness: 0.16,
     roughness: 0.5,
     transparent: true,
   }),
@@ -276,7 +276,7 @@ const MAT = {
   }),
   roof: new THREE.MeshStandardMaterial({
     color: COLOR.roof,
-    metalness: 0.35,
+    metalness: 0.14,
     roughness: 0.45,
     transparent: true,
   }),
@@ -290,7 +290,7 @@ const MAT = {
    */
   roofDark: new THREE.MeshStandardMaterial({
     color: COLOR.roofDark,
-    metalness: 0.35,
+    metalness: 0.14,
     roughness: 0.45,
     transparent: true,
   }),
@@ -308,7 +308,7 @@ const MAT = {
    * because it carries a canvas texture.
    */
   signPlate: new THREE.MeshStandardMaterial({
-    color: COLOR.slab,
+    color: COLOR.accent,
     metalness: 0.2,
     roughness: 0.6,
     transparent: true,
@@ -321,13 +321,13 @@ const MAT = {
   /* ── Doors ─────────────────────────────────────────────────────────────── */
   shutter: new THREE.MeshStandardMaterial({
     color: COLOR.steel,
-    metalness: 0.55,
+    metalness: 0.16,
     roughness: 0.42,
     transparent: true,
   }),
   doorFrame: new THREE.MeshStandardMaterial({
     color: COLOR.steelDark,
-    metalness: 0.5,
+    metalness: 0.15,
     roughness: 0.5,
     transparent: true,
   }),
@@ -1321,7 +1321,7 @@ function Signage({ progress }: { progress: { current: number } }) {
     // Comes up rather than snapping on, so the sign lighting reads as the last
     // thing that happens at handover. See the note on the material: this number
     // is deliberately small — it is a lift, not a lamp.
-    material.emissiveIntensity = local * 0.14
+    material.emissiveIntensity = local * 0.03
     MAT.signPlate.opacity = local
   })
 

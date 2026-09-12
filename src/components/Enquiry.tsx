@@ -123,7 +123,7 @@ export default function Enquiry() {
           <button
             type="submit"
             disabled={busy}
-            className="tap-44 mt-7 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-4 text-[0.84rem] font-semibold tracking-[0.04em] text-ground transition-all duration-300 ease-micro hover:bg-accent-glow hover:shadow-[0_0_38px_-8px_var(--color-accent)] disabled:opacity-60 sm:w-auto"
+            className="tap-44 mt-7 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-4 text-[0.84rem] font-semibold tracking-[0.04em] text-ground transition-all duration-300 ease-micro hover:bg-accent-glow hover:shadow-[0_10px_24px_-10px_rgba(0,84,168,0.55)] disabled:opacity-60 sm:w-auto"
           >
             {busy ? 'Opening WhatsApp…' : 'Send on WhatsApp'}
             <svg

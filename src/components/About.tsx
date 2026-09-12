@@ -110,7 +110,7 @@ export default function About() {
 
   return (
     <Section id="about" ref={ref}>
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-16">
         {/* ── The story ───────────────────────────────────────────────── */}
         <div>
           <Eyebrow>{ABOUT.eyebrow}</Eyebrow>
@@ -129,7 +129,7 @@ export default function About() {
               <div key={figure.label}>
                 <dt className="sr-only">{figure.label}</dt>
                 <dd>
-                  <span className="display-opsz block font-display text-[1.7rem] leading-none font-normal text-heading tabular-nums">
+                  <span className="block font-display text-[1.7rem] leading-none font-semibold text-heading tabular-nums">
                     {figure.value}
                   </span>
                   <span className="tech-sm mt-2.5 block text-body/70">{figure.label}</span>
@@ -155,7 +155,7 @@ export default function About() {
             </p>
           </div>
 
-          <div className="reveal mt-5 space-y-2.5 sm:space-y-3">
+          <div className="reveal mt-5 flex flex-col gap-3 sm:gap-4">
             {ROWS.map((row, r) => (
               <div key={r} className="flex flex-col gap-2.5 sm:flex-row sm:gap-3">
                 {row.map((award) => {
@@ -199,11 +199,11 @@ export default function About() {
                       {/* Shallow, and only over the bottom third: a full-height
                           wash on an uncropped photograph hides the faces the
                           crop was removed to protect. */}
-                      <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ground/92 via-ground/45 to-transparent" />
+                      <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0b1c30]/88 via-[#0b1c30]/35 to-transparent" />
 
                       <span className="absolute inset-x-0 bottom-0 p-2.5 text-left sm:p-3">
-                        <span className="tech-sm block text-accent">{award.date}</span>
-                        <span className="mt-1 line-clamp-2 block text-[0.78rem] leading-tight font-medium text-heading">
+                        <span className="tech-sm block text-brand-lime">{award.date}</span>
+                        <span className="mt-1 line-clamp-2 block text-[0.78rem] leading-tight font-medium text-white">
                           {award.title}
                         </span>
                       </span>
@@ -211,7 +211,7 @@ export default function About() {
                       {award.kind === 'video' ? (
                         <span
                           aria-hidden
-                          className="absolute top-2 right-2 grid size-7 place-items-center rounded-full border border-heading/40 bg-ground/60 text-heading backdrop-blur-sm transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-ground"
+                          className="absolute top-2 right-2 grid size-7 place-items-center rounded-full border border-white/50 bg-[#0b1c30]/55 text-white backdrop-blur-sm transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
                         >
                           <svg
                             viewBox="0 0 24 24"

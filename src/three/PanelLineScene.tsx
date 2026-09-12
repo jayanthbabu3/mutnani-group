@@ -44,12 +44,12 @@ const LINE = {
 } as const
 
 const MAT = {
-  frame: new THREE.MeshStandardMaterial({ color: '#8ba4cc', metalness: 0.55, roughness: 0.45 }),
-  roller: new THREE.MeshStandardMaterial({ color: COLOR.steel, metalness: 0.8, roughness: 0.3 }),
-  machine: new THREE.MeshStandardMaterial({ color: '#5b7db3', metalness: 0.35, roughness: 0.55 }),
-  machineDark: new THREE.MeshStandardMaterial({ color: '#41608f', metalness: 0.35, roughness: 0.65 }),
+  frame: new THREE.MeshStandardMaterial({ color: '#7089ad', metalness: 0.16, roughness: 0.45 }),
+  roller: new THREE.MeshStandardMaterial({ color: COLOR.steel, metalness: 0.2, roughness: 0.3 }),
+  machine: new THREE.MeshStandardMaterial({ color: '#48699c', metalness: 0.14, roughness: 0.55 }),
+  machineDark: new THREE.MeshStandardMaterial({ color: '#2f4a78', metalness: 0.14, roughness: 0.65 }),
   /** Bare steel strip, before the core goes in. */
-  strip: new THREE.MeshStandardMaterial({ color: '#cfdcf0', metalness: 0.8, roughness: 0.22 }),
+  strip: new THREE.MeshStandardMaterial({ color: '#b4c4da', metalness: 0.2, roughness: 0.22 }),
   /**
    * The finished sandwich panel.
    *
@@ -107,9 +107,9 @@ export default function PanelLineScene({ active, onStation }: Props) {
 
       {/* Factory light: a broad cool fill from the roof sheets, one warm key so
           the steel has a direction, and a low bounce off the floor. */}
-      <hemisphereLight args={['#dbe7ff', '#0d2a4f', 1.5] as const} />
-      <directionalLight position={[10, 20, 14]} intensity={2.1} color="#fff3df" />
-      <directionalLight position={[-14, 8, -8]} intensity={0.8} color="#8fb0e4" />
+      <hemisphereLight args={['#eef5fd', '#d3dce7', 1.15] as const} />
+      <directionalLight position={[10, 20, 14]} intensity={1.8} color="#fff8ef" />
+      <directionalLight position={[-14, 8, -8]} intensity={0.6} color="#a7c3e8" />
 
       {/* One scale for the whole line, and one turn — see SCALE and YAW. */}
       <group scale={SCALE} rotation-y={YAW}>

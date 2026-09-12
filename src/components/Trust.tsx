@@ -18,8 +18,8 @@ import { Eyebrow, Section, SectionTitle } from './ui'
  * off to the visitor's own maps with directions ready. `loading="lazy"` keeps
  * the two Google requests out of the critical path.
  *
- * Google's tiles are light; `.map-dark` in index.css inverts and re-hues
- * them so the tile sits on the navy instead of punching a white hole in it.
+ * The tiles are Google's own light style, unfiltered — on a white page that
+ * is simply correct. `.map-frame` in index.css only seats them in the card.
  */
 export default function Trust() {
   const ref = useReveal<HTMLElement>({ stagger: 0.08 })
@@ -61,7 +61,7 @@ function OfficeCard({ office }: { office: (typeof OFFICES)[number] }) {
 
   return (
     <address className="reveal grid overflow-hidden rounded-2xl border border-line/70 bg-raised/40 not-italic sm:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
-      <div className="map-dark relative aspect-[16/9] w-full bg-ground sm:aspect-auto sm:min-h-[15rem]">
+      <div className="map-frame relative aspect-[16/9] w-full bg-ground sm:aspect-auto sm:min-h-[15rem]">
         <iframe
           src={embed}
           title={`Map of ${office.name}`}

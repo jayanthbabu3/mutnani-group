@@ -1,8 +1,13 @@
 import { Fragment, useMemo, useState } from 'react'
-import TradeYardSceneLazy from '../three/TradeYardSceneLazy'
 import { ROUTES } from '../data/site'
-import { useInView, useReveal } from '../lib/motion'
+import { useReveal } from '../lib/motion'
 import { Eyebrow, Lede, Section, SectionTitle } from './ui'
+
+const MASK = [
+  'radial-gradient(82% 86% at 50% 50%, #000 58%, rgba(0,0,0,0.85) 80%, transparent 100%)',
+  'linear-gradient(to right, transparent 0%, #000 3%, #000 97%, transparent 100%)',
+  'linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%)',
+].join(', ')
 
 /**
  * Balaji Prefab Import & Exports — what actually leaves and what arrives.
@@ -49,7 +54,6 @@ const countFor = (mode: Mode) => MARKETS.filter((m) => m.dir === mode || m.dir =
 
 export default function TradeRoutes() {
   const reveal = useReveal<HTMLElement>({ stagger: 0.07 })
-  const [stage, onScreen] = useInView<HTMLDivElement>('280px')
   const [mode, setMode] = useState<Mode>('out')
 
   /*
@@ -190,11 +194,40 @@ export default function TradeRoutes() {
             the stage's own aspect ratio, so a narrower stage pulls back rather
             than cropping the shed off the left.
           */}
-          <div
-            ref={stage}
-            className="stage-bleed relative aspect-[16/10] w-full bg-ground sm:aspect-[16/9] lg:aspect-[3/2]"
-          >
-            <TradeYardSceneLazy mode={mode} active={onScreen} />
+          <div className="relative aspect-[16/10] w-full sm:aspect-[16/9] lg:aspect-[3/2] flex items-center justify-center">
+            {mode === 'in' ? (
+              <video
+                key="import"
+                src="/import-crane.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="size-full object-cover"
+                style={{
+                  WebkitMaskImage: MASK,
+                  maskImage: MASK,
+                  WebkitMaskComposite: 'source-in',
+                  maskComposite: 'intersect',
+                }}
+              />
+            ) : (
+              <video
+                key="export"
+                src="/import-truck.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="size-full object-cover"
+                style={{
+                  WebkitMaskImage: MASK,
+                  maskImage: MASK,
+                  WebkitMaskComposite: 'source-in',
+                  maskComposite: 'intersect',
+                }}
+              />
+            )}
           </div>
 
           <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">

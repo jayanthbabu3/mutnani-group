@@ -60,7 +60,7 @@ export default function Divisions() {
         heading and a list" is just inconsistency with a rationale attached.
         One card, used twice.
       */}
-      <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {DIVISIONS.map((division, i) => (
           <article
             key={division.id}
@@ -69,7 +69,7 @@ export default function Divisions() {
           >
             <DivisionMedia division={division} />
 
-            <div className="p-6 pt-5 sm:p-7 sm:pt-6">
+            <div className="p-4 sm:p-5">
               <div className="flex items-baseline gap-4">
                 <span className="text-[0.78rem] font-semibold text-accent tabular-nums">
                   0{i + 1}
@@ -77,16 +77,16 @@ export default function Divisions() {
                 <span className="tech-sm text-body/70">{division.kind}</span>
               </div>
 
-              <h3 className="display-opsz mt-3 font-display text-[1.25rem] leading-tight font-normal text-heading">
+              <h3 className="mt-2 font-display text-[1.15rem] leading-tight font-semibold text-heading">
                 {division.company}
               </h3>
-              <span aria-hidden className="mt-4 block h-px w-8 bg-accent/70" />
+              <span aria-hidden className="mt-3 block h-px w-8 bg-accent/70" />
 
-              <p className="mt-5 text-[0.88rem] leading-[1.65] text-body">{division.lede}</p>
+              <p className="mt-3 text-[0.85rem] leading-[1.6] text-body">{division.lede}</p>
 
-              <ul className="mt-5 space-y-2.5">
+              <ul className="mt-3 space-y-1.5">
                 {division.offers.map((offer) => (
-                  <li key={offer} className="text-[0.88rem] leading-snug text-body">
+                  <li key={offer} className="text-[0.85rem] leading-snug text-body">
                     {offer}
                   </li>
                 ))}
@@ -114,7 +114,7 @@ function DivisionMedia({ division }: { division: Division }) {
 
   if (division.image) {
     return (
-      <div className="relative aspect-[3/2] overflow-hidden bg-ground">
+      <div className="relative aspect-[2/1] overflow-hidden bg-ground">
         <img
           src={division.image}
           alt={division.imageAlt}
@@ -122,12 +122,7 @@ function DivisionMedia({ division }: { division: Division }) {
           decoding="async"
           className="size-full object-cover transition-transform duration-700 ease-micro group-hover/card:scale-[1.04]"
         />
-        {/* A ramp from the card's own ground into the picture, so the image
-            does not end on a hard line above the heading. */}
-        <div
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-raised to-transparent"
-        />
+
       </div>
     )
   }
@@ -141,7 +136,7 @@ function DivisionMedia({ division }: { division: Division }) {
 
   return (
     <div
-      className="relative aspect-[3/2] w-full"
+      className="relative aspect-[2/1] w-full"
       // Decorative here: every fact the drawing states is also in the prose
       // beside it, so a screen reader announcing it twice is noise. The `role`
       // and `aria-label` inside each art component cover the case where it is

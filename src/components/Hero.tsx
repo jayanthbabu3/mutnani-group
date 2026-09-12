@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
-import BuildSceneLazy from '../three/BuildSceneLazy'
-// From layout, NOT from BuildScene: BuildScene imports three, and importing
-// anything out of it here would pull the whole 3D bundle back into the main
-// chunk and undo BuildSceneLazy.
-import { activePhase, useBuildTimeline } from '../three/layout'
-import { HERO, SITE, STAGES } from '../data/site'
-import { prefersReducedMotion, useCountUp, useEntrance, useInView } from '../lib/motion'
+import { HERO, SITE } from '../data/site'
+import { useCountUp, useEntrance } from '../lib/motion'
 import { CtaLink, Shell } from './ui'
+
+const MASK = [
+  'radial-gradient(82% 86% at 50% 50%, #000 58%, rgba(0,0,0,0.85) 80%, transparent 100%)',
+  'linear-gradient(to right, transparent 0%, #000 3%, #000 97%, transparent 100%)',
+  'linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%)',
+].join(', ')
 
 /**
  * Split hero: the promise on the left, the building erecting itself on the
@@ -17,13 +17,6 @@ import { CtaLink, Shell } from './ui'
  */
 export default function Hero() {
   const ref = useEntrance<HTMLElement>()
-  // Observer-backed state, not a polled ref: the Canvas's `frameloop` is a
-  // prop, so React has to re-render for it to change. See useInView.
-  const [stageRef, active] = useInView<HTMLDivElement>('220px')
-  const [seq] = useState(0)
-
-  const progress = useBuildTimeline(seq, active)
-  const phase = usePhaseLabel(progress, active)
 
   const { line1, line2 } = HERO.headline
 
@@ -38,7 +31,7 @@ export default function Hero() {
       <Shell>
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] lg:gap-14">
           {/* ── Copy ──────────────────────────────────────────────────── */}
-          <div>
+          <div className="order-2 lg:order-1">
             <p data-entrance className="tech flex items-center gap-3 text-accent/85">
               <span className="size-1.5 animate-pulse rounded-full bg-accent" />
               {HERO.eyebrow}
@@ -65,7 +58,7 @@ export default function Hero() {
             */}
             <h1
               data-entrance="lines"
-              className="display-opsz mt-6 font-display text-[clamp(2.05rem,4.4vw,3.6rem)] leading-[1.06] font-light tracking-[-0.02em] text-heading"
+              className="mt-6 font-display text-[clamp(1.7rem,3.2vw,2.75rem)] leading-[1.1] font-bold tracking-tight text-heading"
             >
               <span className="block">{line1}</span>
               <span className="block text-accent">{line2}</span>
@@ -101,66 +94,22 @@ export default function Hero() {
           </div>
 
           {/* ── Stage ─────────────────────────────────────────────────── */}
-          <div data-entrance data-entrance-at="+=0.3" className="lg:pl-4">
-            {/* No grid, no border, no radius — see `.stage-bleed` in index.css.
-                A graph-paper grid behind a rendered building read as leftover
-                scaffolding, and a bordered card around a sky read as a bright
-                box on a dark page. The horizon lives inside the scene now
-                (three/skyTexture.ts) and the canvas is masked so it dissolves
-                into the page instead of stopping at a line.
-
-                `bg-ground` matches both the page and the sky's zenith, so it is
-                seamless in the split second before the canvas paints and behind
-                the no-WebGL still frame. */}
-            <div
-              ref={stageRef}
-              className="stage-bleed relative aspect-[4/3] w-full bg-ground sm:aspect-[16/11]"
-            >
-              <BuildSceneLazy progress={progress} seq={seq} active={active} />
-              {/* The one affordance the stage needs. It is a turntable now
-                  (see Rig in three/BuildScene.tsx), and nothing about a
-                  rendered building says "grab me" — this does. */}
-              <p
-                aria-hidden
-                className="pointer-events-none absolute right-3 bottom-3 flex items-center gap-2 rounded-full border border-line/60 bg-ground/60 px-3 py-1.5 tech-sm text-heading/70 backdrop-blur-sm motion-reduce:hidden"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="size-3.5"
-                  fill="none"
-                  stroke="currentColor"
-                  aria-hidden
-                >
-                  <path
-                    d="M3 12h18M6 8l-3 4 3 4M18 8l3 4-3 4"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                Drag to rotate
-              </p>
-            </div>
-
-            {/* The caption strip. Six dots, the live one filled, and the name
-                of what is going up right now. */}
-            <div className="mt-4 flex items-center justify-between gap-4">
-              <div>
-                <p className="tech-sm text-accent">
-                  {String(phase + 1).padStart(2, '0')} · {STAGES[phase].label}
-                </p>
-                <p className="mt-1.5 text-[0.82rem] leading-snug text-body">{STAGES[phase].note}</p>
-              </div>
-              <ol className="flex shrink-0 items-center gap-1.5" aria-hidden>
-                {STAGES.map((stage, i) => (
-                  <li
-                    key={stage.id}
-                    className={`h-px transition-all duration-500 ease-micro ${
-                      i <= phase ? 'w-6 bg-accent' : 'w-3 bg-line'
-                    }`}
-                  />
-                ))}
-              </ol>
+          <div data-entrance data-entrance-at="+=0.3" className="order-1 lg:order-2 lg:pl-4">
+            <div className="relative mx-auto aspect-[4/3] w-full sm:aspect-[16/11]">
+              <video
+                className="absolute inset-0 size-full object-cover object-center"
+                style={{
+                  WebkitMaskImage: MASK,
+                  maskImage: MASK,
+                  WebkitMaskComposite: 'source-in',
+                  maskComposite: 'intersect',
+                }}
+                src="/hero-timelapse.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
             </div>
           </div>
         </div>
@@ -185,33 +134,4 @@ function Stat({ value, suffix, label }: { value: number; suffix: string; label: 
   )
 }
 
-/**
- * The caption's phase index.
- *
- * Polls the playhead on rAF but only calls setState when the phase actually
- * changes — six re-renders across an eleven-second build, rather than sixty a
- * second. The alternative, lifting the whole playhead into state, would
- * re-render the hero and the Canvas on every frame.
- */
-function usePhaseLabel(progress: { current: number }, active: boolean) {
-  const [phase, setPhase] = useState(prefersReducedMotion() ? STAGES.length - 1 : 0)
-  const last = useRef(phase)
 
-  useEffect(() => {
-    if (prefersReducedMotion() || !active) return
-
-    let raf = 0
-    const tick = () => {
-      const next = activePhase(progress.current)
-      if (next !== last.current) {
-        last.current = next
-        setPhase(next)
-      }
-      raf = requestAnimationFrame(tick)
-    }
-    raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
-  }, [progress, active])
-
-  return phase
-}
