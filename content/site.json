@@ -3,7 +3,7 @@
     "name": "Mutnani",
     "role": "Group of Companies",
     "city": "Hyderabad",
-    "basedLine": "Hyderabad · Mumbai · shipping to 20 countries",
+    "basedLine": "Hyderabad · Mumbai · importing from China",
     "phone": "+917831012345",
     "phoneDisplay": "+91 78310 12345",
     "phoneAlt": "+919396979494",
@@ -13,7 +13,7 @@
     "instagram": "https://instagram.com/balaji_prefab_official",
     "linkedin": "https://www.linkedin.com/",
     "whatsappMessage": "Hi Mutnani Group, I'd like to talk about a prefab / roofing requirement.",
-    "founded": 2000,
+    "founded": 2009,
     "founder": "M. Madhu Sudhan"
   },
   "nav": [
@@ -67,9 +67,9 @@
     "secondaryCta": "See how it goes up",
     "stats": [
       {
-        "value": 26,
+        "value": 17,
         "suffix": " yrs",
-        "label": "Since 2000"
+        "label": "Since 2009"
       },
       {
         "value": 1000,
@@ -77,9 +77,9 @@
         "label": "Projects closed"
       },
       {
-        "value": 20,
-        "suffix": "+",
-        "label": "Countries served"
+        "value": 3,
+        "suffix": "",
+        "label": "Group companies"
       }
     ]
   },
@@ -119,21 +119,21 @@
     "eyebrow": "About us",
     "title": "We are an authorised dealer of Hyderabad Industries Ltd.",
     "body": [
-      "Balaji Agencies was established in 2000 by M. Madhu Sudhan. Since its inception it has handled corporate projects across Andhra Pradesh and other parts of India.",
+      "Balaji Agencies was established in 2009 by M. Madhu Sudhan. Since its inception it has handled corporate projects across Andhra Pradesh and other parts of India.",
       "The group has had the opportunity to work with well-established names in Indian infrastructure — Navyug Engineering Company Ltd, Megha Engineering & Infrastructures Ltd and the NTPC power plant among them."
     ],
     "figures": [
       {
-        "value": "2000",
+        "value": "2009",
         "label": "Founded"
       },
       {
-        "value": "26",
+        "value": "17",
         "label": "Years in trade"
       },
       {
-        "value": "20+",
-        "label": "Countries served"
+        "value": "3",
+        "label": "Group companies"
       }
     ],
     "cta": "Talk to the group",
@@ -247,11 +247,11 @@
       "id": "trade",
       "company": "Balaji Prefab Import & Exports",
       "kind": "Global trade",
-      "lede": "We buy what the other two do not make, and ship what they do.",
+      "lede": "We buy what the other two do not make, direct from China. Exports are on the way.",
       "offers": [
         "Import of building materials",
-        "Export to overseas projects",
-        "International sourcing",
+        "Exports — coming soon",
+        "Sourcing from China",
         "Logistics & supply chain"
       ],
       "image": "/divisions/trade.webp",
@@ -434,7 +434,7 @@
           "Insulation core sourcing",
           "Fasteners & accessories",
           "Machinery import",
-          "Export to overseas projects",
+          "Exports — coming soon",
           "Freight & documentation"
         ],
         "image": "/products/trade.webp",
@@ -472,9 +472,9 @@
       {
         "id": "hil",
         "name": "Hyderabad Industries Ltd.",
-        "scope": "Authorised dealership since 2000",
+        "scope": "Authorised dealership since 2009",
         "place": "Hyderabad",
-        "figure": "26 years"
+        "figure": "17 years"
       }
     ]
   },
@@ -610,10 +610,10 @@
   },
   "trust": {
     "eyebrow": "Why the group gets asked back",
-    "title": "Twenty-six years, and the same phone number",
+    "title": "Seventeen years, and the same phone number",
     "points": [
       {
-        "title": "Founded 2000",
+        "title": "Founded 2009",
         "body": "Started by M. Madhu Sudhan as an authorised dealer of Hyderabad Industries Ltd., and still run by the same family."
       },
       {
@@ -650,7 +650,7 @@
         "Ghodbunder Road, Bhainderpada, Thane (West)",
         "Mumbai, Maharashtra 400615"
       ],
-      "role": "Import, export & logistics",
+      "role": "Import & logistics",
       "mapQuery": "Godrej Emerald, Ghodbunder Road, Bhainderpada, Thane West 400615"
     }
   ],
@@ -716,19 +716,19 @@
   },
   "routes": {
     "eyebrow": "Vertical 03 · Balaji Prefab Import & Exports",
-    "title": "What leaves, and what arrives",
-    "lede": "We ship what the line makes, and buy what it needs.",
+    "title": "What we bring in, and what comes next",
+    "lede": "We buy what the line needs, direct from suppliers in China. Exports are next.",
     "modes": [
       {
         "id": "out",
         "label": "We export",
-        "lede": "Finished panels and knocked-down buildings, strapped and sealed in our own yard.",
-        "caption": "Loaded at our yard and away."
+        "lede": "Our export desk is being set up. Finished panels and knocked-down buildings will ship from here once it opens.",
+        "caption": "Export desk opening soon."
       },
       {
         "id": "in",
         "label": "We import",
-        "lede": "Pre-painted coil, insulation core and line machinery, bought direct at source.",
+        "lede": "Bought direct from suppliers in four Chinese cities and cleared through our Mumbai desk.",
         "caption": "Off the quay and straight into the works."
       }
     ],
@@ -743,116 +743,36 @@
     },
     "markets": [
       {
-        "id": "ae",
-        "country": "United Arab Emirates",
-        "city": "Jebel Ali",
-        "region": "The Gulf",
-        "dir": "out",
-        "note": "PUF panels and knocked-down structures for Gulf industrial parks"
-      },
-      {
-        "id": "om",
-        "country": "Oman",
-        "city": "Sohar",
-        "region": "The Gulf",
-        "dir": "out",
-        "note": "Roofing sheet and accessories"
-      },
-      {
-        "id": "qa",
-        "country": "Qatar",
-        "city": "Doha",
-        "region": "The Gulf",
-        "dir": "out",
-        "note": "Cold-room panels and site buildings"
-      },
-      {
-        "id": "sa",
-        "country": "Saudi Arabia",
-        "city": "Dammam",
-        "region": "The Gulf",
-        "dir": "out",
-        "note": "Pre-engineered warehouse structures"
-      },
-      {
-        "id": "ke",
-        "country": "Kenya",
-        "city": "Mombasa",
-        "region": "East Africa",
-        "dir": "out",
-        "note": "Warehouse kits and roofing sheet"
-      },
-      {
-        "id": "tz",
-        "country": "Tanzania",
-        "city": "Dar es Salaam",
-        "region": "East Africa",
-        "dir": "out",
-        "note": "Industrial sheds, knocked down for sea freight"
-      },
-      {
-        "id": "et",
-        "country": "Ethiopia",
-        "city": "Addis Ababa",
-        "region": "East Africa",
-        "dir": "out",
-        "note": "Panels for agro-processing stores"
-      },
-      {
-        "id": "sg",
-        "country": "Singapore",
-        "city": "Singapore",
-        "region": "South-East Asia",
-        "dir": "both",
-        "note": "Transhipment both ways, and a sourcing desk"
-      },
-      {
-        "id": "my",
-        "country": "Malaysia",
-        "city": "Port Klang",
-        "region": "South-East Asia",
-        "dir": "both",
-        "note": "Panels out; fasteners and sealants in"
-      },
-      {
-        "id": "vn",
-        "country": "Vietnam",
-        "city": "Hai Phong",
-        "region": "South-East Asia",
-        "dir": "both",
-        "note": "Sheet out; roll-formed sections in"
-      },
-      {
-        "id": "de",
-        "country": "Germany",
-        "city": "Hamburg",
-        "region": "Europe",
+        "id": "cn-guangzhou",
+        "country": "China",
+        "city": "Guangzhou",
+        "region": "East Asia",
         "dir": "in",
-        "note": "Polyurethane core chemistry"
+        "note": ""
       },
       {
-        "id": "it",
-        "country": "Italy",
-        "city": "Milan",
-        "region": "Europe",
-        "dir": "in",
-        "note": "Roll-forming and laminating machinery"
-      },
-      {
-        "id": "cn",
+        "id": "cn-shanghai",
         "country": "China",
         "city": "Shanghai",
         "region": "East Asia",
         "dir": "in",
-        "note": "Pre-painted steel coil and line spares"
+        "note": ""
       },
       {
-        "id": "kr",
-        "country": "South Korea",
-        "city": "Busan",
+        "id": "cn-beijing",
+        "country": "China",
+        "city": "Beijing",
         "region": "East Asia",
         "dir": "in",
-        "note": "Coil and coated sheet"
+        "note": ""
+      },
+      {
+        "id": "cn-shandong",
+        "country": "China",
+        "city": "Shandong",
+        "region": "East Asia",
+        "dir": "in",
+        "note": ""
       }
     ]
   }

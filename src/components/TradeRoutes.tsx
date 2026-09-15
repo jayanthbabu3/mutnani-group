@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ROUTES } from '../data/site'
 import { useReveal } from '../lib/motion'
 import { Eyebrow, Lede, Section, SectionTitle } from './ui'
@@ -31,8 +31,9 @@ const MASK = [
  * separate "filter" any more: choosing to look at exports IS the filter, which
  * is one idea where there used to be two.
  *
- * Markets marked `both` appear under each mode, because they genuinely go both
- * ways — Singapore takes panels and sends back machinery.
+ * Markets marked `both` would appear under each mode. None do today: the group
+ * imports from four cities in China and its export desk is not open yet, so
+ * the export side shows that plainly rather than an empty table.
  */
 
 type Mode = 'out' | 'in'
@@ -52,22 +53,29 @@ const MODES = ROUTES.modes
 
 const countFor = (mode: Mode) => MARKETS.filter((m) => m.dir === mode || m.dir === 'both').length
 
+/** "Coming soon" when a direction has no markets, never "0 countries". */
+const countLabel = (mode: Mode) => {
+  const n = countFor(mode)
+  return n === 0 ? 'Coming soon' : `${n} ${n === 1 ? 'city' : 'cities'}`
+}
+
 export default function TradeRoutes() {
   const reveal = useReveal<HTMLElement>({ stagger: 0.07 })
-  const [mode, setMode] = useState<Mode>('out')
+  const [mode, setMode] = useState<Mode>('in')
 
   /*
-    Grouped by region so the list reads as coverage rather than as fourteen
-    unrelated rows — "the Gulf, four ports" is a claim; four country names in a
-    column is data. Regions keep the order they appear in the content.
+    Grouped by COUNTRY, and the country is said once. A table repeated "China"
+    on every row and gave the region a column of its own, so four facts took
+    twelve cells. One heading per country with its cities under it says the
+    same thing in five words, and still scales if a second country is added.
   */
   const groups = useMemo(() => {
     const wanted = MARKETS.filter((m) => m.dir === mode || m.dir === 'both')
-    const out: { region: string; items: typeof wanted }[] = []
+    const out: { country: string; items: typeof wanted }[] = []
     for (const m of wanted) {
-      const open = out.find((g) => g.region === m.region)
+      const open = out.find((g) => g.country === m.country)
       if (open) open.items.push(m)
-      else out.push({ region: m.region, items: [m] })
+      else out.push({ country: m.country, items: [m] })
     }
     return out
   }, [mode])
@@ -111,9 +119,7 @@ export default function TradeRoutes() {
                   >
                     {m.label}
                   </span>
-                  <span className="tech-sm mt-1.5 block text-body/60">
-                    {countFor(m.id)} countries
-                  </span>
+                  <span className="tech-sm mt-1.5 block text-body/60">{countLabel(m.id)}</span>
                 </button>
               )
             })}
@@ -121,65 +127,40 @@ export default function TradeRoutes() {
 
           <p className="mt-5 text-[0.9rem] leading-[1.7] text-body">{current.lede}</p>
 
-          {/*
-            A table, because this is tabular data and every other shape wasted
-            the column. It was region headings over a two-up list whose rows
-            used `justify-between`, which opens a river of empty space between
-            each country and its port — the wider the column, the worse it got,
-            and three region headings added their own padding on top.
-
-            Columns instead: the region reads once per group, the ports line up
-            under each other, and nothing stretches to fill.
-          */}
-          <table className="mt-7 w-full border-collapse text-left">
-            <thead>
-              <tr>
-                <th
-                  scope="col"
-                  className="tech-sm hidden pb-2.5 font-normal text-body/40 sm:table-cell"
-                >
-                  Region
-                </th>
-                <th scope="col" className="tech-sm pb-2.5 font-normal text-body/40">
-                  Country
-                </th>
-                <th scope="col" className="tech-sm pb-2.5 font-normal text-body/40">
-                  Port
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {groups.map((g) =>
-                g.items.map((m, i) => (
-                  <Fragment key={m.id}>
-                    {/* Below `sm` the region column is dropped — three columns
-                        do not fit a 360px phone — so the region comes back as
-                        its own row above each group. */}
-                    {i === 0 && (
-                      <tr className="sm:hidden">
-                        <th
-                          scope="colgroup"
-                          colSpan={2}
-                          className="tech-sm border-t border-line/40 pt-4 pb-1 text-left font-normal text-accent/80"
-                        >
-                          {g.region}
-                        </th>
-                      </tr>
-                    )}
-                    <tr className={i === 0 ? 'sm:border-t sm:border-line/40' : ''}>
-                      <td className="tech-sm hidden py-2 align-baseline text-accent/80 sm:table-cell">
-                        {i === 0 ? g.region : ''}
-                      </td>
-                      <td className="py-2 pr-4 align-baseline text-[0.9rem] text-heading">
-                        {m.country}
-                      </td>
-                      <td className="tech-sm py-2 align-baseline text-body/45">{m.city}</td>
-                    </tr>
-                  </Fragment>
-                )),
-              )}
-            </tbody>
-          </table>
+          {groups.length === 0 ? (
+            <p className="mt-7 rounded-lg border border-dashed border-line px-5 py-6 text-[0.9rem] leading-[1.6] text-body">
+              Nothing to list yet — the export desk is still being set up.
+            </p>
+          ) : (
+            groups.map((g) => (
+              <div
+                key={g.country}
+                className="mt-7 rounded-xl border border-line bg-raised/40 p-5 sm:p-6"
+              >
+                <div className="flex items-baseline justify-between gap-4 border-b border-line pb-4">
+                  <p className="display-opsz font-display text-[1.4rem] leading-none text-heading">
+                    {g.country}
+                  </p>
+                  <p className="tech-sm text-body/70">
+                    {g.items.length} sourcing {g.items.length === 1 ? 'city' : 'cities'}
+                  </p>
+                </div>
+                <ul className="mt-4 grid grid-cols-2 gap-2.5">
+                  {g.items.map((m, i) => (
+                    <li
+                      key={m.id}
+                      className="flex items-baseline gap-3 rounded-lg border border-line bg-ground px-4 py-3"
+                    >
+                      <span className="tech-sm text-accent tabular-nums">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-[0.95rem] text-heading">{m.city}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          )}
 
           <p className="mt-5 text-[0.8rem] leading-[1.6] text-body/70">
             {ROUTES.note.replace('{origin}', ORIGIN.name).replace('{second}', ROUTES.second.name)}
@@ -189,45 +170,25 @@ export default function TradeRoutes() {
         {/* ── Right: the yard ────────────────────────────────────────────── */}
         <div className="reveal lg:sticky lg:top-24">
           {/*
-            Landscape at every width: the yard is a road with the works at one
-            end and a ship at the other. The camera derives its distance from
-            the stage's own aspect ratio, so a narrower stage pulls back rather
-            than cropping the shed off the left.
+            One picture for both directions — the same container ship used on
+            the Global Trade division card, so the trade vertical looks the same
+            wherever it appears. Switching import/export changes the words and
+            the list, not the photograph.
           */}
-          <div className="relative aspect-[16/10] w-full sm:aspect-[16/9] lg:aspect-[3/2] flex items-center justify-center">
-            {mode === 'in' ? (
-              <video
-                key="import"
-                src="/import-crane.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="size-full object-cover"
-                style={{
-                  WebkitMaskImage: MASK,
-                  maskImage: MASK,
-                  WebkitMaskComposite: 'source-in',
-                  maskComposite: 'intersect',
-                }}
-              />
-            ) : (
-              <video
-                key="export"
-                src="/import-truck.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="size-full object-cover"
-                style={{
-                  WebkitMaskImage: MASK,
-                  maskImage: MASK,
-                  WebkitMaskComposite: 'source-in',
-                  maskComposite: 'intersect',
-                }}
-              />
-            )}
+          <div className="relative aspect-[16/10] w-full sm:aspect-[16/9] lg:aspect-[3/2]">
+            <img
+              src="/divisions/trade.webp"
+              alt="A loaded container ship under way at sea at sunset."
+              loading="lazy"
+              decoding="async"
+              className="size-full object-cover"
+              style={{
+                WebkitMaskImage: MASK,
+                maskImage: MASK,
+                WebkitMaskComposite: 'source-in',
+                maskComposite: 'intersect',
+              }}
+            />
           </div>
 
           <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
