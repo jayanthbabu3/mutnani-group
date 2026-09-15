@@ -132,7 +132,7 @@ export default function About() {
                   <span className="block font-display text-[1.7rem] leading-none font-semibold text-heading tabular-nums">
                     {figure.value}
                   </span>
-                  <span className="tech-sm mt-2.5 block text-body/70">{figure.label}</span>
+                  <span className="tech-sm mt-2.5 block text-body">{figure.label}</span>
                 </dd>
               </div>
             ))}
@@ -150,7 +150,7 @@ export default function About() {
               <span className="h-px w-6 bg-accent/50" />
               {ABOUT.awardsEyebrow}
             </p>
-            <p className="tech-sm text-body/60 tabular-nums">
+            <p className="tech-sm text-body tabular-nums">
               {ABOUT.awards.length} awards · 2018–2026
             </p>
           </div>
@@ -296,7 +296,7 @@ function Lightbox({
 
         <div className="mt-6 flex items-center gap-3">
           <Step dir="prev" onClick={() => onStep(-1)} />
-          <span className="tech-sm text-body/60 tabular-nums">
+          <span className="tech-sm text-body tabular-nums">
             {String(index + 1).padStart(2, '0')} / {String(ABOUT.awards.length).padStart(2, '0')}
           </span>
           <Step dir="next" onClick={() => onStep(1)} />
@@ -308,7 +308,7 @@ function Lightbox({
         onClick={onClose}
         aria-label="Close"
         autoFocus
-        className="tap-44 absolute top-4 right-4 grid size-10 place-items-center rounded-full border border-line text-heading/80 transition-colors duration-200 ease-micro hover:border-accent hover:text-accent sm:top-6 sm:right-6"
+        className="tap-44 absolute top-4 right-4 grid size-10 place-items-center rounded-full border border-line text-heading transition-colors duration-200 ease-micro hover:border-accent hover:text-accent sm:top-6 sm:right-6"
       >
         <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" aria-hidden>
           <path d="M6 6l12 12M18 6L6 18" strokeWidth="1.6" strokeLinecap="round" />
@@ -324,7 +324,7 @@ function Step({ dir, onClick }: { dir: 'prev' | 'next'; onClick: () => void }) {
       type="button"
       onClick={onClick}
       aria-label={dir === 'prev' ? 'Previous award' : 'Next award'}
-      className="tap-44 grid size-9 place-items-center rounded-full border border-line text-heading/80 transition-colors duration-200 ease-micro hover:border-accent hover:text-accent"
+      className="tap-44 grid size-9 place-items-center rounded-full border border-line text-heading transition-colors duration-200 ease-micro hover:border-accent hover:text-accent"
     >
       <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" aria-hidden>
         <path

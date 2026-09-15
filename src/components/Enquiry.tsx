@@ -137,7 +137,7 @@ export default function Enquiry() {
             </svg>
           </button>
 
-          <p className="mt-4 text-[0.78rem] leading-relaxed text-body/70">
+          <p className="mt-4 text-[0.78rem] leading-relaxed text-body">
             Nothing is stored in the browser. The button opens WhatsApp with these details written
             out, so you can read them before sending.
           </p>
@@ -150,7 +150,7 @@ export default function Enquiry() {
 function Direct({ label, value, href }: { label: string; value: string; href: string }) {
   return (
     <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-      <dt className="tech-sm text-body/70">{label}</dt>
+      <dt className="tech-sm text-body">{label}</dt>
       <dd>
         <a
           href={href}
@@ -200,11 +200,9 @@ function Field({
 
   return (
     <div className={className}>
-      <label htmlFor={id} className="tech-sm text-body/75">
+      <label htmlFor={id} className="tech-sm text-body">
         {label}
-        {!required && hint === 'Optional' ? (
-          <span className="text-body/50"> · optional</span>
-        ) : null}
+        {!required && hint === 'Optional' ? <span className="text-body"> · optional</span> : null}
       </label>
 
       {textarea ? (
@@ -237,7 +235,7 @@ function Field({
           {error}
         </p>
       ) : hint && hint !== 'Optional' ? (
-        <p id={`${id}-hint`} className="mt-2 text-[0.78rem] text-body/60">
+        <p id={`${id}-hint`} className="mt-2 text-[0.78rem] text-body">
           {hint}
         </p>
       ) : null}

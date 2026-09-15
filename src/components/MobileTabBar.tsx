@@ -23,7 +23,8 @@ const ICONS: Record<string, string> = {
   /* Site plan — plots on a grid. */
   projects: 'M4 4.5h6.5V11H4zM13.5 4.5H20V11h-6.5zM4 13.5h6.5V20H4zM13.5 13.5H20V20h-6.5z',
   /* Two overlapping marks — the group's, and the partner's. */
-  partners: 'M8 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM16 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2.5 19.5a5.5 5.5 0 0 1 11 0M10.5 19.5a5.5 5.5 0 0 1 11 0',
+  partners:
+    'M8 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM16 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2.5 19.5a5.5 5.5 0 0 1 11 0M10.5 19.5a5.5 5.5 0 0 1 11 0',
   build: 'M4 19.5h16M7 19.5V9l5-4.5L17 9v10.5',
   panel: 'M3.5 8.5h17v7h-17zM3.5 12h17M7 8.5v7M11 8.5v7M15 8.5v7',
   trade: 'M3 12h18M15 7l5 5-5 5M9 17l-5-5 5-5',
@@ -107,7 +108,7 @@ function Tab({
         aria-current={active ? 'true' : undefined}
         // py-3 + the 21px icon + label clears 44px without a fixed height.
         className={`flex flex-col items-center gap-1.5 py-3 transition-colors duration-300 ease-micro ${
-          active ? 'text-accent' : 'text-heading/60'
+          active ? 'text-accent' : 'text-heading'
         }`}
       >
         <svg

@@ -119,7 +119,7 @@ export default function TradeRoutes() {
                   >
                     {m.label}
                   </span>
-                  <span className="tech-sm mt-1.5 block text-body/60">{countLabel(m.id)}</span>
+                  <span className="tech-sm mt-1.5 block text-body">{countLabel(m.id)}</span>
                 </button>
               )
             })}
@@ -141,7 +141,7 @@ export default function TradeRoutes() {
                   <p className="display-opsz font-display text-[1.4rem] leading-none text-heading">
                     {g.country}
                   </p>
-                  <p className="tech-sm text-body/70">
+                  <p className="tech-sm text-body">
                     {g.items.length} sourcing {g.items.length === 1 ? 'city' : 'cities'}
                   </p>
                 </div>
@@ -162,7 +162,7 @@ export default function TradeRoutes() {
             ))
           )}
 
-          <p className="mt-5 text-[0.8rem] leading-[1.6] text-body/70">
+          <p className="mt-5 text-[0.8rem] leading-[1.6] text-body">
             {ROUTES.note.replace('{origin}', ORIGIN.name).replace('{second}', ROUTES.second.name)}
           </p>
         </div>
@@ -193,7 +193,7 @@ export default function TradeRoutes() {
 
           <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
             <p className="max-w-md text-[0.85rem] leading-snug text-body">{current.caption}</p>
-            <span className="tech-sm shrink-0 text-body/45">{ORIGIN.sub}</span>
+            <span className="tech-sm shrink-0 text-body">{ORIGIN.sub}</span>
           </div>
         </div>
       </div>

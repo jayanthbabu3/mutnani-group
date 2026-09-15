@@ -74,7 +74,7 @@ export default function Divisions() {
                 <span className="text-[0.78rem] font-semibold text-accent tabular-nums">
                   0{i + 1}
                 </span>
-                <span className="tech-sm text-body/70">{division.kind}</span>
+                <span className="tech-sm text-body">{division.kind}</span>
               </div>
 
               <h3 className="mt-2 font-display text-[1.15rem] leading-tight font-semibold text-heading">
@@ -122,7 +122,6 @@ function DivisionMedia({ division }: { division: Division }) {
           decoding="async"
           className="size-full object-cover transition-transform duration-700 ease-micro group-hover/card:scale-[1.04]"
         />
-
       </div>
     )
   }

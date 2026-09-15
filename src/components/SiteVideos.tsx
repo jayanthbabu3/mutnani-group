@@ -4,23 +4,25 @@ import { useReveal } from '../lib/motion'
 import { Eyebrow, Lede, Section, SectionTitle } from './ui'
 
 /**
- * Site videos — one player, a playlist grouped by site.
+ * Site videos — one player, and a filmstrip of every clip under it.
  *
  * Thirteen clips across seven sites. A grid of thirteen embeds is a wall of
  * identical red buttons and, on load, thirteen YouTube players nobody asked
- * for. One large stage with a site-by-site list beside it does the job of a
- * grid — every clip is one tap away — while reading as a single piece of
- * evidence: this is the group's work, at these places.
+ * for. One stage with every clip one tap away does the same job.
  *
- * Nothing is fetched from YouTube until play is pressed. The stage paints
- * the clip's own thumbnail; the iframe (youtube-nocookie) is mounted only on
- * the first press and swapped in place for every clip after — so the visitor
- * pays for one player, once. Thumbnails in the list are `mqdefault`, the
- * 320px size, which is all a 90px tile needs.
+ * ── Why a filmstrip, not a sidebar ───────────────────────────────────────
+ * The sidebar playlist was tried twice. As per-site thumbnail grids it was
+ * ragged — one clip beside two empty cells. As a list of rows it repeated
+ * "Belgaum · Karnataka" on three consecutive lines inside a tinted box
+ * inside a bordered card, which is a lot of chrome for a list of pictures.
  *
- * Grouping is by SITE, not by clip, because that is the claim: not "we have
- * videos" but "we were at Belgaum, Kodangal, Sileru, Shimla". Site names and
- * places are content — a wrong label is fixed in site.json.
+ * A strip under the stage says each site's name ONCE, above its own clips,
+ * and lets the thumbnails be the content. The stage gets the full width of
+ * the block, which is what footage of a site actually wants.
+ *
+ * Nothing is fetched from YouTube until play is pressed. The stage paints the
+ * clip's own thumbnail; the iframe (youtube-nocookie) is mounted on the first
+ * press and swapped in place after that — one player, once.
  */
 type Clip = { youtubeId: string; siteName: string; place: string; n: number; total: number }
 
@@ -40,16 +42,47 @@ export default function SiteVideos() {
   // Set once, on the first play, and never cleared: from then on picking a
   // clip swaps the iframe src instead of going back to a poster.
   const [armed, setArmed] = useState(false)
+  const stripRef = useRef<HTMLDivElement>(null)
 
   const index = CLIPS.findIndex((c) => c.youtubeId === active.youtubeId)
-  const listRef = useRef<HTMLOListElement>(null)
 
-  // Stepping with the arrows can land on a clip that is scrolled out of the
-  // playlist; bring it into view so the gold ring is always visible.
+  // Which way the strip can still scroll. An arrow that does nothing reads as
+  // broken, so each one only shows while there is something beyond it.
+  const [edges, setEdges] = useState({ left: false, right: false })
   useEffect(() => {
-    listRef.current
-      ?.querySelector<HTMLElement>('[aria-current]')
-      ?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    const strip = stripRef.current
+    if (!strip) return
+    const update = () =>
+      setEdges({
+        left: strip.scrollLeft > 4,
+        right: strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 4,
+      })
+    update()
+    strip.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      strip.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  // A page of thumbnails at a time, leaving a sliver of the last one in view
+  // so the eye keeps its place.
+  const scrollStrip = (dir: 1 | -1) =>
+    stripRef.current?.scrollBy({
+      left: dir * stripRef.current.clientWidth * 0.8,
+      behavior: 'smooth',
+    })
+
+  // Keep the active thumbnail in view when the arrows step past the edge of
+  // the strip. Scrolls the strip only — `scrollIntoView` would also drag the
+  // whole page vertically to the section.
+  useEffect(() => {
+    const strip = stripRef.current
+    const tile = strip?.querySelector<HTMLElement>('[aria-current]')
+    if (!strip || !tile) return
+    const left = tile.offsetLeft - strip.clientWidth / 2 + tile.clientWidth / 2
+    strip.scrollTo({ left, behavior: 'smooth' })
   }, [active])
 
   const pick = (clip: Clip) => {
@@ -61,95 +94,93 @@ export default function SiteVideos() {
 
   return (
     <Section id="videos" ref={ref}>
-      <Eyebrow>{VIDEOS.eyebrow}</Eyebrow>
-      <SectionTitle>{VIDEOS.title}</SectionTitle>
-      <Lede>{VIDEOS.lede}</Lede>
-      <p className="reveal tech-sm mt-5 text-accent/85">
-        {CLIPS.length} clips · {VIDEOS.sites.length} sites
-      </p>
+      <div className="mx-auto max-w-3xl text-center">
+        <div className="flex justify-center">
+          <Eyebrow>{VIDEOS.eyebrow}</Eyebrow>
+        </div>
+        <SectionTitle className="mx-auto">{VIDEOS.title}</SectionTitle>
+        <Lede className="mx-auto">{VIDEOS.lede}</Lede>
+      </div>
 
-      <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-10">
-        {/* The stage. */}
-        <div className="reveal">
-          <div className="relative aspect-video overflow-hidden rounded-2xl border border-line/70 bg-ground shadow-[0_24px_56px_-28px_rgba(13,33,54,0.35)]">
-            {armed ? (
-              <iframe
+      <div className="mx-auto mt-12 max-w-[64rem]">
+        {/* ── The stage ─────────────────────────────────────────────────── */}
+        <div className="reveal relative aspect-video overflow-hidden rounded-2xl bg-heading">
+          {armed ? (
+            <iframe
+              key={active.youtubeId}
+              className="absolute inset-0 size-full"
+              src={`https://www.youtube-nocookie.com/embed/${active.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+              title={`${active.siteName} — video ${active.n}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={() => pick(active)}
+              className="group relative size-full"
+              aria-label={`Play ${active.siteName}, video ${active.n} of ${active.total}`}
+            >
+              <img
                 key={active.youtubeId}
-                className="absolute inset-0 size-full"
-                src={`https://www.youtube-nocookie.com/embed/${active.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
-                title={`${active.siteName} — video ${active.n}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
+                src={`https://i.ytimg.com/vi/${active.youtubeId}/maxresdefault.jpg`}
+                onError={(e) => {
+                  // Not every upload has a 1280px poster; fall back to the
+                  // 480px one YouTube always generates rather than a grey box.
+                  const img = e.currentTarget
+                  if (!img.src.endsWith('hqdefault.jpg')) {
+                    img.src = `https://i.ytimg.com/vi/${active.youtubeId}/hqdefault.jpg`
+                  }
+                }}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-entrance group-hover:scale-[1.02]"
               />
-            ) : (
-              <button
-                type="button"
-                onClick={() => pick(active)}
-                className="group relative size-full"
-                aria-label={`Play ${active.siteName}, video ${active.n} of ${active.total}`}
-              >
-                <img
-                  key={active.youtubeId}
-                  src={`https://i.ytimg.com/vi/${active.youtubeId}/maxresdefault.jpg`}
-                  onError={(e) => {
-                    // Not every upload has a 1280px poster; fall back to the
-                    // 480px one YouTube always generates rather than a grey box.
-                    const img = e.currentTarget
-                    if (!img.src.endsWith('hqdefault.jpg')) {
-                      img.src = `https://i.ytimg.com/vi/${active.youtubeId}/hqdefault.jpg`
-                    }
-                  }}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-entrance group-hover:scale-[1.03]"
-                />
-                <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0b1c30]/70 to-transparent" />
-                <span className="absolute inset-0 flex items-center justify-center">
-                  <span className="flex size-[4.5rem] items-center justify-center rounded-full border border-white/50 bg-[#0b1c30]/45 text-white backdrop-blur-sm transition-all duration-300 ease-micro group-hover:border-accent group-hover:bg-accent group-hover:text-white">
-                    <PlayIcon />
-                  </span>
+              <span className="absolute inset-0 flex items-center justify-center">
+                <span className="flex size-[4.5rem] items-center justify-center rounded-full border-[3px] border-white bg-accent text-white transition-transform duration-300 ease-micro group-hover:scale-105">
+                  <PlayIcon />
                 </span>
-              </button>
-            )}
-          </div>
-
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-            <div>
-              <p className="display-opsz font-display text-[1.35rem] leading-tight text-heading">
-                {active.siteName}
-              </p>
-              <p className="tech-sm mt-1.5 text-body/70">
-                {active.place ? `${active.place} · ` : ''}
-                video {active.n} of {active.total}
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="tech-sm mr-2 text-body/60 tabular-nums">
-                {String(index + 1).padStart(2, '0')} / {String(CLIPS.length).padStart(2, '0')}
               </span>
-              <StepButton dir="prev" onClick={() => step(-1)} />
-              <StepButton dir="next" onClick={() => step(1)} />
-            </div>
+            </button>
+          )}
+        </div>
+
+        {/* ── Now playing ───────────────────────────────────────────────── */}
+        <div className="reveal mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+          <div>
+            <p className="display-opsz font-display text-[1.35rem] leading-tight text-heading">
+              {active.siteName}
+            </p>
+            <p className="tech-sm mt-1.5 text-body">
+              {active.place ? `${active.place} · ` : ''}
+              video {active.n} of {active.total}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="tech-sm mr-2 text-body tabular-nums">
+              {String(index + 1).padStart(2, '0')} / {String(CLIPS.length).padStart(2, '0')}
+            </span>
+            <StepButton dir="prev" onClick={() => step(-1)} />
+            <StepButton dir="next" onClick={() => step(1)} />
           </div>
         </div>
 
-        {/* The playlist, grouped by site. Its own scroll on desktop so the
-            list never pushes the stage off the screen. */}
-        <div className="relative lg:min-h-0">
-          <ol
-            ref={listRef}
-            className="playlist-scroll reveal max-h-[34rem] space-y-6 overflow-y-auto pr-4 pb-12 lg:absolute lg:inset-0 lg:max-h-none"
+        {/* ── The filmstrip ─────────────────────────────────────────────── */}
+        <div className="relative">
+          <div
+            ref={stripRef}
+            className="reveal mt-8 flex snap-x gap-8 overflow-x-auto border-t border-line pt-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {VIDEOS.sites.map((site) => (
-              <li key={site.id}>
-                <div className="flex items-baseline justify-between gap-4 border-b border-line/60 pb-2">
-                  <p className="text-[0.95rem] font-medium text-heading">{site.name}</p>
-                  <p className="tech-sm text-body/60">
-                    {site.place || `${site.videos.length} clip${site.videos.length > 1 ? 's' : ''}`}
-                  </p>
-                </div>
-                <ul className="mt-3 grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-3">
+              <div key={site.id} className="shrink-0 snap-start">
+                <p className="flex items-baseline gap-2">
+                  <span className="text-[0.95rem] font-semibold text-heading">{site.name}</span>
+                  {site.place ? (
+                    <span className="text-[0.8rem] text-body">{site.place}</span>
+                  ) : null}
+                </p>
+                <ul className="mt-3 flex gap-2.5">
                   {site.videos.map((v, i) => {
                     const clip = CLIPS.find((c) => c.youtubeId === v.youtubeId)!
                     const isActive = active.youtubeId === v.youtubeId
@@ -160,45 +191,81 @@ export default function SiteVideos() {
                           onClick={() => pick(clip)}
                           aria-current={isActive ? 'true' : undefined}
                           aria-label={`Play ${site.name}, video ${i + 1} of ${site.videos.length}`}
-                          className={`group relative block aspect-video w-full overflow-hidden rounded-lg border bg-ground transition-all duration-300 ease-micro ${
-                            isActive
-                              ? 'border-accent shadow-[0_0_0_3px_color-mix(in_oklab,var(--color-accent)_25%,transparent)]'
-                              : 'border-line/60 hover:border-heading/40'
-                          }`}
+                          className="group/tile block w-40 text-left sm:w-44"
                         >
-                          <img
-                            src={`https://i.ytimg.com/vi/${v.youtubeId}/mqdefault.jpg`}
-                            alt=""
-                            loading="lazy"
-                            decoding="async"
-                            className={`absolute inset-0 size-full object-cover transition-opacity duration-300 ${
-                              isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
+                          <span
+                            className={`relative block aspect-video overflow-hidden rounded-lg transition-all duration-300 ease-micro ${
+                              isActive
+                                ? 'ring-2 ring-accent ring-offset-2 ring-offset-ground'
+                                : 'ring-1 ring-line group-hover/tile:ring-2 group-hover/tile:ring-accent/60'
                             }`}
-                          />
-                          <span className="absolute bottom-1 left-1.5 rounded bg-[#0b1c30]/75 px-1.5 py-0.5 text-[0.6rem] font-medium tracking-[0.12em] text-white/90 tabular-nums">
-                            {String(i + 1).padStart(2, '0')}
+                          >
+                            <img
+                              src={`https://i.ytimg.com/vi/${v.youtubeId}/mqdefault.jpg`}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                              className="absolute inset-0 size-full object-cover"
+                            />
+                            {isActive && armed ? (
+                              <span
+                                className="absolute right-1.5 bottom-1.5 flex items-end gap-[2px] rounded bg-accent px-1 py-0.5"
+                                aria-hidden
+                              >
+                                <span className="eq-bar h-2 w-[2px] bg-white" />
+                                <span className="eq-bar h-3 w-[2px] bg-white [animation-delay:120ms]" />
+                                <span className="eq-bar h-1.5 w-[2px] bg-white [animation-delay:240ms]" />
+                              </span>
+                            ) : null}
                           </span>
-                          {isActive && armed ? (
-                            <span
-                              className="absolute top-1.5 right-1.5 flex items-end gap-[2px]"
-                              aria-hidden
-                            >
-                              <span className="eq-bar h-2 w-[2px] bg-accent" />
-                              <span className="eq-bar h-3 w-[2px] bg-accent [animation-delay:120ms]" />
-                              <span className="eq-bar h-1.5 w-[2px] bg-accent [animation-delay:240ms]" />
-                            </span>
-                          ) : null}
                         </button>
                       </li>
                     )
                   })}
                 </ul>
-              </li>
+              </div>
             ))}
-          </ol>
+          </div>
+
+          <StripArrow dir="prev" visible={edges.left} onClick={() => scrollStrip(-1)} />
+          <StripArrow dir="next" visible={edges.right} onClick={() => scrollStrip(1)} />
         </div>
       </div>
     </Section>
+  )
+}
+
+function StripArrow({
+  dir,
+  visible,
+  onClick,
+}: {
+  dir: 'prev' | 'next'
+  visible: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      tabIndex={visible ? 0 : -1}
+      aria-hidden={!visible}
+      aria-label={dir === 'prev' ? 'Scroll clips left' : 'Scroll clips right'}
+      // Centred on the thumbnail row (below the site label), and nudged just
+      // outside the strip on wide screens so it never sits on a thumbnail.
+      className={`absolute top-[60%] z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-line bg-ground text-heading shadow-[0_6px_18px_-8px_rgba(13,33,54,0.35)] transition-all duration-200 ease-micro hover:border-accent hover:text-accent ${
+        dir === 'prev' ? 'left-2 lg:-left-6' : 'right-2 lg:-right-6'
+      } ${visible ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+    >
+      <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" aria-hidden>
+        <path
+          d={dir === 'prev' ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7'}
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
   )
 }
 
@@ -208,7 +275,7 @@ function StepButton({ dir, onClick }: { dir: 'prev' | 'next'; onClick: () => voi
       type="button"
       onClick={onClick}
       aria-label={dir === 'prev' ? 'Previous video' : 'Next video'}
-      className="tap-44 flex size-9 items-center justify-center rounded-full border border-line text-heading/80 transition-colors duration-200 ease-micro hover:border-accent hover:text-accent"
+      className="tap-44 flex size-9 items-center justify-center rounded-full border border-line text-heading transition-colors duration-200 ease-micro hover:border-accent hover:text-accent"
     >
       <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" aria-hidden>
         <path

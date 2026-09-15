@@ -26,8 +26,6 @@ export default function Hero() {
       id="top"
       className="relative isolate overflow-hidden pt-28 pb-16 lg:flex lg:min-h-[100svh] lg:items-center lg:pt-24 lg:pb-10"
     >
-      <div aria-hidden className="accent-glow-field absolute inset-0 -z-10" />
-
       <Shell>
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] lg:gap-14">
           {/* ── Copy ──────────────────────────────────────────────────── */}
@@ -88,7 +86,7 @@ export default function Hero() {
               ))}
             </dl>
 
-            <p data-entrance className="tech-sm mt-8 text-body/65">
+            <p data-entrance className="tech-sm mt-8 text-body">
               {SITE.basedLine}
             </p>
           </div>
@@ -129,9 +127,7 @@ function Stat({ value, suffix, label }: { value: number; suffix: string; label: 
         <span ref={ref} />
         <span className="font-light text-accent">{suffix}</span>
       </dd>
-      <p className="tech-sm mt-2.5 text-body/70">{label}</p>
+      <p className="tech-sm mt-2.5 text-body">{label}</p>
     </div>
   )
 }
-
-

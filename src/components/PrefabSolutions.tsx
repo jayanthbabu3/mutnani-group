@@ -56,17 +56,22 @@ export default function PrefabSolutions() {
               tight under the heading and the column still fills its height. */}
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {PREFAB.capabilities.map((c, i) => (
-              <div key={c.name} className="reveal rounded-xl border border-line/50 bg-raised p-5 transition-colors hover:border-accent/50">
+              <div
+                key={c.name}
+                className="reveal rounded-xl border border-line/50 bg-raised p-5 transition-colors hover:border-accent/50"
+              >
                 <span className="mb-3 flex size-8 items-center justify-center rounded-full bg-accent/10 text-[0.75rem] font-semibold tabular-nums text-accent">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <h3 className="text-[0.95rem] font-semibold leading-tight text-heading">{c.name}</h3>
+                <h3 className="text-[0.95rem] font-semibold leading-tight text-heading">
+                  {c.name}
+                </h3>
                 <p className="mt-2 text-[0.85rem] leading-[1.6] text-body">{c.body}</p>
               </div>
             ))}
           </div>
 
-          <p className="reveal mt-5 text-[0.82rem] leading-[1.6] text-body/70 lg:mt-auto lg:pt-5">
+          <p className="reveal mt-5 text-[0.82rem] leading-[1.6] text-body lg:mt-auto lg:pt-5">
             {PREFAB.note}
           </p>
         </div>
@@ -91,7 +96,7 @@ export default function PrefabSolutions() {
               className="w-full h-auto object-cover"
             />
           </div>
-          
+
           <div className="reveal mt-6 rounded-2xl border border-line/50 bg-raised p-6 sm:p-8">
             <dl className="grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3">
               {PREFAB.figures.map((f) => (
@@ -100,7 +105,7 @@ export default function PrefabSolutions() {
                     {f.value}
                     <span className="ml-1 text-[0.8rem] font-light text-accent">{f.unit}</span>
                   </dd>
-                  <dt className="tech-sm mt-2.5 text-body/70">{f.label}</dt>
+                  <dt className="tech-sm mt-2.5 text-body">{f.label}</dt>
                 </div>
               ))}
             </dl>

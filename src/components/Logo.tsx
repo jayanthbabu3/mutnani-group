@@ -39,7 +39,7 @@ export default function Logo({ className = '' }: { className?: string }) {
         <span className="block text-[1.05rem] font-semibold tracking-[0.14em] text-heading sm:text-[1.15rem]">
           {SITE.name.toUpperCase()}
         </span>
-        <span className="tech-sm mt-1 block text-body/70">{SITE.role}</span>
+        <span className="tech-sm mt-1 block text-body">{SITE.role}</span>
       </span>
     </a>
   )

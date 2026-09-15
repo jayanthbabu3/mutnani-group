@@ -69,7 +69,7 @@ export default function Footer() {
                   key={office.id}
                   className="text-[0.85rem] leading-[1.65] text-body not-italic"
                 >
-                  <span className="block text-heading/85">{office.name}</span>
+                  <span className="block text-heading">{office.name}</span>
                   {office.lines.map((line) => (
                     <span key={line} className="block">
                       {line}
@@ -82,7 +82,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-line/60 pt-7">
-          <p className="tech-sm text-body/60">
+          <p className="tech-sm text-body">
             © {year} {SITE.name} {SITE.role}
           </p>
           <div className="flex items-center gap-6">
@@ -90,7 +90,7 @@ export default function Footer() {
               href={SITE.instagram}
               target="_blank"
               rel="noreferrer"
-              className="tech-sm text-body/70 transition-colors duration-200 ease-micro hover:text-accent"
+              className="tech-sm text-body transition-colors duration-200 ease-micro hover:text-accent"
             >
               Instagram
             </a>
@@ -98,7 +98,7 @@ export default function Footer() {
               href={SITE.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="tech-sm text-body/70 transition-colors duration-200 ease-micro hover:text-accent"
+              className="tech-sm text-body transition-colors duration-200 ease-micro hover:text-accent"
             >
               LinkedIn
             </a>

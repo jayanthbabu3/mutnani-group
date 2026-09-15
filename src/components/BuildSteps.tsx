@@ -72,7 +72,7 @@ export default function BuildSteps() {
       {/* The autoplay control sits next to what it controls and says which
           state it is in — a bare pause glyph makes the visitor guess. */}
       <div ref={visRef} className="mt-7 flex items-center justify-between gap-4">
-        <span className="tech-sm text-body/55">
+        <span className="tech-sm text-body">
           {playing ? 'Playing through the steps' : 'Paused — pick any step'}
         </span>
         <button
@@ -80,7 +80,7 @@ export default function BuildSteps() {
           onClick={() => setPlaying((p) => !p)}
           aria-label={playing ? 'Pause the step autoplay' : 'Play through the steps'}
           aria-pressed={playing}
-          className="tap-44 grid size-9 place-items-center rounded-full border border-line text-heading/80 transition-colors duration-200 ease-micro hover:border-accent/50 hover:text-accent"
+          className="tap-44 grid size-9 place-items-center rounded-full border border-line text-heading transition-colors duration-200 ease-micro hover:border-accent/50 hover:text-accent"
         >
           {playing ? (
             <svg viewBox="0 0 24 24" className="size-3.5" fill="currentColor" aria-hidden>
@@ -126,21 +126,21 @@ export default function BuildSteps() {
                 <span className="flex items-baseline justify-between gap-2">
                   <span
                     className={`text-[0.68rem] font-semibold tabular-nums ${
-                      isActive || isDone ? 'text-accent' : 'text-body/45'
+                      isActive || isDone ? 'text-accent' : 'text-body'
                     }`}
                   >
                     {s.n}
                   </span>
                   {/* The parallel pair is marked on the rail, not just in the
                       panel — it is the one thing this section exists to say. */}
-                  <span className={`tech-sm ${par ? 'text-accent/80' : 'text-body/50'}`}>
+                  <span className={`tech-sm ${par ? 'text-accent/80' : 'text-body'}`}>
                     {par ? '∥' : s.days.replace(' days', 'd').replace(' weeks', 'w')}
                   </span>
                 </span>
 
                 <span
                   className={`mt-1.5 block text-[0.82rem] leading-tight font-medium ${
-                    isActive ? 'text-heading' : 'text-heading/80'
+                    isActive ? 'text-heading' : 'text-heading'
                   }`}
                 >
                   {s.short}
@@ -168,7 +168,7 @@ export default function BuildSteps() {
 
       <p
         aria-hidden
-        className={`tech-sm mt-1 flex items-center gap-2 text-body/60 transition-opacity duration-300 ease-micro lg:hidden ${
+        className={`tech-sm mt-1 flex items-center gap-2 text-body transition-opacity duration-300 ease-micro lg:hidden ${
           swiped ? 'pointer-events-none opacity-0' : 'opacity-100'
         }`}
       >
@@ -215,19 +215,19 @@ export default function BuildSteps() {
 
         <dl className="grid grid-cols-2 gap-4 self-center border-t border-line/70 pt-5 lg:grid-cols-1 lg:gap-5 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-7">
           <div>
-            <dt className="tech-sm text-body/50">On the programme</dt>
+            <dt className="tech-sm text-body">On the programme</dt>
             <dd className="mt-1 text-[1rem] font-semibold text-heading">
               {isParallel ? 'Runs in parallel' : step.days}
             </dd>
           </div>
           <div>
-            <dt className="tech-sm text-body/50">Where it happens</dt>
+            <dt className="tech-sm text-body">Where it happens</dt>
             <dd className="mt-1 text-[1rem] font-semibold text-accent">{step.where}</dd>
           </div>
         </dl>
       </div>
 
-      <p className="reveal tech-sm mt-4 text-body/55">
+      <p className="reveal tech-sm mt-4 text-body">
         Steps 02 and 03 overlap — the building is being made while your foundation cures. That is
         where the weeks come from.
       </p>

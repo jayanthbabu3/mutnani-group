@@ -31,7 +31,7 @@ export default function Projects() {
             </h3>
             <p className="text-[0.9rem] leading-snug text-body">{item.scope}</p>
             <div className="flex items-baseline gap-4 sm:justify-end sm:text-right">
-              <span className="tech-sm text-body/70">{item.place}</span>
+              <span className="tech-sm text-body">{item.place}</span>
               <span className="text-[0.85rem] font-medium text-accent tabular-nums">
                 {item.figure}
               </span>

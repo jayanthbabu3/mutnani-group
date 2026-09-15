@@ -73,7 +73,7 @@ function OfficeCard({ office }: { office: (typeof OFFICES)[number] }) {
 
       <div className="flex flex-col p-6">
         <p className="tech-sm text-accent">{office.name}</p>
-        <p className="mt-3.5 text-[0.9rem] leading-[1.65] text-heading/85">
+        <p className="mt-3.5 text-[0.9rem] leading-[1.65] text-heading">
           {office.lines.map((line) => (
             <span key={line} className="block">
               {line}

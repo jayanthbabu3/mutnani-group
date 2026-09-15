@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import Lenis from 'lenis'
+import { whenPreloaderOpen } from './preloader'
 
 // Every GSAP plugin ships in the public npm package as of 3.13 — SplitText,
 // DrawSVG, MorphSVG, Flip, ScrollSmoother, Inertia, CustomEase. No Club
@@ -143,7 +144,9 @@ export function useEntrance<T extends HTMLElement>(delay = 0.15) {
         })
       : Promise.resolve()
 
-    Promise.all([fontsReady, onScreen]).then(() => {
+    // Behind the logo preloader the headline sweep would play to nobody, so the
+    // entrance also waits for that screen to start fading.
+    Promise.all([fontsReady, onScreen, whenPreloaderOpen()]).then(() => {
       if (cancelled) return
 
       ctx = gsap.context(() => {

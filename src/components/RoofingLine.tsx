@@ -65,7 +65,7 @@ export default function RoofingLine() {
           <SectionTitle className="!mt-3">{LINE.title}</SectionTitle>
           <Lede>{LINE.lede}</Lede>
 
-          <p className="tech-sm mt-8 text-body/55">Down the line</p>
+          <p className="tech-sm mt-8 text-body">Down the line</p>
 
           {/* Two columns below lg so six stations do not become a tall ladder
               under the stage on a phone; one column at lg, where it sits beside
@@ -83,7 +83,7 @@ export default function RoofingLine() {
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-[0.92rem] leading-tight text-heading/85">
+                    <span className="block text-[0.92rem] leading-tight text-heading">
                       {s.label}
                     </span>
                     <span className="mt-1 block text-[0.82rem] leading-snug text-body opacity-80">
@@ -95,7 +95,7 @@ export default function RoofingLine() {
             })}
           </ol>
 
-          <p className="mt-6 border-t border-line/50 pt-4 text-[0.78rem] leading-[1.6] text-body/70">
+          <p className="mt-6 border-t border-line/50 pt-4 text-[0.78rem] leading-[1.6] text-body">
             {LINE.note}
           </p>
         </div>
@@ -133,7 +133,7 @@ export default function RoofingLine() {
                   {f.value}
                   <span className="ml-1 text-[0.78rem] font-light text-accent">{f.unit}</span>
                 </dd>
-                <dt className="tech-sm mt-2 text-body/60">{f.label}</dt>
+                <dt className="tech-sm mt-2 text-body">{f.label}</dt>
               </div>
             ))}
           </dl>
