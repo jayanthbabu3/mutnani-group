@@ -661,14 +661,14 @@
   },
   "line": {
     "eyebrow": "Vertical 02 · Balaji Roofing",
-    "title": "A panel in six minutes, not six weeks",
+    "title": "Panels and sheets, made on our own line",
     "lede": "Coil in one end, a finished cut-to-length panel out the other.",
     "note": "Line speed and cure times vary with core thickness and ambient temperature. Figures on the fabrication drawing are the ones that count.",
     "stations": [
       {
         "id": "coil",
         "label": "Coil",
-        "note": "Pre-painted steel, 0.5 mm, off the decoiler"
+        "note": "Pre-painted steel, 0.42–0.80 TCT, off the decoiler"
       },
       {
         "id": "form",
@@ -688,7 +688,7 @@
       {
         "id": "cut",
         "label": "Cut",
-        "note": "Cut to your length — site trims nothing"
+        "note": "Cut to your length, with no limit — site trims nothing"
       },
       {
         "id": "stack",
@@ -698,19 +698,19 @@
     ],
     "figures": [
       {
-        "value": "40–100",
-        "unit": "mm",
-        "label": "Core thickness"
+        "value": "0.42–0.80",
+        "unit": "TCT",
+        "label": "Sheet thickness"
       },
       {
-        "value": "1000",
-        "unit": "mm",
+        "value": "1",
+        "unit": "m",
         "label": "Cover width"
       },
       {
-        "value": "12",
-        "unit": "m",
-        "label": "Max panel length"
+        "value": "Any",
+        "unit": "length",
+        "label": "Max panel"
       }
     ]
   },
