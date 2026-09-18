@@ -11,7 +11,7 @@
     <title>Mutnani Group of Companies — Prefab, Roofing & Global Trade, Hyderabad</title>
     <meta
       name="description"
-      content="Pre-engineered buildings, PUF panel manufacturing and imports from China, under one group since 2009. Balaji Prefab Solutions, Balaji Roofing and Balaji Prefab Import & Exports — Hyderabad and Mumbai."
+      content="Pre-engineered buildings, roofing profile manufacturing and global imports, under one group since 2009. Balaji Prefab Private Limited, Balaji Roofing Industries and Mutnani IMEX Infra Private Limited — Hyderabad and Mumbai."
     />
     <meta
       property="og:title"
@@ -19,7 +19,7 @@
     />
     <meta
       property="og:description"
-      content="Three divisions, one group: pre-engineered buildings, PUF panel manufacturing, and sourcing from China. Building since 2009."
+      content="Three companies, one group: pre-engineered buildings, roofing profile manufacturing and global imports. Building since 2009."
     />
     <meta property="og:type" content="website" />
 
@@ -36,7 +36,8 @@
       script below arms it and carries a 3.5s failsafe, so a bundle that never
       loads cannot leave the page shut.
     -->
-    <link rel="preload" as="image" href="/mark.png" />
+    <link rel="preload" as="image" href="/brand/logo-mark.webp" />
+    <link rel="preload" as="image" href="/brand/logo-name.webp" />
     <script>
       document.documentElement.classList.add('pre', 'is-loading')
       setTimeout(function () {
@@ -67,7 +68,7 @@
       .pre-mark { position: relative; display: grid }
       .pre-logo {
         grid-area: 1 / 1;
-        width: clamp(88px, 9vw, 120px); height: auto;
+        width: clamp(96px, 10vw, 140px); height: auto;
         clip-path: inset(100% 0 0 0); scale: 1.08; filter: blur(8px);
         animation: preMark 1.1s cubic-bezier(.16, 1, .3, 1) .15s forwards;
       }
@@ -75,19 +76,20 @@
          never shows as a rectangle over the transparent corners. */
       .pre-sheen {
         grid-area: 1 / 1;
-        -webkit-mask: url(/mark.png) center / contain no-repeat;
-        mask: url(/mark.png) center / contain no-repeat;
+        -webkit-mask: url(/brand/logo-mark.webp) center / contain no-repeat;
+        mask: url(/brand/logo-mark.webp) center / contain no-repeat;
         background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .8) 50%, transparent 62%);
         background-size: 260% 100%; background-position: 140% 0;
         animation: preSheen 1s cubic-bezier(.65, 0, .35, 1) 1.05s forwards;
       }
 
-      .pre-tag {
-        margin: clamp(22px, 2.6vw, 30px) 0 0;
-        font: 500 11px/1 'Manrope', ui-sans-serif, system-ui, sans-serif;
-        text-transform: uppercase; color: #4b5c70;
-        letter-spacing: .9em; opacity: 0;
-        animation: preTag 1.3s cubic-bezier(.16, 1, .3, 1) .7s forwards;
+      /* The name and tagline, from the client's artwork rather than set in
+         type, so the loader shows exactly the logo the header does. */
+      .pre-name {
+        margin-top: clamp(20px, 2.4vw, 28px);
+        width: clamp(220px, 26vw, 340px); height: auto;
+        opacity: 0; translate: 0 10px; filter: blur(4px);
+        animation: preName 1.1s cubic-bezier(.16, 1, .3, 1) .7s forwards;
       }
       .pre-line { margin-top: 18px; width: clamp(120px, 12vw, 160px); height: 2px; overflow: visible }
       .pre-line path {
@@ -97,7 +99,7 @@
 
       @keyframes preMark { to { clip-path: inset(0 0 0 0); scale: 1; filter: blur(0) } }
       @keyframes preSheen { to { background-position: -40% 0 } }
-      @keyframes preTag { to { opacity: 1; letter-spacing: .42em } }
+      @keyframes preName { to { opacity: 1; translate: 0 0; filter: blur(0) } }
       @keyframes preDraw { to { stroke-dashoffset: 0 } }
 
       @media (prefers-reduced-motion: reduce) {
@@ -111,10 +113,10 @@
       <div class="pre-centre">
         <div class="pre-stack">
           <div class="pre-mark">
-            <img class="pre-logo" src="/mark.png" alt="" width="209" height="160" fetchpriority="high" />
+            <img class="pre-logo" src="/brand/logo-mark.webp" alt="" width="330" height="263" fetchpriority="high" />
             <span class="pre-sheen"></span>
           </div>
-          <p class="pre-tag">From vision to reality</p>
+          <img class="pre-name" src="/brand/logo-name.webp" alt="Mutnani Group — from vision to reality" width="720" height="114" />
           <svg class="pre-line" viewBox="0 0 160 2" preserveAspectRatio="none" aria-hidden="true">
             <defs>
               <linearGradient id="pre-brand" x1="0" y1="0" x2="1" y2="0">

@@ -40,13 +40,10 @@ export default function Hero() {
               that emphasis, and a high-contrast display italic at display size
               reads as an invitation rather than as steel.
 
-              The clamp is measured, not chosen. Both slogan lines cost 8.07em
-              in Fraunces 300 at -0.02em tracking, and the tightest budget on
-              the page is NOT the 360px phone (9.25em) — it is 1280px, where the
-              two-column split has already happened but the type is near full
-              size (9.49em). `4.4vw` and the 3.6rem cap are what keep every
-              breakpoint above the cost with ~13% to spare. Re-measure both
-              lines before changing either the copy or these numbers.
+              Sized for the longest line, "Roofing Profile Manufacturing":
+              it has to hold one line in the ~560px copy column at 1280px,
+              which is what caps the clamp. Re-check it there before changing
+              either the copy or these numbers.
 
               Two block spans, not a `{line1} {line2}` run: the colour change
               marks the second CLAUSE, so it has to start a line. Left inline,
@@ -66,7 +63,7 @@ export default function Hero() {
               data-entrance="rise"
               className="mt-6 max-w-xl text-[0.98rem] leading-[1.75] text-body"
             >
-              {HERO.sub}
+              <Highlighted text={HERO.sub} />
             </p>
 
             <div data-entrance="rise" className="mt-9 flex flex-wrap items-center gap-3">
@@ -113,6 +110,23 @@ export default function Hero() {
         </div>
       </Shell>
     </header>
+  )
+}
+
+/**
+ * The intro is one paragraph, as the client wrote it, with the service names
+ * lifted to the heading colour so a buyer scanning for "PEB" still finds it.
+ * `**…**` in the copy marks them — the one piece of markup the field allows.
+ */
+function Highlighted({ text }: { text: string }) {
+  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+    i % 2 ? (
+      <strong key={i} className="font-medium text-heading">
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
   )
 }
 

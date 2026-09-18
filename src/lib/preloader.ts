@@ -14,7 +14,7 @@
  *     cannot leave the visitor stuck behind the logo
  */
 
-/** Long enough for the title card (mark, sheen, tagline, line) to finish. */
+/** Long enough for the title card (mark, sheen, name, line) to finish. */
 const MIN = 1700
 const MAX = 3000
 /** The title card blurs away for this long before the screen fades. */

@@ -51,6 +51,7 @@ const schema = z.object({
      * components/Hero.tsx before rewriting either.
      */
     headline: z.object({ line1: z.string(), line2: z.string() }),
+    /** Plain text; **double asterisks** mark the service names, set in the heading colour. */
     sub: z.string(),
     primaryCta: z.string(),
     secondaryCta: z.string(),
@@ -76,7 +77,9 @@ const schema = z.object({
    */
   about: z.object({
     eyebrow: z.string(),
+    /** Title in two brand colours: `title` in blue, `titleAccent` after it in green. */
     title: z.string(),
+    titleAccent: z.string(),
     /** One paragraph per entry. Two reads best; three is the ceiling. */
     body: z.array(z.string()).min(1).max(3),
     figures: z

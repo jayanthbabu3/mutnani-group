@@ -99,7 +99,7 @@ collections:
                       label: Second line (shown in gold),
                       widget: string,
                     }
-              - { name: sub, label: Intro paragraph, widget: text }
+              - { name: sub, label: "Intro paragraph (wrap service names in **double asterisks** to highlight them)", widget: text }
               - { name: primaryCta, label: Main button, widget: string }
               - { name: secondaryCta, label: Second button, widget: string }
               - name: stats
@@ -162,12 +162,12 @@ collections:
                   default: true,
                 }
 
-          # ── Vertical 01 · Balaji Prefab Solutions ───────────────────────
+          # ── Vertical 01 · Balaji Prefab Private Limited ───────────────────────
           # The three companies each have one section, numbered in the eyebrow.
           # Keep the "Vertical 0n ·" prefix on all three or the sequence stops
           # reading as a sequence.
           - name: prefab
-            label: Vertical 01 — Balaji Prefab Solutions
+            label: Vertical 01 — Balaji Prefab Private Limited
             widget: object
             fields:
               - { name: eyebrow, label: Small line above the name (e.g. "Vertical 01"), widget: string }

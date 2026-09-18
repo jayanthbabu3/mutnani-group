@@ -3,7 +3,7 @@
     "name": "Mutnani",
     "role": "Group of Companies",
     "city": "Hyderabad",
-    "basedLine": "Hyderabad · Mumbai · importing from China",
+    "basedLine": "Global Imports",
     "phone": "+917831012345",
     "phoneDisplay": "+91 78310 12345",
     "phoneAlt": "+919396979494",
@@ -14,7 +14,7 @@
     "linkedin": "https://www.linkedin.com/",
     "whatsappMessage": "Hi Mutnani Group, I'd like to talk about a prefab / roofing requirement.",
     "founded": 2009,
-    "founder": "M. Madhu Sudhan"
+    "founder": "Mutnani Madhu Sudhan"
   },
   "nav": [
     {
@@ -59,10 +59,10 @@
   "hero": {
     "eyebrow": "Building · Manufacturing · Global trade",
     "headline": {
-      "line1": "Your building is ready",
-      "line2": "before the ground is."
+      "line1": "Technology-Driven",
+      "line2": "Roofing Profile Manufacturing"
     },
-    "sub": "Three companies under one group: pre-engineered structures, our own PUF panel line, and the import desk that sources what neither can make. Fabrication runs in parallel with your foundation, so the shed is closed in weeks rather than seasons.",
+    "sub": "Three companies under one group: prefabrication construction — **roofing, Aerocon walls, false ceilings, PUF panels, PEB (pre-engineered buildings)** and **modular buildings**; **precision-engineered roofing profile manufacturing**; and imports of **false ceiling tiles & grid** and **modern interior equipment**.",
     "primaryCta": "Get a quote",
     "secondaryCta": "See how it goes up",
     "stats": [
@@ -117,9 +117,10 @@
   ],
   "about": {
     "eyebrow": "About us",
-    "title": "We are an authorised dealer of Hyderabad Industries Ltd.",
+    "title": "A Trusted Partner in",
+    "titleAccent": "Corporate Prefab Infrastructure Projects",
     "body": [
-      "Balaji Agencies was established in 2009 by M. Madhu Sudhan. Since its inception it has handled corporate projects across Andhra Pradesh and other parts of India.",
+      "Balaji Agencies was established in 2009 by Mutnani Madhu Sudhan. Since its inception it has handled corporate projects across Andhra Pradesh, Telangana and other parts of India.",
       "The group has had the opportunity to work with well-established names in Indian infrastructure — Navyug Engineering Company Ltd, Megha Engineering & Infrastructures Ltd and the NTPC power plant among them."
     ],
     "figures": [
@@ -143,7 +144,7 @@
         "id": "excellence-2026",
         "kind": "image",
         "src": "/awards/excellence.webp",
-        "alt": "Madhusudhan Mutnani holding the framed Global India Business Forum Business Excellence Award certificate.",
+        "alt": "Mutnani Madhu Sudhan holding the framed Global India Business Forum Business Excellence Award certificate.",
         "title": "Business Excellence Award",
         "body": "Global India Business Forum · presented by the Governor of Telangana",
         "date": "Aug 2026",
@@ -187,7 +188,7 @@
         "id": "india-china-2025",
         "kind": "image",
         "src": "/awards/india-china.webp",
-        "alt": "Madhusudhan Mutnani on stage at the GIBF India–China Business Summit receiving a National Business Excellence Award.",
+        "alt": "Mutnani Madhu Sudhan on stage at the GIBF India–China Business Summit receiving a National Business Excellence Award.",
         "title": "National Business Excellence",
         "body": "GIBF India–China Business Summit",
         "date": "Dec 2025",
@@ -198,7 +199,7 @@
         "id": "hil-2019",
         "kind": "image",
         "src": "/awards/hil-achievers.webp",
-        "alt": "M. Madhu Sudhan and the Balaji team receiving a Birla Aerocon HIL Achievers Club award on stage.",
+        "alt": "Mutnani Madhu Sudhan and the Balaji team receiving a Birla Aerocon HIL Achievers Club award on stage.",
         "title": "HIL Achievers Club",
         "body": "Birla Aerocon · Hyderabad Industries Ltd.",
         "date": "2018–19",
@@ -210,12 +211,12 @@
   "group": {
     "eyebrow": "The group",
     "title": "Three companies, one schedule",
-    "lede": "Each company could run on its own. Together they cover the design, the panels and the shipping."
+    "lede": "Each company could run on its own, in parallel, to accomplish one single goal: design, construction and delivery."
   },
   "divisions": [
     {
       "id": "prefab",
-      "company": "Balaji Prefab Solutions",
+      "company": "Balaji Prefab Private Limited",
       "kind": "Prefabricated construction",
       "lede": "We design the building, make it in our shop, and put it up on your site.",
       "offers": [
@@ -230,11 +231,11 @@
     },
     {
       "id": "roofing",
-      "company": "Balaji Roofing Pvt. Ltd.",
+      "company": "Balaji Roofing Industries",
       "kind": "Manufacturing",
-      "lede": "We make the PUF panels and roofing sheets ourselves, in our own factory.",
+      "lede": "We manufacture roofing profile sheets and we deliver PUF panels.",
       "offers": [
-        "PUF insulated wall & roof panels",
+        "Roofing profile sheets & PUF insulated wall",
         "Trapezoidal & tile-profile sheets",
         "Flashings, gutters, accessories",
         "Custom profiles to drawing"
@@ -245,14 +246,15 @@
     },
     {
       "id": "trade",
-      "company": "Balaji Prefab Import & Exports",
-      "kind": "Global trade",
-      "lede": "We buy what the other two do not make, direct from China. Exports are on the way.",
+      "company": "Mutnani IMEX Infra Private Limited",
+      "kind": "Imports",
+      "lede": "We specialize in sourcing products that are not manufactured by others in the market, leveraging a reliable global procurement network.",
       "offers": [
         "Import of building materials",
-        "Exports — coming soon",
-        "Sourcing from China",
-        "Logistics & supply chain"
+        "Sourcing from the global market",
+        "Logistics & supply chain",
+        "Site camp setup",
+        "Exports — coming soon"
       ],
       "image": "/divisions/trade.webp",
       "imageAlt": "A container ship loaded with stacked shipping containers at sea.",
@@ -334,7 +336,7 @@
   },
   "prefab": {
     "eyebrow": "Vertical 01",
-    "title": "Balaji Prefab Solutions",
+    "title": "Balaji Prefab Private Limited",
     "sub": "Pre-engineered buildings, made easy.",
     "capabilities": [
       {
@@ -660,7 +662,7 @@
     "lede": "Those two facts are enough for a first number. Fill this in and it opens WhatsApp with your details already written out — or call the Hyderabad desk directly."
   },
   "line": {
-    "eyebrow": "Vertical 02 · Balaji Roofing",
+    "eyebrow": "Vertical 02 · Balaji Roofing Industries",
     "title": "Panels and sheets, made on our own line",
     "lede": "Coil in one end, a finished cut-to-length panel out the other.",
     "note": "Line speed and cure times vary with core thickness and ambient temperature. Figures on the fabrication drawing are the ones that count.",
@@ -715,7 +717,7 @@
     ]
   },
   "routes": {
-    "eyebrow": "Vertical 03 · Balaji Prefab Import & Exports",
+    "eyebrow": "Vertical 03 · Mutnani IMEX Infra",
     "title": "What we bring in, and what comes next",
     "lede": "We buy what the line needs, direct from suppliers in China. Exports are next.",
     "modes": [
