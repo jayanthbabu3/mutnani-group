@@ -6,8 +6,8 @@
     "basedLine": "Global Imports",
     "phone": "+917831012345",
     "phoneDisplay": "+91 78310 12345",
-    "phoneAlt": "+919396979494",
-    "phoneAltDisplay": "+91 93969 79494",
+    "phoneAlt": "",
+    "phoneAltDisplay": "",
     "email": "info@balajiprefab.com",
     "emailAlt": "balajiprefab@gmail.com",
     "instagram": "https://instagram.com/balaji_prefab_official",
@@ -483,7 +483,7 @@
   "partners": {
     "eyebrow": "Strategic partners",
     "title": "Trusted by industry leaders",
-    "lede": "Executed with and for infrastructure companies across Andhra Pradesh, Telangana and beyond — site buildings, sheds, panels and stores.",
+    "lede": "Executed with and for infrastructure companies across India — site buildings, sheds, panels and stores.",
     "items": [
       {
         "id": "meil",
@@ -616,11 +616,11 @@
     "points": [
       {
         "title": "Founded 2009",
-        "body": "Started by M. Madhu Sudhan as an authorised dealer of Hyderabad Industries Ltd., and still run by the same family."
+        "body": "Founded by Mutnani Madhu Sudhan, Founder and Managing Director of Mutnani Group of Companies."
       },
       {
         "title": "We make what we fit",
-        "body": "The PUF panels on your wall came off our own line. There is no supplier in the middle to blame for a slipped date."
+        "body": "The panels on your wall came off our own line. There is no supplier in the middle to blame for a slipped date."
       },
       {
         "title": "One team, drawing to handover",
@@ -628,7 +628,7 @@
       },
       {
         "title": "Two offices, one schedule",
-        "body": "Hyderabad runs execution, Mumbai runs the trade desk. A project in either region is somebody's day job, not a trip."
+        "body": "Hyderabad runs execution, Mumbai runs the trade desk."
       }
     ]
   },
@@ -665,7 +665,7 @@
     "eyebrow": "Vertical 02 · Balaji Roofing Industries",
     "title": "Panels and sheets, made on our own line",
     "lede": "Coil in one end, a finished cut-to-length panel out the other.",
-    "note": "Line speed and cure times vary with core thickness and ambient temperature. Figures on the fabrication drawing are the ones that count.",
+    "note": "Line speed varies with the profile and sheet thickness. Figures on the fabrication drawing are the ones that count.",
     "stations": [
       {
         "id": "coil",
@@ -676,11 +676,6 @@
         "id": "form",
         "label": "Roll-form",
         "note": "Rolled to the rib profile, both skins at once"
-      },
-      {
-        "id": "foam",
-        "label": "Foam",
-        "note": "Polyurethane injected between the skins"
       },
       {
         "id": "press",

@@ -67,7 +67,7 @@ export default function RoofingLine() {
 
           <p className="tech-sm mt-8 text-body">Down the line</p>
 
-          {/* Two columns below lg so six stations do not become a tall ladder
+          {/* Two columns below lg so the stations do not become a tall ladder
               under the stage on a phone; one column at lg, where it sits beside
               the stage and reads as a sequence. */}
           <ol className="mt-4 grid grid-cols-2 gap-x-6 lg:grid-cols-1 lg:gap-x-0">

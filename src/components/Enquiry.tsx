@@ -56,11 +56,13 @@ export default function Enquiry() {
 
           <dl className="reveal mt-10 space-y-5 border-t border-line/60 pt-8">
             <Direct label="Hyderabad desk" value={SITE.phoneDisplay} href={`tel:${SITE.phone}`} />
-            <Direct
-              label="Balaji Prefab line"
-              value={SITE.phoneAltDisplay}
-              href={`tel:${SITE.phoneAlt}`}
-            />
+            {SITE.phoneAlt ? (
+              <Direct
+                label="Balaji Prefab line"
+                value={SITE.phoneAltDisplay}
+                href={`tel:${SITE.phoneAlt}`}
+              />
+            ) : null}
             <Direct label="Email" value={SITE.email} href={`mailto:${SITE.email}`} />
             <Direct label="Email (alt)" value={SITE.emailAlt} href={`mailto:${SITE.emailAlt}`} />
           </dl>

@@ -20,8 +20,8 @@ const schema = z.object({
     phone: z.string().regex(/^\+\d{10,15}$/, 'phone must be international, e.g. +919000000000'),
     /** CLIENT */
     phoneDisplay: z.string(),
-    /** CLIENT · the older Balaji Prefab line, kept live in the footer */
-    phoneAlt: z.string().regex(/^\+\d{10,15}$/),
+    /** CLIENT · a second contact line. Leave empty to hide it. */
+    phoneAlt: z.union([z.literal(''), z.string().regex(/^\+\d{10,15}$/)]),
     /** CLIENT */
     phoneAltDisplay: z.string(),
     /** CLIENT */
@@ -287,12 +287,11 @@ const schema = z.object({
     title: z.string(),
     lede: z.string(),
     note: z.string(),
-    /**
-     * Six stations. The 3D scene indexes into this array and the caption strip
-     * reads the same one, so a caption can never name a station the line is not
-     * currently at — same contract as the hero's `stageStages`.
-     */
-    stations: z.array(z.object({ id: z.string(), label: z.string(), note: z.string() })).length(6),
+    /** The stations down the line, in order. */
+    stations: z
+      .array(z.object({ id: z.string(), label: z.string(), note: z.string() }))
+      .min(3)
+      .max(6),
     figures: z.array(z.object({ value: z.string(), unit: z.string(), label: z.string() })).min(2),
   }),
   /** Balaji Prefab Import & Exports — the trade signature. */

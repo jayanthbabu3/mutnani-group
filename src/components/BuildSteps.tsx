@@ -226,11 +226,6 @@ export default function BuildSteps() {
           </div>
         </dl>
       </div>
-
-      <p className="reveal tech-sm mt-4 text-body">
-        Steps 02 and 03 overlap — the building is being made while your foundation cures. That is
-        where the weeks come from.
-      </p>
     </Section>
   )
 }

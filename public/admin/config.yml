@@ -55,11 +55,12 @@ collections:
               - { name: phoneDisplay, label: Main phone as shown, widget: string }
               - {
                   name: phoneAlt,
-                  label: Second phone (international),
+                  label: Second phone (international — leave empty to hide),
                   widget: string,
-                  pattern: ['^\+\d{10,15}$', 'Must start with + and country code'],
+                  required: false,
+                  pattern: ['^(\+\d{10,15})?$', 'Must start with + and country code'],
                 }
-              - { name: phoneAltDisplay, label: Second phone as shown, widget: string }
+              - { name: phoneAltDisplay, label: Second phone as shown, widget: string, required: false }
               - { name: email, label: Email, widget: string }
               - { name: instagram, label: Instagram URL, widget: string }
               - { name: linkedin, label: LinkedIn URL, widget: string }
@@ -285,9 +286,9 @@ collections:
               - { name: lede, label: Intro, widget: text }
               - { name: note, label: Small print, widget: text }
               - name: stations
-                label: The six stations (must stay at 6 — the 3D scene indexes into these)
+                label: Stations down the line (3–6, in order)
                 widget: list
-                min: 6
+                min: 3
                 max: 6
                 fields:
                   - { name: id, label: ID (do not change), widget: string }
