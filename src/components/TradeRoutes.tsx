@@ -1,84 +1,49 @@
-import { useMemo, useState } from 'react'
+import { useRef, useState } from 'react'
+import type { Ref } from 'react'
 import { ROUTES } from '../data/site'
-import { useReveal } from '../lib/motion'
+import { prefersReducedMotion, useInView, useReveal } from '../lib/motion'
+import ImportGlobeLazy from '../three/ImportGlobeLazy'
 import { Eyebrow, Lede, Section, SectionTitle } from './ui'
 
-const MASK = [
-  'radial-gradient(82% 86% at 50% 50%, #000 58%, rgba(0,0,0,0.85) 80%, transparent 100%)',
-  'linear-gradient(to right, transparent 0%, #000 3%, #000 97%, transparent 100%)',
-  'linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%)',
-].join(', ')
-
 /**
- * Balaji Prefab Import & Exports — what actually leaves and what arrives.
+ * Mutnani IMEX Infra — what comes in, and what will go out.
  *
- * This section took four goes, and the first three failed the same way. A fan
- * of labelled lanes, then a real world map, then a dial of bearings and
- * distances: every one of them drew WHERE the goods go. None of them drew the
- * trade. A list of countries is not a business — the business is that a
- * finished panel gets on a lorry and a coil of steel comes off one.
+ * ── Why there is no list of places ────────────────────────────────────────
+ * This section used to name the four Chinese cities the group buys from. The
+ * client asked for that to come off: a sourcing list on a public site is a
+ * map for competitors. So the picture says "from across the world" — a globe
+ * with lines rising out of whole regions, none of them labelled — and the
+ * words say what happens once the goods land, which is the part the group
+ * actually wants to be hired for.
  *
- * So the two halves swap jobs. The words carry the destinations, because a
- * destination is a name and names belong in type. The picture carries the
- * movement, because movement is the one thing type cannot do: the shutter
- * lifts, a flatbed loaded with panels runs for the port, and switching to
- * imports reverses the whole yard — a truck comes in off the quay with a coil
- * and takes it inside.
+ * The only places named are the group's own two desks, pinned on the globe.
  *
  * ── One control, two halves ───────────────────────────────────────────────
- * `mode` is the only state here. It picks the direction the yard runs, the
- * cargo on the bed, the copy and which markets are listed. There is no
- * separate "filter" any more: choosing to look at exports IS the filter, which
- * is one idea where there used to be two.
- *
- * Markets marked `both` would appear under each mode. None do today: the group
- * imports from four cities in China and its export desk is not open yet, so
- * the export side shows that plainly rather than an empty table.
+ * `mode` is the only state. It picks the direction the globe runs, the copy,
+ * and whether the import steps or the "coming soon" note shows.
  */
 
 type Mode = 'out' | 'in'
 
-const MARKETS = ROUTES.markets
 const ORIGIN = ROUTES.origin
+const SECOND = ROUTES.second
 
 /**
- * The two directions come from `content/site.json`, not from a constant here.
- *
- * They were hardcoded in this file, which made four pieces of client-facing
- * copy — two ledes, two captions — unreachable from the CMS. Every one of them
- * asserts something about how the business runs, and the client has to be able
- * to correct anything they would not say themselves.
+ * The two directions come from `content/site.json`, not from a constant here:
+ * every line of it is a claim about how the business runs, and the client has
+ * to be able to correct it.
  */
 const MODES = ROUTES.modes
-
-const countFor = (mode: Mode) => MARKETS.filter((m) => m.dir === mode || m.dir === 'both').length
-
-/** "Coming soon" when a direction has no markets, never "0 countries". */
-const countLabel = (mode: Mode) => {
-  const n = countFor(mode)
-  return n === 0 ? 'Coming soon' : `${n} ${n === 1 ? 'city' : 'cities'}`
-}
 
 export default function TradeRoutes() {
   const reveal = useReveal<HTMLElement>({ stagger: 0.07 })
   const [mode, setMode] = useState<Mode>('in')
-
-  /*
-    Grouped by COUNTRY, and the country is said once. A table repeated "China"
-    on every row and gave the region a column of its own, so four facts took
-    twelve cells. One heading per country with its cities under it says the
-    same thing in five words, and still scales if a second country is added.
-  */
-  const groups = useMemo(() => {
-    const wanted = MARKETS.filter((m) => m.dir === mode || m.dir === 'both')
-    const out: { country: string; items: typeof wanted }[] = []
-    for (const m of wanted) {
-      const open = out.find((g) => g.country === m.country)
-      if (open) open.items.push(m)
-      else out.push({ country: m.country, items: [m] })
-    }
-    return out
-  }, [mode])
+  const [stage, onScreen] = useInView<HTMLDivElement>('280px')
+  const [still] = useState(prefersReducedMotion)
+  const mumbai = useRef<HTMLDivElement>(null)
+  const hyderabad = useRef<HTMLDivElement>(null)
+  const india = useRef<HTMLDivElement>(null)
+  const china = useRef<HTMLDivElement>(null)
 
   const current = MODES.find((m) => m.id === mode)!
 
@@ -88,14 +53,14 @@ export default function TradeRoutes() {
       <SectionTitle>{ROUTES.title}</SectionTitle>
       <Lede>{ROUTES.lede}</Lede>
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:gap-12">
+      <div className="mt-8 grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:gap-12">
         {/* ── Left: the trade ────────────────────────────────────────────── */}
         <div className="reveal">
           {/*
             The switch is two cards, not two pills. It is the only control in
-            the section and it changes everything on screen — the yard, the copy
-            and the list — so it should look like a decision, not like a chip on
-            a filter bar.
+            the section and it changes everything on screen — the globe, the
+            copy and the steps — so it should look like a decision, not like a
+            chip on a filter bar.
           */}
           <div role="group" aria-label="Direction of trade" className="grid grid-cols-2 gap-3">
             {MODES.map((m) => {
@@ -119,7 +84,7 @@ export default function TradeRoutes() {
                   >
                     {m.label}
                   </span>
-                  <span className="tech-sm mt-1.5 block text-body">{countLabel(m.id)}</span>
+                  <span className="tech-sm mt-1.5 block text-body">{m.tag}</span>
                 </button>
               )
             })}
@@ -127,68 +92,61 @@ export default function TradeRoutes() {
 
           <p className="mt-5 text-[0.9rem] leading-[1.7] text-body">{current.lede}</p>
 
-          {groups.length === 0 ? (
+          {mode === 'out' ? (
             <p className="mt-7 rounded-lg border border-dashed border-line px-5 py-6 text-[0.9rem] leading-[1.6] text-body">
               Nothing to list yet — the export desk is still being set up.
             </p>
           ) : (
-            groups.map((g) => (
-              <div
-                key={g.country}
-                className="mt-7 rounded-xl border border-line bg-raised/40 p-5 sm:p-6"
-              >
-                <div className="flex items-baseline justify-between gap-4 border-b border-line pb-4">
-                  <p className="display-opsz font-display text-[1.4rem] leading-none text-heading">
-                    {g.country}
-                  </p>
-                  <p className="tech-sm text-body">
-                    {g.items.length} sourcing {g.items.length === 1 ? 'city' : 'cities'}
-                  </p>
-                </div>
-                <ul className="mt-4 grid grid-cols-2 gap-2.5">
-                  {g.items.map((m, i) => (
-                    <li
-                      key={m.id}
-                      className="flex items-baseline gap-3 rounded-lg border border-line bg-ground px-4 py-3"
-                    >
-                      <span className="tech-sm text-accent tabular-nums">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <span className="text-[0.95rem] text-heading">{m.city}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))
+            <ol className="mt-7 rounded-xl border border-line bg-raised/40 px-5 sm:px-6">
+              {ROUTES.flow.map((step, i) => (
+                <li
+                  key={step.title}
+                  className="flex gap-4 border-b border-line py-4 last:border-b-0 sm:gap-5"
+                >
+                  <span className="tech-sm pt-1 text-accent tabular-nums">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span>
+                    <span className="block text-[0.98rem] font-medium text-heading">
+                      {step.title}
+                    </span>
+                    <span className="mt-1 block text-[0.85rem] leading-[1.6] text-body">
+                      {step.body}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ol>
           )}
 
           <p className="mt-5 text-[0.8rem] leading-[1.6] text-body">
-            {ROUTES.note.replace('{origin}', ORIGIN.name).replace('{second}', ROUTES.second.name)}
+            {ROUTES.note.replace('{origin}', ORIGIN.name).replace('{second}', SECOND.name)}
           </p>
         </div>
 
-        {/* ── Right: the yard ────────────────────────────────────────────── */}
-        <div className="reveal lg:sticky lg:top-24">
-          {/*
-            One picture for both directions — the same container ship used on
-            the Global Trade division card, so the trade vertical looks the same
-            wherever it appears. Switching import/export changes the words and
-            the list, not the photograph.
-          */}
-          <div className="relative aspect-[16/10] w-full sm:aspect-[16/9] lg:aspect-[3/2]">
-            <img
-              src="/divisions/trade.webp"
-              alt="A loaded container ship under way at sea at sunset."
-              loading="lazy"
-              decoding="async"
-              className="size-full object-cover"
-              style={{
-                WebkitMaskImage: MASK,
-                maskImage: MASK,
-                WebkitMaskComposite: 'source-in',
-                maskComposite: 'intersect',
-              }}
+        {/* ── Right: the globe ───────────────────────────────────────────── */}
+        <div className="reveal">
+          <div
+            ref={stage}
+            role="img"
+            aria-label={`A globe turned between China and India, with trade lines from China and the rest of the world landing at ${SECOND.name} and running on to ${ORIGIN.name}.`}
+            className="relative mx-auto aspect-square w-full max-w-[560px] overflow-hidden"
+          >
+            {/* The globe's shadow on the page, so it sits rather than floats. */}
+            <div
+              aria-hidden
+              className="absolute bottom-[3%] left-1/2 h-[5%] w-[52%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(13,33,54,0.16),rgba(13,33,54,0))]"
             />
+            <ImportGlobeLazy
+              mode={mode}
+              active={onScreen}
+              still={still}
+              labels={{ mumbai, hyderabad, india, china }}
+            />
+            <CountryLabel ref={china} name="China" tone="bg-secondary" />
+            <CountryLabel ref={india} name="India" tone="bg-accent" />
+            <DeskLabel ref={mumbai} name={SECOND.name} sub="Clearing & freight" side="left" />
+            <DeskLabel ref={hyderabad} name={ORIGIN.name} sub="Works" side="right" />
           </div>
 
           <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
@@ -198,5 +156,69 @@ export default function TradeRoutes() {
         </div>
       </div>
     </Section>
+  )
+}
+
+/**
+ * A country's name, on the country itself — as a solid pill in that country's
+ * colour. Plain text over the dots disappeared: blue on blue dots for India,
+ * green on green for China. The pill is the one thing on the globe that is
+ * a flat, full-strength colour, so the two names are the first thing read.
+ */
+function CountryLabel({ ref, name, tone }: { ref: Ref<HTMLDivElement>; name: string; tone: string }) {
+  return (
+    <div ref={ref} aria-hidden className="pointer-events-none absolute top-0 left-0 opacity-0">
+      <span
+        className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full px-3 py-1 text-[0.72rem] font-bold tracking-[0.22em] text-white uppercase shadow-[0_2px_10px_rgba(13,33,54,0.28)] ring-2 ring-white sm:px-3.5 sm:py-1.5 sm:text-[0.82rem] ${tone}`}
+      >
+        {name}
+      </span>
+    </div>
+  )
+}
+
+/**
+ * A desk's name, pinned to its city by the globe's frame loop. It starts
+ * hidden and only shows once the scene has placed it, so it never sits in the
+ * corner before the globe loads.
+ */
+function DeskLabel({
+  ref,
+  name,
+  sub,
+  side,
+}: {
+  ref: Ref<HTMLDivElement>
+  name: string
+  sub: string
+  side: 'left' | 'right'
+}) {
+  return (
+    <div
+      ref={ref}
+      aria-hidden
+      className="pointer-events-none absolute top-0 left-0 opacity-0"
+    >
+      {/*
+        Pushed out on a leader line, down and away from the city: Mumbai and
+        Hyderabad are close together and India is the subject, so neither
+        label may sit on it. Mumbai goes out over the Arabian Sea, Hyderabad
+        down over the Bay of Bengal.
+      */}
+      <span
+        className={`absolute top-0 h-px w-6 origin-left sm:w-9 bg-heading/40 ${
+          side === 'left' ? 'right-0 origin-right rotate-[-24deg]' : 'left-0 rotate-[38deg]'
+        }`}
+      />
+      <div
+        className={`absolute whitespace-nowrap rounded-md border border-line bg-ground/90 px-2.5 py-1.5 shadow-sm backdrop-blur-sm ${
+          side === 'left' ? 'right-5 bottom-1 text-right sm:right-8' : 'top-3 left-5 sm:top-4 sm:left-7'
+        }`}
+      >
+        <span className="block text-[0.8rem] leading-none font-medium text-heading">{name}</span>
+        {/* The role only where there is room; on a phone the name alone fits. */}
+        <span className="tech-sm mt-1 hidden text-[0.6rem] text-body sm:block">{sub}</span>
+      </div>
+    </div>
   )
 }

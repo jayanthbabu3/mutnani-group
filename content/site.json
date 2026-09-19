@@ -713,19 +713,35 @@
   "routes": {
     "eyebrow": "Vertical 03 · Mutnani IMEX Infra",
     "title": "What we bring in, | and what comes next",
-    "lede": "We buy what the line needs, direct from suppliers in China. Exports are next.",
+    "lede": "We source what the market does not make, through a reliable global procurement network. Exports are next.",
     "modes": [
       {
         "id": "out",
         "label": "We export",
+        "tag": "Coming soon",
         "lede": "Our export desk is being set up. Finished panels and knocked-down buildings will ship from here once it opens.",
         "caption": "Export desk opening soon."
       },
       {
         "id": "in",
         "label": "We import",
-        "lede": "Bought direct from suppliers in four Chinese cities and cleared through our Mumbai desk.",
+        "tag": "Global network",
+        "lede": "Sourced from suppliers around the world, cleared through our Mumbai desk and delivered into the works at Hyderabad.",
         "caption": "Off the quay and straight into the works."
+      }
+    ],
+    "flow": [
+      {
+        "title": "Sourced worldwide",
+        "body": "Materials the local market does not make, bought through our global procurement network."
+      },
+      {
+        "title": "Cleared at Mumbai",
+        "body": "Customs, freight and documentation handled by our own Mumbai desk."
+      },
+      {
+        "title": "Into the works",
+        "body": "Delivered to Hyderabad and on to your site, on the project schedule."
       }
     ],
     "note": "Both desks are ours — {origin} for the works, {second} for clearing and freight.",
@@ -736,40 +752,6 @@
     "second": {
       "name": "Mumbai",
       "sub": "Trade & logistics desk"
-    },
-    "markets": [
-      {
-        "id": "cn-guangzhou",
-        "country": "China",
-        "city": "Guangzhou",
-        "region": "East Asia",
-        "dir": "in",
-        "note": ""
-      },
-      {
-        "id": "cn-shanghai",
-        "country": "China",
-        "city": "Shanghai",
-        "region": "East Asia",
-        "dir": "in",
-        "note": ""
-      },
-      {
-        "id": "cn-beijing",
-        "country": "China",
-        "city": "Beijing",
-        "region": "East Asia",
-        "dir": "in",
-        "note": ""
-      },
-      {
-        "id": "cn-shandong",
-        "country": "China",
-        "city": "Shandong",
-        "region": "East Asia",
-        "dir": "in",
-        "note": ""
-      }
-    ]
+    }
   }
 }

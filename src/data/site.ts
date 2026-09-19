@@ -310,11 +310,23 @@ const schema = z.object({
         z.object({
           id: z.enum(['out', 'in']),
           label: z.string(),
+          /** The small line under the button — "Global network", "Coming soon". */
+          tag: z.string(),
           lede: z.string(),
           caption: z.string(),
         }),
       )
       .length(2),
+    /**
+     * How an import reaches the works, in steps. Deliberately names no
+     * supplier country or city: the client does not want competitors reading
+     * the sourcing list off the site. The globe carries "from everywhere";
+     * these carry what the group does once it lands.
+     */
+    flow: z
+      .array(z.object({ title: z.string(), body: z.string() }))
+      .min(2)
+      .max(4),
     /** `{origin}` and `{second}` are substituted with the two desk names. */
     note: z.string(),
     origin: z.object({
@@ -325,31 +337,6 @@ const schema = z.object({
       name: z.string(),
       sub: z.string(),
     }),
-    /**
-     * CLIENT · every market the group actually trades with.
-     *
-     * `city` is the PORT, not the capital — this is a shipping list, and the
-     * buyer reading it wants to know the load clears through Jebel Ali, not
-     * that the UAE exists.
-     *
-     * `region` groups the list. `dir` decides which of the two directions a
-     * market is filed under; `both` files it under each, which is honest for
-     * somewhere like Singapore that takes panels and sends back machinery.
-     */
-    markets: z
-      .array(
-        z.object({
-          id: z.string(),
-          country: z.string(),
-          city: z.string(),
-          /** Groups the list. Markets sharing a region are listed together in
-              the order they appear here. */
-          region: z.string(),
-          dir: z.enum(['in', 'out', 'both']),
-          note: z.string(),
-        }),
-      )
-      .min(4),
   }),
   /**
    * The logo strip. Visual proof, sitting right after `projects` names the

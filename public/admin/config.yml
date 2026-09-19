@@ -321,8 +321,20 @@ collections:
                 fields:
                   - { name: id, label: 'ID — must be "out" or "in" (do not change)', widget: string }
                   - { name: label, label: Button label, widget: string }
+                  - { name: tag, label: Small line under the button, widget: string }
                   - { name: lede, label: What moves in this direction, widget: text }
                   - { name: caption, label: Caption under the animation, widget: string }
+              # How an import reaches the works. Keep supplier countries and
+              # cities OUT of this — the client asked for the sourcing list not
+              # to be published.
+              - name: flow
+                label: Import steps (2 to 4)
+                widget: list
+                min: 2
+                max: 4
+                fields:
+                  - { name: title, label: Step, widget: string }
+                  - { name: body, label: Detail, widget: text }
               - {
                   name: note,
                   label: 'Small print. {origin} and {second} fill in the two desk names',
@@ -340,26 +352,6 @@ collections:
                 fields:
                   - { name: name, label: City, widget: string }
                   - { name: sub, label: What it does, widget: string }
-              # `city` is the PORT the load clears through, not the capital.
-              # `region` is the heading the market is listed under; markets
-              # sharing one are grouped together, in the order they appear
-              # here. `dir` picks which side of the section it shows on —
-              # "both" lists it under exports AND imports.
-              - name: markets
-                label: Markets
-                widget: list
-                fields:
-                  - { name: id, label: ID (do not change), widget: string }
-                  - { name: country, label: Country, widget: string }
-                  - { name: city, label: Port or city, widget: string }
-                  - { name: region, label: Region (the heading it is listed under), widget: string }
-                  - {
-                      name: dir,
-                      label: Direction,
-                      widget: select,
-                      options: ['in', 'out', 'both'],
-                    }
-                  - { name: note, label: What moves through it, widget: text }
 
           # ── Why the group gets asked back ───────────────────────────────
           - name: trust
