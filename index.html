@@ -60,17 +60,22 @@
       /* ── Title card ── */
       .pre-centre {
         position: absolute; inset: 0; display: grid; place-items: center;
-        transition: opacity .4s cubic-bezier(.33, 1, .68, 1), scale .8s cubic-bezier(.16, 1, .3, 1), filter .4s ease;
+        transition: opacity .45s cubic-bezier(.33, 1, .68, 1), scale .7s cubic-bezier(.55, 0, .45, 1), filter .45s ease;
       }
-      .preloader.is-opening .pre-centre { opacity: 0; scale: .94; filter: blur(6px) }
-      .pre-stack { display: grid; justify-items: center }
+      /* Out: the logo keeps coming toward the viewer as it fades — the same
+         direction as the way in, so the exit reads as one continuous zoom. */
+      .preloader.is-opening .pre-centre { opacity: 0; scale: 1.18; filter: blur(4px) }
+      /* In: the whole lockup zooms up from small, as one piece. */
+      .pre-stack {
+        display: grid; justify-items: center;
+        opacity: 0; scale: .35; filter: blur(6px);
+        animation: preZoom 1.6s cubic-bezier(.22, 1, .36, 1) .1s forwards;
+      }
 
       .pre-mark { position: relative; display: grid }
       .pre-logo {
         grid-area: 1 / 1;
         width: clamp(96px, 10vw, 140px); height: auto;
-        clip-path: inset(100% 0 0 0); scale: 1.08; filter: blur(8px);
-        animation: preMark 1.1s cubic-bezier(.16, 1, .3, 1) .15s forwards;
       }
       /* One pass of light across the mark, masked to its own shape so the band
          never shows as a rectangle over the transparent corners. */
@@ -80,7 +85,7 @@
         mask: url(/brand/logo-mark.webp) center / contain no-repeat;
         background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .8) 50%, transparent 62%);
         background-size: 260% 100%; background-position: 140% 0;
-        animation: preSheen 1s cubic-bezier(.65, 0, .35, 1) 1.05s forwards;
+        animation: preSheen 1s cubic-bezier(.65, 0, .35, 1) 1.2s forwards;
       }
 
       /* The name and tagline, from the client's artwork rather than set in
@@ -88,18 +93,15 @@
       .pre-name {
         margin-top: clamp(20px, 2.4vw, 28px);
         width: clamp(220px, 26vw, 340px); height: auto;
-        opacity: 0; translate: 0 10px; filter: blur(4px);
-        animation: preName 1.1s cubic-bezier(.16, 1, .3, 1) .7s forwards;
       }
       .pre-line { margin-top: 18px; width: clamp(120px, 12vw, 160px); height: 2px; overflow: visible }
       .pre-line path {
         stroke-dasharray: 1; stroke-dashoffset: 1;
-        animation: preDraw 1.2s cubic-bezier(.65, 0, .35, 1) .55s forwards;
+        animation: preDraw 1s cubic-bezier(.65, 0, .35, 1) 1s forwards;
       }
 
-      @keyframes preMark { to { clip-path: inset(0 0 0 0); scale: 1; filter: blur(0) } }
+      @keyframes preZoom { to { opacity: 1; scale: 1; filter: blur(0) } }
       @keyframes preSheen { to { background-position: -40% 0 } }
-      @keyframes preName { to { opacity: 1; translate: 0 0; filter: blur(0) } }
       @keyframes preDraw { to { stroke-dashoffset: 0 } }
 
       @media (prefers-reduced-motion: reduce) {
