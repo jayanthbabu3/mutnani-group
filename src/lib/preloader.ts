@@ -1,6 +1,6 @@
 /**
- * The logo preloader: a white screen, the mark revealed like a title card with
- * the tagline and a brand line under it, then the whole screen fades away.
+ * The logo preloader: a white screen, the logo zooming in like a title card with
+ * a brand line drawn under it, then zooming on through as the screen fades.
  *
  * The markup and its CSS live in index.html, not in React. That is the point
  * of a preloader: it has to paint before this bundle has even downloaded, and
@@ -15,8 +15,8 @@
  */
 
 /** Long enough for the title card (mark, sheen, name, line) to finish. */
-const MIN = 1700
-const MAX = 3000
+const MIN = 2300
+const MAX = 3400
 /** The title card blurs away for this long before the screen fades. */
 const CLEAR_MS = 350
 /** Screen fade in index.html is 0.6s; remove the node just after. */

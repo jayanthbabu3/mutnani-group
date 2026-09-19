@@ -110,6 +110,23 @@ export function Eyebrow({ children }: { children: ReactNode }) {
  * `className` remains for POSITION, not for size. If a section needs a smaller
  * heading to fit, the copy is too long — shorten the copy.
  */
+/**
+ * Headings in the two logo colours. A ` | ` in the copy marks the switch:
+ * everything before it is brand blue, everything after it brand green
+ * (`secondary`, the text-safe green — the lime is fills only). A title with
+ * no marker keeps the plain heading colour.
+ */
+function TwoTone({ text }: { text: string }) {
+  const [lead, ...rest] = text.split(' | ')
+  if (!rest.length) return <>{text}</>
+  return (
+    <>
+      <span className="text-accent">{lead}</span>{' '}
+      <span className="text-secondary">{rest.join(' ')}</span>
+    </>
+  )
+}
+
 export function SectionTitle({
   children,
   className = '',
@@ -120,9 +137,9 @@ export function SectionTitle({
 }) {
   return (
     <h2
-      className={`reveal mt-4 max-w-3xl font-display text-[clamp(1.9rem,3.2vw,2.7rem)] leading-[1.12] font-semibold tracking-[-0.015em] text-heading ${className}`}
+      className={`reveal mt-4 max-w-3xl font-display text-[clamp(1.55rem,2.5vw,2.1rem)] leading-[1.18] font-semibold tracking-[-0.015em] text-pretty text-heading ${className}`}
     >
-      {children}
+      {typeof children === 'string' ? <TwoTone text={children} /> : children}
     </h2>
   )
 }

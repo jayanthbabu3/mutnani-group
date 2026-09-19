@@ -114,12 +114,7 @@ export default function About() {
         {/* ── The story ───────────────────────────────────────────────── */}
         <div>
           <Eyebrow>{ABOUT.eyebrow}</Eyebrow>
-          {/* Brand blue then brand green — the two halves of the logo, and the
-              only two colours the client wants in a heading. */}
-          <SectionTitle>
-            <span className="text-accent">{ABOUT.title}</span>{' '}
-            <span className="text-secondary">{ABOUT.titleAccent}</span>
-          </SectionTitle>
+          <SectionTitle>{ABOUT.title}</SectionTitle>
 
           <div className="reveal mt-6 space-y-4">
             {ABOUT.body.map((para) => (

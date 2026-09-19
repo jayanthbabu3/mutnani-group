@@ -77,9 +77,7 @@ const schema = z.object({
    */
   about: z.object({
     eyebrow: z.string(),
-    /** Title in two brand colours: `title` in blue, `titleAccent` after it in green. */
     title: z.string(),
-    titleAccent: z.string(),
     /** One paragraph per entry. Two reads best; three is the ceiling. */
     body: z.array(z.string()).min(1).max(3),
     figures: z

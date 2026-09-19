@@ -129,7 +129,7 @@ collections:
             widget: object
             fields:
               - { name: eyebrow, label: Small line, widget: string }
-              - { name: title, label: Heading, widget: string }
+              - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
               - { name: lede, label: Intro, widget: text }
 
           # ── The three companies ─────────────────────────────────────────
@@ -172,7 +172,7 @@ collections:
             widget: object
             fields:
               - { name: eyebrow, label: Small line above the name (e.g. "Vertical 01"), widget: string }
-              - { name: title, label: Company name — this is the heading, widget: string }
+              - { name: title, label: "Company name — this is the heading (text after \" | \" turns green)", widget: string }
               - { name: sub, label: One-line strapline under the name (shown in gold), widget: string }
               - name: capabilities
                 label: What this company does (3–6)
@@ -207,7 +207,7 @@ collections:
             widget: object
             fields:
               - { name: eyebrow, label: Small line, widget: string }
-              - { name: title, label: Heading, widget: string }
+              - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
               - { name: lede, label: Intro, widget: text }
               - name: steps
                 label: Steps
@@ -238,7 +238,7 @@ collections:
             widget: object
             fields:
               - { name: eyebrow, label: Small line, widget: string }
-              - { name: title, label: Heading, widget: string }
+              - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
               - { name: lede, label: Intro, widget: text }
               - name: groups
                 label: Groups
@@ -264,7 +264,7 @@ collections:
             widget: object
             fields:
               - { name: eyebrow, label: Small line, widget: string }
-              - { name: title, label: Heading, widget: string }
+              - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
               - { name: lede, label: Intro, widget: text }
               - name: items
                 label: Projects
@@ -282,7 +282,7 @@ collections:
             widget: object
             fields:
               - { name: eyebrow, label: Small line, widget: string }
-              - { name: title, label: Heading, widget: string }
+              - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
               - { name: lede, label: Intro, widget: text }
               - { name: note, label: Small print, widget: text }
               - name: stations
@@ -308,7 +308,7 @@ collections:
             widget: object
             fields:
               - { name: eyebrow, label: Small line, widget: string }
-              - { name: title, label: Heading, widget: string }
+              - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
               - { name: lede, label: Intro, widget: text }
               # These two blocks describe how the trade actually runs. They are
               # claims about the business — check them with the client before
@@ -367,7 +367,7 @@ collections:
             widget: object
             fields:
               - { name: eyebrow, label: Small line, widget: string }
-              - { name: title, label: Heading, widget: string }
+              - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
               - name: points
                 label: Points
                 widget: list
@@ -391,5 +391,5 @@ collections:
             widget: object
             fields:
               - { name: eyebrow, label: Small line, widget: string }
-              - { name: title, label: Heading, widget: string }
+              - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
               - { name: lede, label: Intro, widget: text }

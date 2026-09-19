@@ -36,7 +36,7 @@ export default function Hero() {
             </p>
 
             {/*
-              No italic on the stressed line: the accent colour already carries
+              No italic on the stressed line: the blue-to-green switch already carries
               that emphasis, and a high-contrast display italic at display size
               reads as an invitation rather than as steel.
 
@@ -55,8 +55,8 @@ export default function Hero() {
               data-entrance="lines"
               className="mt-6 font-display text-[clamp(1.7rem,3.2vw,2.75rem)] leading-[1.1] font-bold tracking-tight text-heading"
             >
-              <span className="block">{line1}</span>
-              <span className="block text-accent">{line2}</span>
+              <span className="block text-accent">{line1}</span>
+              <span className="block text-secondary">{line2}</span>
             </h1>
 
             <p
