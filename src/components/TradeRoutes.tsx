@@ -11,12 +11,12 @@ import { Eyebrow, Lede, Section, SectionTitle } from './ui'
  * ── Why there is no list of places ────────────────────────────────────────
  * This section used to name the four Chinese cities the group buys from. The
  * client asked for that to come off: a sourcing list on a public site is a
- * map for competitors. So the picture says "from across the world" — a globe
- * with lines rising out of whole regions, none of them labelled — and the
- * words say what happens once the goods land, which is the part the group
- * actually wants to be hired for.
+ * map for competitors. So the globe names COUNTRIES only — China, Vietnam and
+ * the UAE, with India — and its lines start from inside them, never at a
+ * city. The words say what happens once the goods land, which is the part the
+ * group actually wants to be hired for.
  *
- * The only places named are the group's own two desks, pinned on the globe.
+ * The only cities named are the group's own two desks, pinned on the globe.
  *
  * ── One control, two halves ───────────────────────────────────────────────
  * `mode` is the only state. It picks the direction the globe runs, the copy,
@@ -44,6 +44,8 @@ export default function TradeRoutes() {
   const hyderabad = useRef<HTMLDivElement>(null)
   const india = useRef<HTMLDivElement>(null)
   const china = useRef<HTMLDivElement>(null)
+  const vietnam = useRef<HTMLDivElement>(null)
+  const uae = useRef<HTMLDivElement>(null)
 
   const current = MODES.find((m) => m.id === mode)!
 
@@ -129,7 +131,7 @@ export default function TradeRoutes() {
           <div
             ref={stage}
             role="img"
-            aria-label={`A globe turned between China and India, with trade lines from China and the rest of the world landing at ${SECOND.name} and running on to ${ORIGIN.name}.`}
+            aria-label={`A globe turned to India, with trade lines from China, Vietnam, the UAE and the rest of the world landing at ${SECOND.name} and running on to ${ORIGIN.name}.`}
             className="relative mx-auto aspect-square w-full max-w-[560px] overflow-hidden"
           >
             {/* The globe's shadow on the page, so it sits rather than floats. */}
@@ -141,12 +143,14 @@ export default function TradeRoutes() {
               mode={mode}
               active={onScreen}
               still={still}
-              labels={{ mumbai, hyderabad, india, china }}
+              labels={{ mumbai, hyderabad, india, china, vietnam, uae }}
             />
             <CountryLabel ref={china} name="China" tone="bg-secondary" />
+            <CountryLabel ref={vietnam} name="Vietnam" tone="bg-secondary" />
+            <CountryLabel ref={uae} name="UAE" tone="bg-secondary" />
             <CountryLabel ref={india} name="India" tone="bg-accent" />
             <DeskLabel ref={mumbai} name={SECOND.name} sub="Clearing & freight" side="left" />
-            <DeskLabel ref={hyderabad} name={ORIGIN.name} sub="Works" side="right" />
+            <DeskLabel ref={hyderabad} name={ORIGIN.name} sub="Works" side="below" />
           </div>
 
           <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
@@ -161,9 +165,10 @@ export default function TradeRoutes() {
 
 /**
  * A country's name, on the country itself — as a solid pill in that country's
- * colour. Plain text over the dots disappeared: blue on blue dots for India,
- * green on green for China. The pill is the one thing on the globe that is
- * a flat, full-strength colour, so the two names are the first thing read.
+ * colour: green for a source, blue for India. Plain text over the dots
+ * disappeared: blue on blue dots for India, green on green for China. The
+ * pills are the only flat, full-strength colour on the globe, so the country
+ * names are the first thing read.
  */
 function CountryLabel({ ref, name, tone }: { ref: Ref<HTMLDivElement>; name: string; tone: string }) {
   return (
@@ -191,7 +196,7 @@ function DeskLabel({
   ref: Ref<HTMLDivElement>
   name: string
   sub: string
-  side: 'left' | 'right'
+  side: 'left' | 'below'
 }) {
   return (
     <div
@@ -202,17 +207,21 @@ function DeskLabel({
       {/*
         Pushed out on a leader line, down and away from the city: Mumbai and
         Hyderabad are close together and India is the subject, so neither
-        label may sit on it. Mumbai goes out over the Arabian Sea, Hyderabad
-        down over the Bay of Bengal.
+        label may sit on it. Both go DOWN, into open sea — Mumbai down-left
+        over the Arabian Sea, Hyderabad straight down past the tip of India —
+        because up-left is the UAE and to the right is Vietnam, and each has a
+        country pill of its own there.
       */}
       <span
         className={`absolute top-0 h-px w-6 origin-left sm:w-9 bg-heading/40 ${
-          side === 'left' ? 'right-0 origin-right rotate-[-24deg]' : 'left-0 rotate-[38deg]'
+          side === 'left' ? 'right-0 origin-right rotate-[-30deg]' : 'left-0 rotate-[72deg]'
         }`}
       />
       <div
         className={`absolute whitespace-nowrap rounded-md border border-line bg-ground/90 px-2.5 py-1.5 shadow-sm backdrop-blur-sm ${
-          side === 'left' ? 'right-5 bottom-1 text-right sm:right-8' : 'top-3 left-5 sm:top-4 sm:left-7'
+          side === 'left'
+            ? 'top-2 right-5 text-right sm:top-3 sm:right-8'
+            : 'top-6 -left-3 sm:top-8'
         }`}
       >
         <span className="block text-[0.8rem] leading-none font-medium text-heading">{name}</span>

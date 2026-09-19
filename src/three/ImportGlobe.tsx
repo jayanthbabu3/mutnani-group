@@ -6,14 +6,15 @@ import DOTS from '../data/globe-dots.json'
 import { COLOR } from './layout'
 
 /**
- * Mutnani IMEX: goods arriving in India, most of them from China.
+ * Mutnani IMEX: goods arriving in India from China, Vietnam and the UAE.
  *
- * A lit, dotted globe turned between the two countries. China's land is
- * picked out in the logo green, India's in the logo blue, and the lead trade
- * lines run from one to the other — green at the Chinese end, blue by the time
- * they land at the Mumbai desk — before a short green hop inland to the
- * Hyderabad works. Fainter lines from the rest of the world say the network
- * does not stop at China.
+ * A lit, dotted globe turned to India and the countries it buys from. The
+ * source countries are picked out in the logo green, India in the logo blue —
+ * green is where goods come from, blue is where they land — and the lead trade
+ * lines run from one to the other, green at the source, blue by the time they
+ * reach the Mumbai desk, before a short green hop inland to the Hyderabad
+ * works. Fainter lines from the rest of the world say the network does not
+ * stop at three countries.
  *
  * No line starts at a real city: the client does not want the sourcing list
  * readable off the site. The country is the claim; the suppliers are not.
@@ -28,7 +29,7 @@ import { COLOR } from './layout'
  */
 
 type Mode = 'out' | 'in'
-type LabelKey = 'mumbai' | 'hyderabad' | 'india' | 'china'
+type LabelKey = 'mumbai' | 'hyderabad' | 'india' | 'china' | 'vietnam' | 'uae'
 type Props = {
   mode: Mode
   active: boolean
@@ -44,39 +45,43 @@ const PLACES: Record<LabelKey, readonly [number, number]> = {
   hyderabad: [17.38, 78.48],
   india: [30.5, 77.5],
   china: [44.5, 101],
+  // Off the coast, in the South China Sea: Vietnam is too narrow to hold a
+  // pill, and inland it would sit on the Hyderabad label.
+  vietnam: [14, 113.5],
+  uae: [25.5, 54],
 }
 
-/** The lead lines: spread across China, deliberately not on any city. */
-const FROM_CHINA: readonly (readonly [number, number])[] = [
+/** The lead lines: two from inside China, one each from Vietnam and the UAE —
+    all deliberately off any city. */
+const FROM_SOURCES: readonly (readonly [number, number])[] = [
   [30.5, 111],
-  [37.5, 106.5],
-  [26.5, 104],
+  [37.5, 104],
+  [15.2, 107.9],
+  [23.6, 54.8],
 ]
 
-/** The rest of the network, drawn quieter: Europe, the Gulf, East Africa,
-    Southeast Asia, Australia. Regions, never ports. */
+/** The rest of the network, drawn quieter: Europe, East Africa, Australia.
+    Regions, never ports. */
 const FROM_WORLD: readonly (readonly [number, number])[] = [
   [49, 9],
-  [26, 46],
   [-4, 33],
-  [11, 104],
   [-24, 134],
 ]
 
-/** The point that faces the camera: between India and China, so both sit
-    square on the near side. */
-const FACE = { lat: 24, lon: 90 }
+/** The point that faces the camera: east of India, so China and Vietnam sit
+    square on the near side and the UAE is still well clear of the limb. */
+const FACE = { lat: 22, lon: 86 }
 
 /** The sun, fixed in the world — the globe turns under it. Upper left, in front. */
 const SUN = new THREE.Vector3(-0.55, 0.5, 0.67).normalize()
 
 const GREEN = '#2f7a0a' // mirrors --color-secondary
-const LIME = '#5aa312' // a lifted secondary, for China's dots on the lit side
+const LIME = '#5aa312' // a lifted secondary, for the source countries' dots
 
 /* ── Timing ──────────────────────────────────────────────────────────────── */
 
-/** Every China line lands once per LEAD seconds. */
-const LEAD = 6
+/** Every lead line lands once per LEAD seconds. */
+const LEAD = 7.2
 /** The quieter lines run slower, off the lead beat. */
 const WORLD = 9.5
 /** How long the lit tail is, as a fraction of the line. */
@@ -207,8 +212,8 @@ const atmosphereMaterial = () =>
   })
 
 /**
- * The land dots. `aKind` is 0 for the world, 1 for India, 2 for China; the
- * two countries are drawn larger and stronger, and breathe very slightly so
+ * The land dots. `aKind` is 0 for the world, 1 for India, 2 for a source
+ * country; those are drawn larger and stronger, and breathe very slightly so
  * they read as the subject even at a glance.
  */
 const dotMaterial = () =>
@@ -219,7 +224,7 @@ const dotMaterial = () =>
       uSun: { value: SUN },
       uLand: { value: new THREE.Color('#8ea4bf') },
       uIndia: { value: new THREE.Color(COLOR.accent) },
-      uChina: { value: new THREE.Color(LIME) },
+      uSource: { value: new THREE.Color(LIME) },
       /** Dot diameter in world units — a little over half the dot spacing. */
       uSize: { value: 0.0142 },
       /** World units to device pixels at unit depth; set from the canvas each frame. */
@@ -250,7 +255,7 @@ const dotMaterial = () =>
     fragmentShader: /* glsl */ `
       uniform vec3 uLand;
       uniform vec3 uIndia;
-      uniform vec3 uChina;
+      uniform vec3 uSource;
       varying float vKind;
       varying float vFacing;
       varying float vLight;
@@ -259,8 +264,8 @@ const dotMaterial = () =>
         if (d > 0.5) discard;
         float edge = smoothstep(0.5, 0.34, d);
         float face = smoothstep(0.08, 0.55, vFacing);
-        vec3 col = vKind > 1.5 ? uChina : vKind > 0.5 ? uIndia : uLand;
-        // The night side darkens the world but only dims the two countries.
+        vec3 col = vKind > 1.5 ? uSource : vKind > 0.5 ? uIndia : uLand;
+        // The night side darkens the world but only dims the highlighted countries.
         float hot = step(0.5, vKind);
         col *= mix(mix(0.62, 1.08, vLight), mix(0.8, 1.05, vLight), hot);
         gl_FragColor = vec4(col, edge * face * mix(0.8, 1.0, hot));
@@ -406,10 +411,10 @@ function Globe({ mode, still, labels }: Props) {
   }, [gl, invalidate])
 
   const scene = useMemo(() => {
-    // Land dots. The two countries last, so they draw over any neighbour.
+    // Land dots. The highlighted countries last, so they draw over any neighbour.
     const lists = [
       [DOTS.land, 0],
-      [DOTS.china, 2],
+      [DOTS.sources, 2],
       [DOTS.india, 1],
     ] as const
     const n = lists.reduce((sum, [list]) => sum + list.length / 2, 0)
@@ -450,7 +455,7 @@ function Globe({ mode, still, labels }: Props) {
       globeMat: globeMaterial(),
       atmoMat: atmosphereMaterial(),
       gridGeo: graticule(),
-      lead: FROM_CHINA.map((o) => makeLine(o, true)),
+      lead: FROM_SOURCES.map((o) => makeLine(o, true)),
       world: FROM_WORLD.map((o) => makeLine(o, false)),
       hop: {
         curve: hopCurve,
@@ -519,7 +524,7 @@ function Globe({ mode, still, labels }: Props) {
         if (!p) return
         p.visible = head <= 1
         if (p.visible) line.curve.getPointAt(out ? 1 - head : head, p.position)
-        // A China packet leaves green and arrives blue, like its line.
+        // A lead packet leaves green and arrives blue, like its line.
         ;(p.material as THREE.MeshBasicMaterial).color.set(
           out || (line.lead && head < 0.5) ? GREEN : COLOR.accent,
         )
@@ -527,7 +532,7 @@ function Globe({ mode, still, labels }: Props) {
     drive(scene.lead, LEAD, 0)
     drive(scene.world, WORLD, scene.lead.length)
 
-    // Every China landing at Mumbai sets off a ring there and a hop inland.
+    // Every lead landing at Mumbai sets off a ring there and a hop inland.
     const count = scene.lead.length
     const beat = frac((time * count) / LEAD - count * LAND)
     ringsM.current.forEach((ring, j) => {
