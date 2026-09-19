@@ -68,7 +68,7 @@
     "stats": [
       {
         "value": 17,
-        "suffix": " yrs",
+        "suffix": "+ yrs",
         "label": "Since 2009"
       },
       {
@@ -128,7 +128,7 @@
         "label": "Founded"
       },
       {
-        "value": "17",
+        "value": "17+",
         "label": "Years in trade"
       },
       {
@@ -611,7 +611,7 @@
   },
   "trust": {
     "eyebrow": "Why the group gets asked back",
-    "title": "Seventeen years, | and the same phone number",
+    "title": "17+ years, | and the same phone number",
     "points": [
       {
         "title": "Founded 2009",
