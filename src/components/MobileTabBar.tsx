@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import { NAV_LINKS, whatsappHref } from '../data/site'
+import { usePath } from '../lib/router'
 
 /**
  * The bottom bar on phones — the primary navigation, not a fallback.
@@ -17,7 +17,7 @@ import { NAV_LINKS, whatsappHref } from '../data/site'
 /** Drawn at one weight, in the same hand as the rest of the site's line work. */
 const ICONS: Record<string, string> = {
   /* Three stacked bars — the three companies. */
-  divisions: 'M4 5.5h16M4 12h16M4 18.5h16',
+  companies: 'M4 5.5h16M4 12h16M4 18.5h16',
   /* A gable frame: the thing the group actually sells. */
   products: 'M3.5 10.5 12 4.5l8.5 6M6 10v10h12V10M6 20h12',
   /* Site plan — plots on a grid. */
@@ -39,18 +39,15 @@ const ICONS: Record<string, string> = {
   contact: 'M4 6.5h16v11H4zM4 7l8 6 8-6',
 }
 
-/** Four tabs, split two either side of the raised enquiry button. */
+/** The four pages, split two either side of the raised enquiry button. The
+    icon is named by the path: "/" is home, "/about" is about. */
 const TABS = NAV_LINKS.slice(0, 4).map((link) => ({
   ...link,
-  icon: link.href.replace('#', ''),
+  icon: link.href === '/' ? 'home' : link.href.replace(/^\//, ''),
 }))
 
-// Hoisted: a fresh array on every render would tear down and rebuild the
-// observer in useActiveSection each time.
-const TAB_HREFS = TABS.map((tab) => tab.href)
-
 export default function MobileTabBar() {
-  const active = useActiveSection(TAB_HREFS)
+  const active = usePath()
 
   return (
     <nav
@@ -105,7 +102,7 @@ function Tab({
     <li>
       <a
         href={href}
-        aria-current={active ? 'true' : undefined}
+        aria-current={active ? 'page' : undefined}
         // py-3 + the 21px icon + label clears 44px without a fixed height.
         className={`flex flex-col items-center gap-1.5 py-3 transition-colors duration-300 ease-micro ${
           active ? 'text-accent' : 'text-heading'
@@ -127,40 +124,4 @@ function Tab({
       </a>
     </li>
   )
-}
-
-/**
- * Which section owns the viewport. Observed rather than computed from
- * scrollY, so it stays correct with Lenis easing the scroll and with sections
- * of wildly different heights.
- */
-function useActiveSection(hrefs: string[]) {
-  const [active, setActive] = useState<string | null>(null)
-
-  useEffect(() => {
-    const sections = hrefs
-      .map((href) => document.querySelector(href))
-      .filter((el): el is Element => el !== null)
-    if (!sections.length) return
-
-    const visible = new Map<string, number>()
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => visible.set('#' + entry.target.id, entry.intersectionRatio))
-        const top = [...visible.entries()]
-          .filter(([, ratio]) => ratio > 0)
-          .sort((a, b) => b[1] - a[1])[0]
-        setActive(top ? top[0] : null)
-      },
-      // A band across the middle of the screen: the section the visitor is
-      // actually reading, not one clipping the top edge.
-      { rootMargin: '-35% 0px -35% 0px', threshold: [0, 0.25, 0.5, 1] },
-    )
-
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
-  }, [hrefs])
-
-  return active
 }

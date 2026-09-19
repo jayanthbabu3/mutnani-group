@@ -116,7 +116,7 @@ export function Eyebrow({ children }: { children: ReactNode }) {
  * (`secondary`, the text-safe green — the lime is fills only). A title with
  * no marker keeps the plain heading colour.
  */
-function TwoTone({ text }: { text: string }) {
+export function TwoTone({ text }: { text: string }) {
   const [lead, ...rest] = text.split(' | ')
   if (!rest.length) return <>{text}</>
   return (

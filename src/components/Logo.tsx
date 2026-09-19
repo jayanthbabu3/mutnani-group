@@ -16,7 +16,7 @@ import { SITE } from '../data/site'
  */
 export default function Logo({ className = '' }: { className?: string }) {
   return (
-    <a href="#top" className={`flex items-center ${className}`} aria-label={`${SITE.name} Group — home`}>
+    <a href="/" className={`flex items-center ${className}`} aria-label={`${SITE.name} Group — home`}>
       <img
         src="/brand/logo-horizontal.webp"
         alt={`${SITE.name} Group — from vision to reality`}

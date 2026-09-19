@@ -45,6 +45,33 @@ const unstage = (el: Element) => {
 export const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+/** The live Lenis instance, while smooth scroll is running. */
+let activeLenis: Lenis | null = null
+
+/**
+ * Scroll to an element or a y position, through Lenis when it is running so
+ * programmatic scrolls ride the same easing as the wheel. `immediate` jumps —
+ * for a page change, where easing down from the top of a new page reads as the
+ * page sliding rather than arriving.
+ *
+ * No offset for the fixed header: every section and card that can be linked
+ * to carries a `scroll-mt-*`, and Lenis honours scroll-margin itself, as does
+ * `scrollIntoView`. An offset here as well stopped every link 72px short.
+ */
+export function scrollToTarget(target: HTMLElement | number, opts: { immediate?: boolean } = {}) {
+  if (activeLenis) {
+    // Lenis caches the page height and clamps to it. After a page change the
+    // cached height is the OLD page's, so without this a jump to a section
+    // further down than the old page was long goes nowhere.
+    activeLenis.resize()
+    activeLenis.scrollTo(target, { duration: 1.4, immediate: opts.immediate, force: true })
+    return
+  }
+  const behavior = opts.immediate || prefersReducedMotion() ? 'auto' : 'smooth'
+  if (typeof target === 'number') window.scrollTo({ top: target, behavior })
+  else target.scrollIntoView({ behavior })
+}
+
 /** Smooth scroll driven by Lenis, with ScrollTrigger on the same ticker. */
 export function useSmoothScroll() {
   useEffect(() => {
@@ -58,6 +85,7 @@ export function useSmoothScroll() {
     })
 
     lenis.on('scroll', ScrollTrigger.update)
+    activeLenis = lenis
 
     const raf = (time: number) => lenis.raf(time * 1000)
     gsap.ticker.add(raf)
@@ -72,13 +100,14 @@ export function useSmoothScroll() {
       const target = document.querySelector(id)
       if (!target) return
       e.preventDefault()
-      lenis.scrollTo(target as HTMLElement, { offset: -72, duration: 1.4 })
+      scrollToTarget(target as HTMLElement)
     }
     document.addEventListener('click', onClick)
 
     return () => {
       document.removeEventListener('click', onClick)
       gsap.ticker.remove(raf)
+      if (activeLenis === lenis) activeLenis = null
       lenis.destroy()
     }
   }, [])

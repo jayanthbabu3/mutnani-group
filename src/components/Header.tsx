@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Logo from './Logo'
 import { NAV_EXTRA, NAV_LINKS, SITE } from '../data/site'
+import { usePath } from '../lib/router'
 import { Shell } from './ui'
 
 /**
@@ -9,9 +10,16 @@ import { Shell } from './ui'
  *
  * Nav links are hidden below `lg` — the bottom tab bar is the navigation there,
  * and a hamburger that hides every destination behind a tap is not.
+ *
+ * The four pages are always listed; Partners and Videos (sections of the home
+ * page) join them from `xl`. The page you are on is marked.
  */
+const ORDER = ['/', '/companies', '/#partners', '/#videos', '/about', '/contact']
+const rank = (href: string) => (ORDER.includes(href) ? ORDER.indexOf(href) : ORDER.length - 1.5)
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const path = usePath()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -21,21 +29,14 @@ export default function Header() {
   }, [])
 
   /**
-   * Header order is the page's order, not the tab bar's.
-   *
-   * The tab bar needs Contact as one of its four, so `nav` in the content file
-   * ends with it — but in a header that lists seven links, Contact appearing
-   * fourth of seven puts three sections after the thing that ends the journey.
-   * So: everything except Contact, in page order, then Contact last.
+   * The links come from two lists in site.json — the pages, and the home
+   * sections worth a link — so they are put in one reading order here:
+   * Home, Companies, the two home sections, About, Contact. A link not in
+   * ORDER lands just before Contact.
    */
-  const links = [
-    ...NAV_LINKS.slice(0, 1),
-    ...NAV_EXTRA,
-    ...NAV_LINKS.slice(1, 3),
-    ...NAV_LINKS.slice(3),
-  ]
+  const links = [...NAV_LINKS, ...NAV_EXTRA].sort((a, b) => rank(a.href) - rank(b.href))
 
-  /** The three that get dropped when the header runs out of room. */
+  /** The home-section links, dropped when the header runs out of room. */
   const secondary = useMemo(() => new Set(NAV_EXTRA.map((link) => link.href)), [])
 
   return (
@@ -45,23 +46,31 @@ export default function Header() {
       }`}
     >
       <Shell className="flex items-center justify-between py-3.5">
-        <Logo />
+        <Logo className="shrink-0" />
 
-        <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={`text-[0.82rem] font-medium tracking-[0.02em] text-body transition-colors duration-200 ease-micro hover:text-accent ${
-                // Tested by membership, not by index: the array is reordered
-                // above, so an index check would hide whichever links happened
-                // to land in those slots.
-                secondary.has(link.href) ? 'hidden xl:inline' : ''
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
+        <nav aria-label="Primary" className="ml-10 hidden items-center gap-7 whitespace-nowrap lg:flex">
+          {links.map((link) => {
+            const current = link.href === path
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={current ? 'page' : undefined}
+                className={`relative py-1 text-[0.82rem] font-medium tracking-[0.02em] transition-colors duration-200 ease-micro hover:text-accent ${
+                  current
+                    ? 'text-accent after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-accent'
+                    : 'text-body'
+                } ${
+                  // Measured, not guessed: with all six links and the phone
+                  // button, `xl` (1280px) still leaves a wide gap after the
+                  // logo. Below it the four pages alone are shown.
+                  secondary.has(link.href) ? 'hidden xl:inline' : ''
+                }`}
+              >
+                {link.label}
+              </a>
+            )
+          })}
           <a
             href={`tel:${SITE.phone}`}
             className="rounded-full bg-accent px-5 py-2.5 text-[0.78rem] font-semibold tracking-[0.04em] text-ground tabular-nums transition-colors duration-200 ease-micro hover:bg-accent-glow"

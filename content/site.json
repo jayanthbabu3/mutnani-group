@@ -18,44 +18,52 @@
   },
   "nav": [
     {
-      "href": "#divisions",
-      "label": "Divisions"
+      "href": "/",
+      "label": "Home"
     },
     {
-      "href": "#products",
-      "label": "Products"
+      "href": "/companies",
+      "label": "Companies"
     },
     {
-      "href": "#partners",
-      "label": "Partners"
+      "href": "/about",
+      "label": "About"
     },
     {
-      "href": "#contact",
+      "href": "/contact",
       "label": "Contact"
     }
   ],
   "navExtra": [
     {
-      "href": "#about",
-      "label": "About"
+      "href": "/#partners",
+      "label": "Partners"
     },
     {
-      "href": "#prefab",
-      "label": "Prefab"
-    },
-    {
-      "href": "#line",
-      "label": "Roofing"
-    },
-    {
-      "href": "#trade",
-      "label": "Global trade"
-    },
-    {
-      "href": "#videos",
+      "href": "/#videos",
       "label": "Videos"
     }
   ],
+  "pages": {
+    "companies": {
+      "eyebrow": "Our companies",
+      "title": "Design, construction | and delivery",
+      "lede": "Balaji Prefab Private Limited designs and builds the structure, Balaji Roofing Industries manufactures the roofing that covers it, and Mutnani IMEX Infra sources what the market does not make — each able to run on its own, all working to one schedule.",
+      "meta": "Balaji Prefab Private Limited, Balaji Roofing Industries and Mutnani IMEX Infra Private Limited — prefabricated construction, roofing profile manufacturing and global imports."
+    },
+    "about": {
+      "eyebrow": "About the group",
+      "title": "From vision | to reality",
+      "lede": "Mutnani Group of Companies began in 2009 as Balaji Agencies, founded by Mutnani Madhu Sudhan. Today it is three companies delivering corporate prefab infrastructure across India.",
+      "meta": "Founded in 2009 by Mutnani Madhu Sudhan, Mutnani Group of Companies delivers corporate prefab infrastructure across India."
+    },
+    "contact": {
+      "eyebrow": "Contact us",
+      "title": "Talk to | the group",
+      "lede": "Call the Hyderabad desk, write to us, or send an enquiry below — it opens WhatsApp with your details already written out.",
+      "meta": "Contact Mutnani Group of Companies — Hyderabad head office and works, Mumbai trade and logistics desk."
+    }
+  },
   "hero": {
     "eyebrow": "Building · Manufacturing · Global trade",
     "headline": {

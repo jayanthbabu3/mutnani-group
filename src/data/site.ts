@@ -10,6 +10,14 @@ import raw from '../../content/site.json'
  * and stays with the developer.
  */
 
+/** An inner page's heading block. `meta` is its search and link-preview text. */
+const pageHead = z.object({
+  eyebrow: z.string(),
+  title: z.string(),
+  lede: z.string(),
+  meta: z.string(),
+})
+
 const schema = z.object({
   site: z.object({
     name: z.string().min(1),
@@ -34,9 +42,16 @@ const schema = z.object({
     founded: z.number().int().min(1900).max(2100),
     founder: z.string(),
   }),
-  nav: z.array(z.object({ href: z.string().startsWith('#'), label: z.string() })).length(4),
-  /** Desktop-only links. The tab bar takes exactly four, so these never reach it. */
-  navExtra: z.array(z.object({ href: z.string().startsWith('#'), label: z.string() })),
+  /**
+   * The four pages. The header shows them, and they are the phone tab bar —
+   * which takes exactly four. Paths, not anchors: "/", "/companies"…
+   */
+  nav: z.array(z.object({ href: z.string().startsWith('/'), label: z.string() })).length(4),
+  /** Desktop-only links to sections of the home page ("/#videos"). The tab
+      bar takes exactly four, so these never reach it. */
+  navExtra: z.array(z.object({ href: z.string().startsWith('/'), label: z.string() })),
+  /** The heading block at the top of each inner page, and its search/share text. */
+  pages: z.object({ companies: pageHead, about: pageHead, contact: pageHead }),
   hero: z.object({
     /** CLIENT */
     eyebrow: z.string(),
@@ -423,6 +438,7 @@ export const CONTENT = schema.parse(raw)
 export const SITE = CONTENT.site
 export const NAV_LINKS = CONTENT.nav
 export const NAV_EXTRA = CONTENT.navExtra
+export const PAGES = CONTENT.pages
 export const HERO = CONTENT.hero
 export const STAGES = CONTENT.stageStages
 export const ABOUT = CONTENT.about

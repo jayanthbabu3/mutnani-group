@@ -70,19 +70,35 @@ collections:
 
           # ── Navigation. Structural: the hrefs must match section ids. ────
           - name: nav
-            label: Main navigation (exactly 4 — these are the phone tab bar)
+            label: Pages (exactly 4 — these are also the phone tab bar)
             widget: list
             min: 4
             max: 4
             fields:
-              - { name: href, label: Section anchor, widget: string }
+              - { name: href, label: 'Path, e.g. /about', widget: string }
               - { name: label, label: Label, widget: string }
           - name: navExtra
-            label: Extra desktop links
+            label: Extra desktop links (home page sections)
             widget: list
             fields:
-              - { name: href, label: Section anchor, widget: string }
+              - { name: href, label: 'Path and section, e.g. /#videos', widget: string }
               - { name: label, label: Label, widget: string }
+
+          # ── Inner pages ─────────────────────────────────────────────────
+          - name: pages
+            label: Page headings (Companies, About, Contact)
+            widget: object
+            fields:
+              - name: companies
+                label: Companies page
+                widget: object
+                fields: &pagehead
+                  - { name: eyebrow, label: Small line, widget: string }
+                  - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
+                  - { name: lede, label: Intro, widget: text }
+                  - { name: meta, label: Search and link-preview text, widget: text }
+              - { name: about, label: About page, widget: object, fields: *pagehead }
+              - { name: contact, label: Contact page, widget: object, fields: *pagehead }
 
           # ── Hero ────────────────────────────────────────────────────────
           - name: hero

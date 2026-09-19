@@ -32,7 +32,7 @@ export default function Footer() {
           </div>
 
           <nav aria-label="Footer">
-            <p className="tech-sm text-accent">Sections</p>
+            <p className="tech-sm text-accent">Pages</p>
             <ul className="mt-5 space-y-2.5">
               {[...NAV_LINKS, ...NAV_EXTRA].map((link) => (
                 <li key={link.href}>
@@ -51,7 +51,7 @@ export default function Footer() {
               {DIVISIONS.map((division) => (
                 <li key={division.id}>
                   <a
-                    href={`#${divisionAnchor(division.id)}`}
+                    href={`/companies#${divisionAnchor(division.id)}`}
                     className="text-[0.88rem] text-body transition-colors duration-200 ease-micro hover:text-accent"
                   >
                     {division.company}
