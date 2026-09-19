@@ -67,7 +67,7 @@
     "secondaryCta": "See how it goes up",
     "stats": [
       {
-        "value": 17,
+        "value": 18,
         "suffix": "+ yrs",
         "label": "Since 2009"
       },
@@ -128,7 +128,7 @@
         "label": "Founded"
       },
       {
-        "value": "17+",
+        "value": "18+",
         "label": "Years in trade"
       },
       {
@@ -475,7 +475,7 @@
         "name": "Hyderabad Industries Ltd.",
         "scope": "Authorised dealership since 2009",
         "place": "Hyderabad",
-        "figure": "17 years"
+        "figure": "18+ years"
       }
     ]
   },
@@ -611,7 +611,7 @@
   },
   "trust": {
     "eyebrow": "Why the group gets asked back",
-    "title": "17+ years, | and the same phone number",
+    "title": "18+ years, | and the same phone number",
     "points": [
       {
         "title": "Founded 2009",
