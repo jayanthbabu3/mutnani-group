@@ -192,6 +192,39 @@ const schema = z.object({
       { message: 'A division with an image must also have imageAlt' },
     ),
   /**
+   * CLIENT · the appreciation letters, quoted and shown.
+   *
+   * The scans are REDACTED on purpose: the issuing company's letterhead,
+   * footer, phone, email, website and the signing officer's name are painted
+   * out before the image is exported, because the client's own customers are
+   * contractors they do not want approached directly. The source PDFs live in
+   * /source-letters, OUTSIDE public/, so the originals are never served.
+   *
+   * `quote` is the sentence the letter is worth reading for; keep it verbatim.
+   */
+  appreciation: z.object({
+    eyebrow: z.string(),
+    title: z.string(),
+    lede: z.string(),
+    items: z
+      .array(
+        z.object({
+          id: z.string(),
+          company: z.string(),
+          scope: z.string(),
+          date: z.string(),
+          quote: z.string(),
+          detail: z.string(),
+          image: z.string(),
+          imageAlt: z.string().min(1),
+          width: z.number(),
+          height: z.number(),
+        }),
+      )
+      .min(1),
+    cta: z.string(),
+  }),
+  /**
    * CLIENT · Vertical 01, Balaji Prefab Solutions.
    *
    * The three companies each get one section of their own, in order, so a
@@ -444,6 +477,7 @@ export const STAGES = CONTENT.stageStages
 export const ABOUT = CONTENT.about
 export const GROUP = CONTENT.group
 export const DIVISIONS = CONTENT.divisions
+export const APPRECIATION = CONTENT.appreciation
 export const BUILD = CONTENT.build
 export const PREFAB = CONTENT.prefab
 export const PRODUCTS = CONTENT.products

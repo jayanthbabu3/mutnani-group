@@ -1,4 +1,5 @@
 import About from '../components/About'
+import Appreciation from '../components/Appreciation'
 import BuildSteps from '../components/BuildSteps'
 import Divisions from '../components/Divisions'
 import Enquiry from '../components/Enquiry'
@@ -34,6 +35,9 @@ export default function HomePage() {
       <BuildSteps />
       <Divider />
       <Divisions />
+      <Divider />
+      {/* Proof, straight after the claim: the letters the contractors wrote. */}
+      <Appreciation />
       <Divider />
 
       {/* One signature per company, in the group's own order.

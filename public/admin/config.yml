@@ -100,6 +100,33 @@ collections:
               - { name: about, label: About page, widget: object, fields: *pagehead }
               - { name: contact, label: Contact page, widget: object, fields: *pagehead }
 
+          # ── Client appreciation ─────────────────────────────────────────
+          # The letter IMAGES are redacted by hand before export (letterhead,
+          # footer, phone, email, website and the signing officer's name are
+          # painted out). Replace one only with an image redacted the same way.
+          - name: appreciation
+            label: Client appreciation letters
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small line above the heading, widget: string }
+              - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
+              - { name: lede, label: Intro line, widget: text }
+              - name: items
+                label: Letters
+                widget: list
+                fields:
+                  - { name: id, label: ID (do not change), widget: string }
+                  - { name: company, label: Company that wrote the letter, widget: string }
+                  - { name: scope, label: What the work was, widget: string }
+                  - { name: date, label: Date on the letter, widget: string }
+                  - { name: quote, label: The sentence to quote, widget: text }
+                  - { name: detail, label: Short explanation under the quote, widget: text }
+                  - { name: image, label: Redacted letter image, widget: image }
+                  - { name: imageAlt, label: Image description, widget: string }
+                  - { name: width, label: Image width in pixels, widget: number, value_type: int }
+                  - { name: height, label: Image height in pixels, widget: number, value_type: int }
+              - { name: cta, label: Button text, widget: string }
+
           # ── Hero ────────────────────────────────────────────────────────
           - name: hero
             label: Hero

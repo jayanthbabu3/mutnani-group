@@ -40,6 +40,10 @@
       "label": "Partners"
     },
     {
+      "href": "/#appreciation",
+      "label": "Appreciation"
+    },
+    {
       "href": "/#videos",
       "label": "Videos"
     }
@@ -268,6 +272,50 @@
       "imagePlaceholder": true
     }
   ],
+  "appreciation": {
+    "eyebrow": "Client appreciation",
+    "title": "Letters from the companies | we build for",
+    "lede": "Written on the letterheads of the contractors whose sites the group builds on.",
+    "items": [
+      {
+        "id": "meil",
+        "company": "Megha Engineering & Infrastructures Ltd.",
+        "scope": "Camp sheds and PEB sheds, MEIL project sites across India",
+        "date": "November 2024",
+        "quote": "The over all work done is timely completion and satisfactory.",
+        "detail": "Registered vendor for supply and erection of prefabricated project camp sheds and PEB sheds, in spans up to 80 m long, 24 m wide and 9 m high.",
+        "image": "/appreciation/meil.webp",
+        "imageAlt": "Letter from Megha Engineering & Infrastructures Ltd., November 2024, confirming Balaji Prefab Private Limited as a registered vendor for prefabricated camp and PEB sheds.",
+        "width": 1600,
+        "height": 1877
+      },
+      {
+        "id": "vishwa-samudra",
+        "company": "Vishwa Samudra Engineering Pvt Ltd",
+        "scope": "Prefab structures for NHAI and port projects across India",
+        "date": "November 2024",
+        "quote": "The quality of material supplied & erection by them was good and satisfactory.",
+        "detail": "Four years of supply and erection of prefab structures for their highway and port sites.",
+        "image": "/appreciation/vishwa-samudra.webp",
+        "imageAlt": "Letter from Vishwa Samudra Engineering Pvt Ltd, November 2024, certifying four years of prefab supply and erection for their NHAI and port projects.",
+        "width": 1600,
+        "height": 1535
+      },
+      {
+        "id": "jasper",
+        "company": "Jasper Industries Private Limited",
+        "scope": "Platinum Workshop, Sangareddy — a Tata Motors facility",
+        "date": "April 2013",
+        "quote": "The following works have been carried out … satisfactorily.",
+        "detail": "Experience certificate for the construction of the Platinum Workshop at Sangareddy, valued at ₹46.15 lakh.",
+        "image": "/appreciation/jasper.webp",
+        "imageAlt": "Experience certificate from Jasper Industries Private Limited, April 2013, for construction of the Platinum Workshop at Sangareddy.",
+        "width": 1600,
+        "height": 2062
+      }
+    ],
+    "cta": "Open full letter"
+  },
   "build": {
     "eyebrow": "How a building goes up",
     "title": "Six steps, | two at the same time",
