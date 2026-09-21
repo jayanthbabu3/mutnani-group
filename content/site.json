@@ -74,7 +74,7 @@
       "line1": "Technology-Driven",
       "line2": "Roofing Profile Manufacturing"
     },
-    "sub": "Three companies under one group: Prefabrication Construction — **Roofing, Aerocon Walls, False Ceilings, PUF Panels, PEB (Pre-Engineered Buildings)** and **Modular Buildings**; **Precision-Engineered Roofing Profile Manufacturing**; and Imports of **False Ceiling Tiles & Grid** and **Modern Interior Equipment**.",
+    "sub": "Three companies under one group: Prefabrication Construction — **Roofing, Aerocon Walls, False Ceilings, PUF Panels, PEB (Pre-Engineered Buildings)** and **Modular Buildings**; **Precision-Engineered Roofing Profile Manufacturing**; and Imports of **False Ceiling Tiles & Grid**, and **Modern Interior Equipment**.",
     "primaryCta": "Get a quote",
     "secondaryCta": "See how it goes up",
     "stats": [
@@ -222,7 +222,7 @@
   "group": {
     "eyebrow": "The group",
     "title": "Three companies, | one schedule",
-    "lede": "Each company could run on its own, in parallel, to accomplish one single goal: design, construction and delivery."
+    "lede": "Each company could run on its own, in parallel, to accomplish one single goal: Design, Construction and Delivery."
   },
   "divisions": [
     {
@@ -259,7 +259,7 @@
       "id": "trade",
       "company": "Mutnani IMEX Infra Private Limited",
       "kind": "Imports",
-      "lede": "We specialize in sourcing products that are not manufactured by others in the market, leveraging a reliable global procurement network.",
+      "lede": "We specialize in sourcing products that are not manufactured by others in the market, leveraging a reliable global procurement network across the globe.",
       "offers": [
         "Import of building materials",
         "Sourcing from the global market",
