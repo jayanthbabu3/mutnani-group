@@ -30,10 +30,14 @@ export default function Hero() {
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] lg:gap-14">
           {/* ── Copy ──────────────────────────────────────────────────── */}
           <div className="order-2 lg:order-1">
-            <p data-entrance className="tech flex items-center gap-3 text-accent/85">
-              <span className="size-1.5 animate-pulse rounded-full bg-accent" />
-              {HERO.eyebrow}
-            </p>
+            {/* Only when the client wants one: an empty `hero.eyebrow` in the
+                content file drops the line, and the headline leads instead. */}
+            {HERO.eyebrow ? (
+              <p data-entrance className="tech flex items-center gap-3 text-accent/85">
+                <span className="size-1.5 animate-pulse rounded-full bg-accent" />
+                {HERO.eyebrow}
+              </p>
+            ) : null}
 
             {/*
               No italic on the stressed line: the blue-to-green switch already carries
@@ -53,7 +57,7 @@ export default function Hero() {
             */}
             <h1
               data-entrance="lines"
-              className="mt-6 font-display text-[clamp(1.7rem,3.2vw,2.75rem)] leading-[1.1] font-bold tracking-tight text-heading"
+              className="mt-6 first:mt-0 font-display text-[clamp(1.7rem,3.2vw,2.75rem)] leading-[1.1] font-bold tracking-tight text-heading"
             >
               <span className="block text-accent">{line1}</span>
               <span className="block text-secondary">{line2}</span>
