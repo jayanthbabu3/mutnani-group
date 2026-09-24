@@ -65,6 +65,8 @@ const schema = z.object({
      * components/Hero.tsx before rewriting either.
      */
     headline: z.object({ line1: z.string(), line2: z.string() }),
+    /** One line under the headline. */
+    sub: z.string(),
     /** The three companies as a checklist under the headline: name, what it does, and its line items. */
     companies: z
       .array(z.object({ name: z.string(), kind: z.string(), items: z.array(z.string()).min(1) }))

@@ -139,9 +139,10 @@ collections:
                   - { name: line1, label: First line, widget: string }
                   - {
                       name: line2,
-                      label: Second line (shown in gold),
+                      label: Second line (shown in green),
                       widget: string,
                     }
+              - { name: sub, label: Line under the headline, widget: text }
               - name: companies
                 label: Companies checklist (up to 3)
                 widget: list

@@ -68,15 +68,16 @@
     }
   },
   "hero": {
-    "eyebrow": "",
+    "eyebrow": "Mutnani Group · Since 2009",
     "headline": {
-      "line1": "Prefab. Roofing. Imports.",
-      "line2": "Three Companies, One Group."
+      "line1": "Three Companies.",
+      "line2": "One Complete Build."
     },
+    "sub": "Structures, roofing and interiors — designed, manufactured and imported by one group, delivered to one schedule.",
     "companies": [
       {
         "name": "Balaji Prefab Private Limited",
-        "kind": "Prefabrication Construction",
+        "kind": "Prefab Construction",
         "items": [
           "Roofing",
           "Aerocon Walls",
@@ -88,7 +89,7 @@
       },
       {
         "name": "Balaji Roofing Industries",
-        "kind": "Manufacturing",
+        "kind": "Roofing Manufacturing",
         "items": ["Precision-Engineered Roofing Profile Manufacturing"]
       },
       {
