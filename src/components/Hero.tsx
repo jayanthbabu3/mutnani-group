@@ -1,177 +1,136 @@
 import { HERO } from '../data/site'
 import { useCountUp, useEntrance } from '../lib/motion'
-import { Shell } from './ui'
+import { CtaLink, Shell } from './ui'
+
+const MASK = [
+  'radial-gradient(82% 86% at 50% 50%, #000 58%, rgba(0,0,0,0.85) 80%, transparent 100%)',
+  'linear-gradient(to right, transparent 0%, #000 3%, #000 97%, transparent 100%)',
+  'linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%)',
+].join(', ')
 
 /**
- * Framed cinematic hero: the construction timelapse fills one large rounded
- * frame, the promise sits on it in white, and the three companies line up
- * along its foot as glass cards — so the first screen says both "we build
- * this" (the film) and "these are the three of us" (the cards) without a
- * paragraph in between.
- *
- * The frame, not a full-bleed video, because the header is transparent over
- * white: a dark full-bleed ground would need the logo and nav re-inked, and
- * the inset keeps the header exactly as it is on every other page.
- *
- * Height is a MINIMUM tied to the screen (`svh`), so on a 1280×800 MacBook the
- * whole hero — headline, buttons and all three cards — lands on one screen,
- * and on anything shorter the frame grows with its content instead of
- * clipping it. Re-check at 1280×800 before adding copy.
- *
- * `poster` is not optional: Safari on a Mac in Low Power Mode refuses to
- * autoplay, and without a poster the frame would be a dark empty box.
+ * Split hero: the promise on the left, the building erecting itself on the
+ * right. The caption under the stage names the stage currently being built, so
+ * the animation is legible as a process rather than admired as an effect —
+ * which is the difference between a hero that sells prefab and one that just
+ * moves.
  */
 export default function Hero() {
   const ref = useEntrance<HTMLElement>()
+
   const { line1, line2 } = HERO.headline
 
   return (
-    <header ref={ref} id="top" className="relative pt-[4.75rem] pb-6 lg:pb-8">
+    <header
+      ref={ref}
+      id="top"
+      className="relative isolate overflow-hidden pt-28 pb-20 lg:flex lg:min-h-[100svh] lg:items-center lg:pt-24 lg:pb-10"
+    >
       <Shell>
-        <div className="relative isolate flex flex-col overflow-hidden rounded-[1.75rem] bg-heading lg:min-h-[calc(100svh-6.5rem)] lg:rounded-[2rem]">
-          {/* ── Film ───────────────────────────────────────────────────── */}
-          <video
-            className="absolute inset-0 -z-20 size-full object-cover object-center"
-            src="/hero-timelapse.mp4"
-            poster="/hero-poster.jpg"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-          />
-          {/* Two washes: one from the left behind the copy, one from the foot
-              behind the cards. Together they hold white text at AA over the
-              brightest sky in the film without flattening the picture. */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(8,22,40,0.92)_0%,rgba(8,22,40,0.72)_40%,rgba(8,22,40,0.25)_75%,rgba(8,22,40,0.15)_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-[linear-gradient(to_top,rgba(8,22,40,0.95)_0%,rgba(8,22,40,0.6)_45%,transparent_100%)]"
-          />
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] lg:gap-14">
+          {/* ── Copy ──────────────────────────────────────────────────── */}
+          <div className="order-2 lg:order-1">
+            {/* Only when the client wants one: an empty `hero.eyebrow` in the
+                content file drops the line, and the headline leads instead. */}
+            {HERO.eyebrow ? (
+              <p data-entrance className="tech flex items-center gap-3 text-accent/85">
+                <span className="size-1.5 animate-pulse rounded-full bg-accent" />
+                {HERO.eyebrow}
+              </p>
+            ) : null}
 
-          {/* ── Promise ────────────────────────────────────────────────── */}
-          <div className="flex flex-1 flex-col justify-center px-5 pt-10 pb-9 sm:px-10 sm:pt-12 lg:px-14 lg:pt-14">
-            <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
-              <div className="max-w-2xl">
-                {HERO.eyebrow ? (
-                  <p
-                    data-entrance
-                    className="tech-sm inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-white/90 backdrop-blur-md"
-                  >
-                    <span className="size-1.5 animate-pulse rounded-full bg-brand-lime" />
-                    {HERO.eyebrow}
+            {/*
+              No italic on the stressed line: the blue-to-green switch already carries
+              that emphasis, and a high-contrast display italic at display size
+              reads as an invitation rather than as steel.
+
+              Sized for the longest line, "Three Companies, One Group.":
+              it has to hold one line in the ~560px copy column at 1280px,
+              which is what caps the clamp. Re-check it there before changing
+              either the copy or these numbers.
+
+              Two block spans, not a `{line1} {line2}` run: the colour change
+              marks the second CLAUSE, so it has to start a line. Left inline,
+              the accent picks up in the middle of line one and the device stops
+              reading. SplitText treats each block as its own line, so the mask
+              sweep still works per clause.
+            */}
+            <h1
+              data-entrance="lines"
+              className="mt-6 first:mt-0 font-display text-[clamp(1.6rem,2.9vw,2.6rem)] leading-[1.1] font-bold tracking-tight text-heading"
+            >
+              <span className="block text-accent">{line1}</span>
+              <span className="block text-secondary">{line2}</span>
+            </h1>
+
+            {/* The three companies as a checklist rather than one long
+                sentence: a buyer scanning for "PEB" or "False Ceiling" finds it
+                under the company that does it. */}
+            <ul data-entrance="rise" className="mt-7 max-w-xl space-y-4 lg:mt-8">
+              {HERO.companies.map((c, i) => (
+                <li key={c.name} className="border-l-2 border-accent/40 pl-4">
+                  <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+                    <span className="tech-sm text-accent tabular-nums">0{i + 1}</span>
+                    <span className="text-[0.98rem] font-semibold text-heading">{c.name}</span>
+                    <span className="tech-sm text-secondary">{c.kind}</span>
                   </p>
-                ) : null}
+                  <ul className="mt-2 grid gap-x-8 gap-y-1.5 sm:grid-cols-[auto_auto] sm:justify-start">
+                    {c.items.map((item) => (
+                      <li
+                        key={item}
+                        className={`flex items-start gap-2 text-[0.92rem] leading-snug text-body ${
+                          c.items.length === 1 ? 'sm:col-span-2' : ''
+                        }`}
+                      >
+                        <Check />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
 
-                {/*
-                  White then lime: the logo's two faces. The lime cannot carry
-                  text on white (2.2:1), but on this dark wash it is well past
-                  AA, which is the one place the site gets to use it for type.
-                */}
-                <h1
-                  data-entrance="lines"
-                  className="mt-6 font-display text-[clamp(2.1rem,4.4vw,4rem)] leading-[1.04] font-bold tracking-tight text-white"
-                >
-                  <span className="block">{line1}</span>
-                  <span className="block text-brand-lime">{line2}</span>
-                </h1>
-
-                <p
-                  data-entrance="rise"
-                  className="mt-5 max-w-lg text-[1rem] leading-relaxed text-white/80 sm:text-[1.06rem]"
-                >
-                  {HERO.sub}
-                </p>
-
-                <div data-entrance="rise" className="mt-8 flex flex-wrap items-center gap-3">
-                  <a
-                    href="#contact"
-                    className="group inline-flex items-center gap-2.5 rounded-full bg-brand-lime px-6 py-3 text-[0.82rem] font-semibold tracking-[0.04em] text-heading transition-all duration-300 ease-micro hover:bg-white sm:px-7 sm:py-3.5"
-                  >
-                    {HERO.primaryCta}
-                    <Arrow />
-                  </a>
-                  <a
-                    href="#build"
-                    className="group inline-flex items-center gap-2.5 rounded-full border border-white/30 bg-white/5 px-6 py-3 text-[0.82rem] font-medium tracking-[0.04em] text-white backdrop-blur-md transition-all duration-300 ease-micro hover:border-white hover:bg-white/15 sm:px-7 sm:py-3.5"
-                  >
-                    {HERO.secondaryCta}
-                    <Arrow />
-                  </a>
-                </div>
-              </div>
-
-              <dl
-                data-entrance="rise"
-                data-entrance-at="+=0.15"
-                className="grid grid-cols-3 gap-4 border-t border-white/20 pt-6 lg:grid-cols-1 lg:gap-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8"
-              >
-                {HERO.stats.map((s) => (
-                  <Stat key={s.label} {...s} />
-                ))}
-              </dl>
+            <div data-entrance="rise" className="mt-8 flex flex-wrap items-center gap-3">
+              <CtaLink href="#contact">{HERO.primaryCta}</CtaLink>
+              <CtaLink href="#build" variant="ghost">
+                {HERO.secondaryCta}
+              </CtaLink>
             </div>
+
+            <dl
+              data-entrance="rise"
+              data-entrance-at="+=0.15"
+              className="mt-9 grid max-w-lg grid-cols-3 gap-4 border-t border-line pt-6"
+            >
+              {HERO.stats.map((s) => (
+                <Stat key={s.label} {...s} />
+              ))}
+            </dl>
           </div>
 
-          {/* ── The three companies ────────────────────────────────────── */}
-          <ul
-            data-entrance="rise"
-            data-entrance-at="+=0.25"
-            className="grid gap-3 px-4 pb-4 sm:px-6 sm:pb-6 lg:grid-cols-[1.7fr_1fr_1fr] lg:gap-4 lg:px-8 lg:pb-8"
-          >
-            {HERO.companies.map((c, i) => (
-              <li
-                key={c.name}
-                className="rounded-2xl border border-white/15 bg-white/[0.08] p-5 backdrop-blur-xl transition-colors duration-300 ease-micro hover:border-white/30 hover:bg-white/[0.12] lg:p-6"
-              >
-                <p className="flex items-center gap-2.5">
-                  <span className="grid size-6 place-items-center rounded-full bg-brand-lime text-[0.68rem] font-bold text-heading tabular-nums">
-                    {i + 1}
-                  </span>
-                  <span className="tech-sm text-brand-lime">{c.kind}</span>
-                </p>
-                <h2 className="mt-3 font-display text-[1.02rem] leading-snug font-semibold text-white">
-                  {c.name}
-                </h2>
-                <ul
-                  className={`mt-3 grid gap-x-6 gap-y-1.5 ${
-                    c.items.length > 3 ? 'sm:grid-cols-[auto_auto] sm:justify-start' : ''
-                  }`}
-                >
-                  {c.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2 text-[0.88rem] leading-snug text-white/80"
-                    >
-                      <Check />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
+          {/* ── Stage ─────────────────────────────────────────────────── */}
+          <div data-entrance data-entrance-at="+=0.3" className="order-1 lg:order-2 lg:pl-4">
+            <div className="relative mx-auto aspect-[4/3] w-full sm:aspect-[16/11]">
+              <video
+                className="absolute inset-0 size-full object-cover object-center"
+                style={{
+                  WebkitMaskImage: MASK,
+                  maskImage: MASK,
+                  WebkitMaskComposite: 'source-in',
+                  maskComposite: 'intersect',
+                }}
+                src="/hero-timelapse.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            </div>
+          </div>
         </div>
       </Shell>
     </header>
-  )
-}
-
-function Arrow() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="size-3.5 transition-transform duration-300 ease-micro group-hover:translate-x-0.5"
-      fill="none"
-      stroke="currentColor"
-      aria-hidden
-    >
-      <path d="M4 12h15m0 0-6-6m6 6-6 6" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
   )
 }
 
@@ -180,10 +139,10 @@ function Check() {
     <svg
       viewBox="0 0 16 16"
       aria-hidden="true"
-      className="mt-[0.18em] size-[0.95em] shrink-0 text-brand-lime"
+      className="mt-[0.2em] size-[0.95em] shrink-0 text-secondary"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2.4}
+      strokeWidth={2.2}
       strokeLinecap="round"
       strokeLinejoin="round"
     >
@@ -197,11 +156,13 @@ function Stat({ value, suffix, label }: { value: number; suffix: string; label: 
   return (
     <div>
       <dt className="sr-only">{label}</dt>
-      <dd className="text-[1.45rem] leading-none font-semibold whitespace-nowrap text-white tabular-nums sm:text-[2rem]">
+      {/* Numbers in the sans: Fraunces has old-style figures, and "1000" set
+          in it reads as a run of ascenders and descenders. */}
+      <dd className="text-[1.7rem] leading-none font-semibold text-heading tabular-nums sm:text-[2.1rem]">
         <span ref={ref} />
-        <span className="ml-0.5 text-[0.6em] font-medium text-brand-lime">{suffix}</span>
+        <span className="font-light text-accent">{suffix}</span>
       </dd>
-      <p className="tech-sm mt-2 text-white/65">{label}</p>
+      <p className="tech-sm mt-2.5 text-body">{label}</p>
     </div>
   )
 }
