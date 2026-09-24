@@ -4,7 +4,8 @@ import { ScrollTrigger, scrollToTarget } from './motion'
 /**
  * The site's router: four paths, no library.
  *
- * Home, /companies, /about and /contact are one React app sharing a header,
+ * Home, /companies, /about, /contact and /what-we-build are one React app
+ * sharing a header,
  * footer and tab bar, so a router is a pathname, a way to change it and a way
  * to hear it change — which is what this is. A dependency would bring nested
  * routes, loaders and params for four flat pages that need none of them.
@@ -17,13 +18,22 @@ import { ScrollTrigger, scrollToTarget } from './motion'
  * shared link lands on the right page; Vite's dev server does the same.
  */
 
-export type Page = 'home' | 'companies' | 'about' | 'contact' | 'missing'
+export type Page =
+  | 'home'
+  | 'companies'
+  | 'about'
+  | 'contact'
+  | 'applications'
+  | 'roofing'
+  | 'missing'
 
 const PAGES: Record<string, Page> = {
   '/': 'home',
   '/companies': 'companies',
   '/about': 'about',
   '/contact': 'contact',
+  '/what-we-build': 'applications',
+  '/roofing-range': 'roofing',
 }
 
 /** "/about/" and "/about" are the same page. */

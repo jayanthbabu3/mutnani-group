@@ -3,7 +3,6 @@
     "name": "Mutnani",
     "role": "Group of Companies",
     "city": "Hyderabad",
-    "basedLine": "Global Imports",
     "phone": "+917831012345",
     "phoneDisplay": "+91 78310 12345",
     "phoneAlt": "",
@@ -66,13 +65,25 @@
       "title": "Talk to | the group",
       "lede": "Call the Hyderabad desk, write to us, or send an enquiry below — it opens WhatsApp with your details already written out.",
       "meta": "Contact Mutnani Group of Companies — Hyderabad head office and works, Mumbai trade and logistics desk."
+    },
+    "applications": {
+      "eyebrow": "Balaji Prefab Private Limited",
+      "title": "What we build, | and who we build it for",
+      "lede": "The same prefabricated system — steel frame, insulated panels, a fit-out — serves very different buildings. These are the kinds of projects the company takes on.",
+      "meta": "Prefabricated buildings by Balaji Prefab Private Limited: malls, hypermarkets, offices, showrooms, schools, hospitals, transport hubs, sports complexes, convention centres, hotels, cold storage, poultry sheds and agro-processing units."
+    },
+    "roofing": {
+      "eyebrow": "Balaji Roofing Industries",
+      "title": "What comes off | our roofing line",
+      "lede": "Pre-painted coil goes in one end and a finished, cut-to-length sheet or insulated panel comes out the other. This is the range, and the sizes it is made to.",
+      "meta": "Roofing profile sheets, PUF insulated wall and roof panels, flashings, gutters and custom profiles, manufactured by Balaji Roofing Industries on its own line."
     }
   },
   "hero": {
     "eyebrow": "",
     "headline": {
-      "line1": "Technology-Driven",
-      "line2": "Roofing Profile Manufacturing"
+      "line1": "Design, Manufacture,",
+      "line2": "Deliver"
     },
     "sub": "Three companies under one group: Prefabrication Construction — **Roofing, Aerocon Walls, False Ceilings, PUF Panels, PEB (Pre-Engineered Buildings)** and **Modular Buildings**; **Precision-Engineered Roofing Profile Manufacturing**; and Imports of **False Ceiling Tiles & Grid**, and **Modern Interior Equipment**.",
     "primaryCta": "Get a quote",
@@ -234,11 +245,43 @@
         "Pre-engineered buildings (PEB)",
         "Industrial sheds & workshops",
         "Warehouses & godowns",
-        "Turnkey project execution"
+        "Turnkey project execution",
+        "Site camp setup"
       ],
       "image": "/divisions/prefab-completed.png",
       "imageAlt": "A completed pre-engineered steel warehouse in an industrial park during the day.",
-      "imagePlaceholder": true
+      "imagePlaceholder": true,
+      "gallery": [
+        {
+          "title": "Aerocon Walls",
+          "src": "/divisions/prefab/aerocon-walls.webp",
+          "alt": "Fibre-cement partition panels fixed to slim steel studs inside a bare concrete building, one panel leaning against the frame showing the cavity."
+        },
+        {
+          "title": "False Ceiling",
+          "src": "/divisions/prefab/false-ceiling.webp",
+          "alt": "A finished white suspended ceiling with recessed downlights and a concealed-lit cove in an empty office room."
+        },
+        {
+          "title": "PUF Panel",
+          "src": "/divisions/prefab/puf-panel.webp",
+          "alt": "Two stacked PUF sandwich panels, the cut end showing the polyurethane core between pre-painted steel facings."
+        },
+        {
+          "title": "PEB",
+          "src": "/divisions/prefab/peb.webp",
+          "alt": "An erected pre-engineered steel frame on a clear site: tapered columns, rafters and purlins, clear span, no cladding yet."
+        },
+        {
+          "title": "Mezzanine Floor",
+          "src": "/divisions/prefab/mezzanine-floor.webp",
+          "alt": "A steel mezzanine floor inside an industrial shed, with a yellow edge handrail and a staircase up to it."
+        }
+      ],
+      "more": {
+        "label": "View more",
+        "href": "/what-we-build"
+      }
     },
     {
       "id": "roofing",
@@ -253,7 +296,11 @@
       ],
       "image": "/divisions/roofing-collection.png",
       "imageAlt": "A collection of PUF sandwich panels and colored trapezoidal roofing sheets stacked neatly on a warehouse floor.",
-      "imagePlaceholder": true
+      "imagePlaceholder": true,
+      "more": {
+        "label": "View more",
+        "href": "/roofing-range"
+      }
     },
     {
       "id": "trade",
@@ -264,12 +311,12 @@
         "Import of building materials",
         "Sourcing from the global market",
         "Logistics & supply chain",
-        "Site camp setup",
         "Exports — coming soon"
       ],
       "image": "/divisions/trade.webp",
       "imageAlt": "A container ship loaded with stacked shipping containers at sea.",
-      "imagePlaceholder": true
+      "imagePlaceholder": true,
+      "more": null
     }
   ],
   "appreciation": {
@@ -725,7 +772,7 @@
       {
         "id": "coil",
         "label": "Coil",
-        "note": "Pre-painted steel, 0.42–0.80 TCT, off the decoiler"
+        "note": "Pre-painted coil from Tata, Jindal and AMNS, 0.42–0.80 TCT"
       },
       {
         "id": "form",
@@ -809,5 +856,142 @@
       "name": "Mumbai",
       "sub": "Trade & logistics desk"
     }
+  },
+  "applications": {
+    "groups": [
+      {
+        "title": "Commercial & Retail",
+        "items": [
+          {
+            "title": "Shopping Malls & Multiplexes",
+            "body": "Long clear spans for atriums and screen boxes, with the structure up while the fit-out is still being drawn.",
+            "icon": "mall"
+          },
+          {
+            "title": "Hypermarkets & Supermarkets",
+            "body": "Column-free trading floors, insulated roofs and loading docks under one roof line.",
+            "icon": "market"
+          },
+          {
+            "title": "Office Buildings",
+            "body": "Modular floor plates with mezzanines, false ceilings and partitions to the layout you want.",
+            "icon": "office"
+          },
+          {
+            "title": "Showrooms & Service Centers",
+            "body": "Wide glazed frontage for display, with clear workshop bays behind it.",
+            "icon": "showroom"
+          }
+        ]
+      },
+      {
+        "title": "Institutional & Public Infrastructure",
+        "items": [
+          {
+            "title": "Educational Institutions",
+            "body": "Classroom blocks, halls and hostels, built off site so a campus keeps running.",
+            "icon": "school"
+          },
+          {
+            "title": "Hospitals & Healthcare Facilities",
+            "body": "Insulated, sealed envelopes for wards, diagnostics and support blocks.",
+            "icon": "hospital"
+          },
+          {
+            "title": "Transportation Hubs",
+            "body": "Terminals, depots and covered platforms spanning the width of the track or bay.",
+            "icon": "transport"
+          },
+          {
+            "title": "Sports Complexes",
+            "body": "Clear-span indoor courts and covered stands, with no column in the sight line.",
+            "icon": "sports"
+          }
+        ]
+      },
+      {
+        "title": "Hospitality & Entertainment",
+        "items": [
+          {
+            "title": "Convention Centers & Exhibition Halls",
+            "body": "Column-free halls that can be divided and re-divided as the event needs.",
+            "icon": "convention"
+          },
+          {
+            "title": "Hotels & Resorts",
+            "body": "Room blocks, banquet halls and back-of-house, finished to the operator's standard.",
+            "icon": "hotel"
+          }
+        ]
+      },
+      {
+        "title": "Agricultural & Food Industry",
+        "items": [
+          {
+            "title": "Cold Storage Facilities",
+            "body": "PUF panel envelopes built for controlled temperature, from our own panel line.",
+            "icon": "cold"
+          },
+          {
+            "title": "Poultry & Livestock Sheds",
+            "body": "Ventilated, insulated sheds sized to the flock and the feed system.",
+            "icon": "livestock"
+          },
+          {
+            "title": "Grain Silos & Agro-Processing Units",
+            "body": "Structures for silos and covered bays for cleaning, drying and processing.",
+            "icon": "silo"
+          }
+        ]
+      }
+    ],
+    "steel": {
+      "eyebrow": "The steel we build with",
+      "title": "Panels rolled from | mill-grade steel",
+      "lede": "The sheets and PUF panels on these buildings are rolled on the group's own line, from pre-painted coil supplied by India's primary steel makers.",
+      "mills": [
+        {
+          "name": "Tata",
+          "note": "Pre-painted coil"
+        },
+        {
+          "name": "Jindal",
+          "note": "Pre-painted coil"
+        },
+        {
+          "name": "AMNS",
+          "note": "ArcelorMittal Nippon Steel"
+        }
+      ]
+    }
+  },
+  "roofingRange": {
+    "items": [
+      {
+        "title": "Trapezoidal Profile Sheets",
+        "body": "The standard industrial roof and wall sheet, rolled to length so a run needs no end lap.",
+        "icon": "trapezoid"
+      },
+      {
+        "title": "Tile-Profile Sheets",
+        "body": "The look of a tiled roof in one steel sheet, for showrooms, resorts and site offices.",
+        "icon": "tile"
+      },
+      {
+        "title": "PUF Insulated Panels",
+        "body": "Roof and wall panels with a polyurethane core between two steel skins, for cold stores and conditioned buildings.",
+        "icon": "panel"
+      },
+      {
+        "title": "Flashings, Gutters & Accessories",
+        "body": "Ridges, valleys, barge boards, gutters and closures, folded to suit the profile they meet.",
+        "icon": "gutter"
+      },
+      {
+        "title": "Custom Profiles to Drawing",
+        "body": "A section rolled to your own drawing when the standard profiles do not fit the detail.",
+        "icon": "drawing"
+      }
+    ]
   }
 }

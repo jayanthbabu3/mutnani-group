@@ -45,7 +45,6 @@ collections:
               - { name: name, label: Group name, widget: string }
               - { name: role, label: Descriptor, widget: string }
               - { name: city, label: City, widget: string }
-              - { name: basedLine, label: Location line, widget: string }
               - {
                   name: phone,
                   label: Main phone (international, e.g. +919849078678),

@@ -39,29 +39,15 @@ export function Shell({ children, className = '' }: { children: ReactNode; class
  * the default, because a prop that no longer changes anything is a trap for
  * whoever reads this next.
  *
- * ── One section per screen ────────────────────────────────────────────────
- * `min-h-svh` plus centred content gives each section a screen of its own, so
- * scrolling lands on one thing at a time rather than on the tail of one
- * section and the head of the next.
+ * ── Rhythm, not one-section-per-screen ──────────────────────────────────
+ * Sections used to carry `min-h-svh` with their content centred, so scrolling
+ * landed on one section at a time. It read well on the long ones and badly on
+ * every short one: partners, why-us and contact have well under a screen of
+ * content, so the rule bought a tidy scroll with half a screen of white above
+ * and below each of them, and the home page ran to 12,000px.
  *
- * It is a MINIMUM, not a height. A section with more content than a screen
- * stays as tall as its content — the rule cannot be enforced by CSS, only
- * offered, and on a phone it is not offered at all: measured at 390×844 every
- * section's content alone runs 863–2250px, so a viewport can never hold one
- * whole section there no matter how the padding is set. Forcing `min-h` on
- * mobile would add empty screens without ever achieving it, so mobile relies
- * on the padding instead: 96px a side, about a fifth of a phone screen, which
- * is enough to say a section has ended.
- *
- * `svh` not `vh`: on iOS `vh` is the height with the URL bar hidden, so every
- * section would be taller than the screen actually is until the bar collapses.
- *
- * The FLEX is `md:` too, not just the `min-h`. As a flex container at every
- * width it broke the phone layout: a flex item will not shrink below its
- * content, so the build steps' horizontal rail pushed the whole shell wider
- * than the screen and twenty-three elements overflowed. Below `md` the section
- * stays a plain block, which is all it needs to be — there is nothing to
- * centre when the content is taller than the screen anyway.
+ * Now the boundary is padding alone — generous, identical everywhere — and a
+ * section is exactly as tall as what is in it.
  */
 export function Section({
   id,
@@ -78,7 +64,12 @@ export function Section({
     <section
       id={id}
       ref={ref}
-      className={`relative scroll-mt-20 py-24 md:flex md:min-h-svh md:items-center md:py-32 ${className}`}
+      // Padding only — no one-screen minimum. Every section used to reserve
+      // a full viewport and centre itself in it, which gave the short ones
+      // (partners, why-us, contact) half a screen of white above and below
+      // and made the home page 12,000px of mostly nothing. The rhythm now
+      // comes from the padding, so a section is as tall as it needs to be.
+      className={`relative scroll-mt-20 py-14 md:py-16 lg:py-20 ${className}`}
     >
       <Shell>{children}</Shell>
     </section>

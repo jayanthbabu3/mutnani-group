@@ -1,4 +1,4 @@
-import { HERO, SITE } from '../data/site'
+import { HERO } from '../data/site'
 import { useCountUp, useEntrance } from '../lib/motion'
 import { CtaLink, Shell } from './ui'
 
@@ -87,9 +87,6 @@ export default function Hero() {
               ))}
             </dl>
 
-            <p data-entrance className="tech-sm mt-8 text-body">
-              {SITE.basedLine}
-            </p>
           </div>
 
           {/* ── Stage ─────────────────────────────────────────────────── */}

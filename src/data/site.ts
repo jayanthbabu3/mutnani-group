@@ -23,7 +23,6 @@ const schema = z.object({
     name: z.string().min(1),
     role: z.string(),
     city: z.string(),
-    basedLine: z.string(),
     /** CLIENT · international form, drives every wa.me and tel: link */
     phone: z.string().regex(/^\+\d{10,15}$/, 'phone must be international, e.g. +919000000000'),
     /** CLIENT */
@@ -51,7 +50,13 @@ const schema = z.object({
       bar takes exactly four, so these never reach it. */
   navExtra: z.array(z.object({ href: z.string().startsWith('/'), label: z.string() })),
   /** The heading block at the top of each inner page, and its search/share text. */
-  pages: z.object({ companies: pageHead, about: pageHead, contact: pageHead }),
+  pages: z.object({
+    companies: pageHead,
+    about: pageHead,
+    contact: pageHead,
+    applications: pageHead,
+    roofing: pageHead,
+  }),
   hero: z.object({
     /** CLIENT */
     eyebrow: z.string(),
@@ -170,6 +175,26 @@ const schema = z.object({
         /** CLIENT · required whenever `image` is set; it is a content image. */
         imageAlt: z.string(),
         /**
+         * CLIENT · more than one photograph for this company, shown as a
+         * carousel with the title of each printed on it.
+         *
+         * Empty is the normal case: a division with no gallery falls back to
+         * `image`, and then to its drawing. Only fill this where the company
+         * genuinely makes several distinct things — one photograph per thing,
+         * all shot the same way, or the carousel reads as a slideshow of
+         * unrelated stock.
+         */
+        /**
+         * CLIENT · a page this company has of its own, or null.
+         *
+         * Only Balaji Prefab has one so far — the list of building types it
+         * puts up is too long for a card and too useful to drop.
+         */
+        more: z.object({ label: z.string(), href: z.string().startsWith('/') }).nullable(),
+        gallery: z
+          .array(z.object({ title: z.string(), src: z.string(), alt: z.string().min(1) }))
+          .default([]),
+        /**
          * True while `image` is AI-generated or otherwise not the group's own
          * photography.
          *
@@ -223,6 +248,45 @@ const schema = z.object({
       )
       .min(1),
     cta: z.string(),
+  }),
+  /** CLIENT · what Balaji Roofing rolls, for /roofing-range. */
+  roofingRange: z.object({
+    items: z
+      .array(z.object({ title: z.string(), body: z.string(), icon: z.string() }))
+      .min(1),
+  }),
+  /**
+   * CLIENT · the building types Balaji Prefab takes on, for /what-we-build.
+   *
+   * Groups in the client's own order, each with its own items. The bodies are
+   * ours, written from what the group actually does — the client sent the
+   * headings with the descriptions left blank — so they are the first thing
+   * to check with them.
+   */
+  applications: z.object({
+    /**
+     * CLIENT · the mills whose coil the group's panels are rolled from.
+     *
+     * Names only, set in type — not the mills' logos. A supplier's trademark
+     * on a customer's website is the supplier's to grant, and the client is
+     * careful about exactly that elsewhere on this site.
+     */
+    steel: z.object({
+      eyebrow: z.string(),
+      title: z.string(),
+      lede: z.string(),
+      mills: z.array(z.object({ name: z.string(), note: z.string() })).min(1),
+    }),
+    groups: z
+      .array(
+        z.object({
+          title: z.string(),
+          items: z
+            .array(z.object({ title: z.string(), body: z.string(), icon: z.string() }))
+            .min(1),
+        }),
+      )
+      .min(1),
   }),
   /**
    * CLIENT · Vertical 01, Balaji Prefab Solutions.
@@ -478,6 +542,8 @@ export const ABOUT = CONTENT.about
 export const GROUP = CONTENT.group
 export const DIVISIONS = CONTENT.divisions
 export const APPRECIATION = CONTENT.appreciation
+export const APPLICATIONS = CONTENT.applications
+export const ROOFING_RANGE = CONTENT.roofingRange
 export const BUILD = CONTENT.build
 export const PREFAB = CONTENT.prefab
 export const PRODUCTS = CONTENT.products

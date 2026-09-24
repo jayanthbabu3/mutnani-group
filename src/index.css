@@ -402,17 +402,15 @@ html.js [data-entrance][data-entered] {
   }
 }
 
-/* The first section after an inner page's heading starts right under it.
-   Sections are one screen tall with their content centred (see Section in
-   ui.tsx); straight after a page heading that centring left half a screen of
-   white between the heading and what it introduces. Unlayered, so it wins
-   over the utilities. */
+/* The first section after an inner page's heading starts right under it: the
+   page heading already introduces what follows, so the section's own top
+   padding would only repeat the gap. Unlayered, so it wins over the
+   utilities. */
 .page-hero + section {
-  padding-top: 3rem;
+  padding-top: 2.5rem;
 }
 @media (min-width: 48rem) {
   .page-hero + section {
-    min-height: 0;
-    padding-top: 4rem;
+    padding-top: 3rem;
   }
 }

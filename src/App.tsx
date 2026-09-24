@@ -7,8 +7,10 @@ import WhatsAppFab from './components/WhatsAppFab'
 import { ScrollTrigger, useSmoothScroll } from './lib/motion'
 import { pageFor, useLinkInterception, usePath, useScrollOnNavigate } from './lib/router'
 import AboutPage from './pages/AboutPage'
+import ApplicationsPage from './pages/ApplicationsPage'
 import CompaniesPage from './pages/CompaniesPage'
 import ContactPage from './pages/ContactPage'
+import RoofingRangePage from './pages/RoofingRangePage'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -17,6 +19,8 @@ const PAGE_COMPONENTS = {
   companies: CompaniesPage,
   about: AboutPage,
   contact: ContactPage,
+  applications: ApplicationsPage,
+  roofing: RoofingRangePage,
   missing: NotFoundPage,
 }
 

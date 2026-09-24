@@ -1,4 +1,4 @@
-import { LINE } from '../data/site'
+import { APPLICATIONS, LINE } from '../data/site'
 import { useReveal } from '../lib/motion'
 import { Eyebrow, Lede, Section, SectionTitle } from './ui'
 
@@ -137,6 +137,26 @@ export default function RoofingLine() {
               </div>
             ))}
           </dl>
+
+          {/* Whose coil it is. It sits under the sizes rather than in its own
+              band: "0.42–0.80 TCT" and "Tata, Jindal, AMNS" answer the same
+              question — what is this sheet — and a buyer asks them together.
+              Names set in type, not the mills' marks, which are theirs. */}
+          <div className="mt-8 border-t border-line/60 pt-5">
+            <p className="tech-sm text-body">{APPLICATIONS.steel.eyebrow}</p>
+            <ul className="mt-3 flex flex-wrap gap-2.5">
+              {APPLICATIONS.steel.mills.map((mill) => (
+                <li
+                  key={mill.name}
+                  className="rounded-xl border border-line bg-raised/40 px-4 py-2.5"
+                >
+                  <p className="font-display text-[1rem] leading-none font-semibold text-heading">
+                    {mill.name}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </Section>
