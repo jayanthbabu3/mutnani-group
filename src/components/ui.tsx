@@ -50,7 +50,7 @@ export function Shell({ children, className = '' }: { children: ReactNode; class
  * section's content alone runs 863–2250px, so a viewport can never hold one
  * whole section there no matter how the padding is set. Forcing `min-h` on
  * mobile would add empty screens without ever achieving it, so mobile relies
- * on the padding instead: 96px a side, about a fifth of a phone screen, which
+ * on the padding instead: 112px a side, about a fifth of a phone screen, which
  * is enough to say a section has ended.
  *
  * `svh` not `vh`: on iOS `vh` is the height with the URL bar hidden, so every
@@ -78,7 +78,7 @@ export function Section({
     <section
       id={id}
       ref={ref}
-      className={`relative scroll-mt-20 py-24 md:flex md:min-h-svh md:items-center md:py-32 ${className}`}
+      className={`relative scroll-mt-20 py-28 md:flex md:min-h-svh md:items-center md:py-40 ${className}`}
     >
       <Shell>{children}</Shell>
     </section>

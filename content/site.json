@@ -3,7 +3,6 @@
     "name": "Mutnani",
     "role": "Group of Companies",
     "city": "Hyderabad",
-    "basedLine": "Global Imports",
     "phone": "+917831012345",
     "phoneDisplay": "+91 78310 12345",
     "phoneAlt": "",
@@ -71,10 +70,33 @@
   "hero": {
     "eyebrow": "",
     "headline": {
-      "line1": "Technology-Driven",
-      "line2": "Roofing Profile Manufacturing"
+      "line1": "Prefab. Roofing. Imports.",
+      "line2": "Three Companies, One Group."
     },
-    "sub": "Three companies under one group: Prefabrication Construction — **Roofing, Aerocon Walls, False Ceilings, PUF Panels, PEB (Pre-Engineered Buildings)** and **Modular Buildings**; **Precision-Engineered Roofing Profile Manufacturing**; and Imports of **False Ceiling Tiles & Grid**, and **Modern Interior Equipment**.",
+    "companies": [
+      {
+        "name": "Balaji Prefab Private Limited",
+        "kind": "Prefabrication Construction",
+        "items": [
+          "Roofing",
+          "Aerocon Walls",
+          "False Ceilings",
+          "PUF Panels",
+          "PEB (Pre-Engineered Buildings)",
+          "Modular Buildings"
+        ]
+      },
+      {
+        "name": "Balaji Roofing Industries",
+        "kind": "Manufacturing",
+        "items": ["Precision-Engineered Roofing Profile Manufacturing"]
+      },
+      {
+        "name": "Mutnani IMEX Infra Private Limited",
+        "kind": "Imports",
+        "items": ["False Ceiling Tiles & Grid", "Modern Interior Equipment"]
+      }
+    ],
     "primaryCta": "Get a quote",
     "secondaryCta": "See how it goes up",
     "stats": [

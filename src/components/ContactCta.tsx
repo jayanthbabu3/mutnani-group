@@ -14,7 +14,7 @@ export default function ContactCta() {
   const ref = useReveal<HTMLElement>({ stagger: 0.08 })
 
   return (
-    <section ref={ref} className="py-20 md:py-28">
+    <section ref={ref} className="py-24 md:py-36">
       <Shell>
         <div className="relative isolate overflow-hidden rounded-3xl border border-line bg-raised/40 px-6 py-12 sm:px-12 sm:py-16">
           <div

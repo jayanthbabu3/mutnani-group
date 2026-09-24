@@ -45,7 +45,6 @@ collections:
               - { name: name, label: Group name, widget: string }
               - { name: role, label: Descriptor, widget: string }
               - { name: city, label: City, widget: string }
-              - { name: basedLine, label: Location line, widget: string }
               - {
                   name: phone,
                   label: Main phone (international, e.g. +919849078678),
@@ -143,7 +142,14 @@ collections:
                       label: Second line (shown in gold),
                       widget: string,
                     }
-              - { name: sub, label: "Intro paragraph (wrap service names in **double asterisks** to highlight them)", widget: text }
+              - name: companies
+                label: Companies checklist (up to 3)
+                widget: list
+                max: 3
+                fields:
+                  - { name: name, label: Company name, widget: string }
+                  - { name: kind, label: What it does (short), widget: string }
+                  - { name: items, label: Checklist items, widget: list, field: { name: item, label: Item, widget: string } }
               - { name: primaryCta, label: Main button, widget: string }
               - { name: secondaryCta, label: Second button, widget: string }
               - name: stats

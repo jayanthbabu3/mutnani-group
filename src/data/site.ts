@@ -23,7 +23,6 @@ const schema = z.object({
     name: z.string().min(1),
     role: z.string(),
     city: z.string(),
-    basedLine: z.string(),
     /** CLIENT · international form, drives every wa.me and tel: link */
     phone: z.string().regex(/^\+\d{10,15}$/, 'phone must be international, e.g. +919000000000'),
     /** CLIENT */
@@ -66,8 +65,11 @@ const schema = z.object({
      * components/Hero.tsx before rewriting either.
      */
     headline: z.object({ line1: z.string(), line2: z.string() }),
-    /** Plain text; **double asterisks** mark the service names, set in the heading colour. */
-    sub: z.string(),
+    /** The three companies as a checklist under the headline: name, what it does, and its line items. */
+    companies: z
+      .array(z.object({ name: z.string(), kind: z.string(), items: z.array(z.string()).min(1) }))
+      .min(1)
+      .max(3),
     primaryCta: z.string(),
     secondaryCta: z.string(),
     stats: z.array(z.object({ value: z.number(), suffix: z.string(), label: z.string() })).max(4),

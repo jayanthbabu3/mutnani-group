@@ -1,4 +1,4 @@
-import { HERO, SITE } from '../data/site'
+import { HERO } from '../data/site'
 import { useCountUp, useEntrance } from '../lib/motion'
 import { CtaLink, Shell } from './ui'
 
@@ -24,7 +24,7 @@ export default function Hero() {
     <header
       ref={ref}
       id="top"
-      className="relative isolate overflow-hidden pt-28 pb-16 lg:flex lg:min-h-[100svh] lg:items-center lg:pt-24 lg:pb-10"
+      className="relative isolate overflow-hidden pt-28 pb-20 lg:flex lg:min-h-[100svh] lg:items-center lg:pt-24 lg:pb-10"
     >
       <Shell>
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] lg:gap-14">
@@ -44,7 +44,7 @@ export default function Hero() {
               that emphasis, and a high-contrast display italic at display size
               reads as an invitation rather than as steel.
 
-              Sized for the longest line, "Roofing Profile Manufacturing":
+              Sized for the longest line, "Three Companies, One Group.":
               it has to hold one line in the ~560px copy column at 1280px,
               which is what caps the clamp. Re-check it there before changing
               either the copy or these numbers.
@@ -57,20 +57,41 @@ export default function Hero() {
             */}
             <h1
               data-entrance="lines"
-              className="mt-6 first:mt-0 font-display text-[clamp(1.7rem,3.2vw,2.75rem)] leading-[1.1] font-bold tracking-tight text-heading"
+              className="mt-6 first:mt-0 font-display text-[clamp(1.6rem,2.9vw,2.6rem)] leading-[1.1] font-bold tracking-tight text-heading"
             >
               <span className="block text-accent">{line1}</span>
               <span className="block text-secondary">{line2}</span>
             </h1>
 
-            <p
-              data-entrance="rise"
-              className="mt-6 max-w-xl text-[0.98rem] leading-[1.75] text-body"
-            >
-              <Highlighted text={HERO.sub} />
-            </p>
+            {/* The three companies as a checklist rather than one long
+                sentence: a buyer scanning for "PEB" or "False Ceiling" finds it
+                under the company that does it. */}
+            <ul data-entrance="rise" className="mt-7 max-w-xl space-y-4 lg:mt-8">
+              {HERO.companies.map((c, i) => (
+                <li key={c.name} className="border-l-2 border-accent/40 pl-4">
+                  <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+                    <span className="tech-sm text-accent tabular-nums">0{i + 1}</span>
+                    <span className="text-[0.98rem] font-semibold text-heading">{c.name}</span>
+                    <span className="tech-sm text-secondary">{c.kind}</span>
+                  </p>
+                  <ul className="mt-2 grid gap-x-8 gap-y-1.5 sm:grid-cols-[auto_auto] sm:justify-start">
+                    {c.items.map((item) => (
+                      <li
+                        key={item}
+                        className={`flex items-start gap-2 text-[0.92rem] leading-snug text-body ${
+                          c.items.length === 1 ? 'sm:col-span-2' : ''
+                        }`}
+                      >
+                        <Check />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
 
-            <div data-entrance="rise" className="mt-9 flex flex-wrap items-center gap-3">
+            <div data-entrance="rise" className="mt-8 flex flex-wrap items-center gap-3">
               <CtaLink href="#contact">{HERO.primaryCta}</CtaLink>
               <CtaLink href="#build" variant="ghost">
                 {HERO.secondaryCta}
@@ -80,16 +101,12 @@ export default function Hero() {
             <dl
               data-entrance="rise"
               data-entrance-at="+=0.15"
-              className="mt-11 grid max-w-lg grid-cols-3 gap-4 border-t border-line pt-7"
+              className="mt-9 grid max-w-lg grid-cols-3 gap-4 border-t border-line pt-6"
             >
               {HERO.stats.map((s) => (
                 <Stat key={s.label} {...s} />
               ))}
             </dl>
-
-            <p data-entrance className="tech-sm mt-8 text-body">
-              {SITE.basedLine}
-            </p>
           </div>
 
           {/* ── Stage ─────────────────────────────────────────────────── */}
@@ -117,20 +134,20 @@ export default function Hero() {
   )
 }
 
-/**
- * The intro is one paragraph, as the client wrote it, with the service names
- * lifted to the heading colour so a buyer scanning for "PEB" still finds it.
- * `**…**` in the copy marks them — the one piece of markup the field allows.
- */
-function Highlighted({ text }: { text: string }) {
-  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
-    i % 2 ? (
-      <strong key={i} className="font-medium text-heading">
-        {part}
-      </strong>
-    ) : (
-      part
-    ),
+function Check() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+      className="mt-[0.2em] size-[0.95em] shrink-0 text-secondary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 8.5l3.2 3L13 4.5" />
+    </svg>
   )
 }
 
