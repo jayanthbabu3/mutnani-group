@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { VIDEOS } from '../data/site'
 import { useReveal } from '../lib/motion'
 import { Eyebrow, Lede, Section, SectionTitle } from './ui'
@@ -26,25 +26,34 @@ import { Eyebrow, Lede, Section, SectionTitle } from './ui'
  */
 type Clip = { youtubeId: string; siteName: string; place: string; n: number; total: number }
 
-const CLIPS: Clip[] = VIDEOS.sites.flatMap((site) =>
-  site.videos.map((v, i) => ({
-    youtubeId: v.youtubeId,
-    siteName: site.name,
-    place: site.place,
-    n: i + 1,
-    total: site.videos.length,
-  })),
-)
+const clipsIn = (group: string): Clip[] =>
+  VIDEOS.sites
+    .filter((site) => site.group === group)
+    .flatMap((site) =>
+      site.videos.map((v, i) => ({
+        youtubeId: v.youtubeId,
+        siteName: site.name,
+        place: site.place,
+        n: i + 1,
+        total: site.videos.length,
+      })),
+    )
+
+/** Only the tabs that have footage under them. */
+const TABS = VIDEOS.groups.filter((group) => clipsIn(group.id).length > 0)
 
 export default function SiteVideos() {
   const ref = useReveal<HTMLElement>({ stagger: 0.08 })
-  const [active, setActive] = useState<Clip>(CLIPS[0])
+  const [tab, setTab] = useState(TABS[0].id)
+  const clips = useMemo(() => clipsIn(tab), [tab])
+  const sites = useMemo(() => VIDEOS.sites.filter((site) => site.group === tab), [tab])
+  const [active, setActive] = useState<Clip>(clips[0])
   // Set once, on the first play, and never cleared: from then on picking a
   // clip swaps the iframe src instead of going back to a poster.
   const [armed, setArmed] = useState(false)
   const stripRef = useRef<HTMLDivElement>(null)
 
-  const index = CLIPS.findIndex((c) => c.youtubeId === active.youtubeId)
+  const index = clips.findIndex((c) => c.youtubeId === active.youtubeId)
 
   // Which way the strip can still scroll. An arrow that does nothing reads as
   // broken, so each one only shows while there is something beyond it.
@@ -89,8 +98,15 @@ export default function SiteVideos() {
     setActive(clip)
     setArmed(true)
   }
-  // Wraps at both ends — thirteen clips is a loop, not a line.
-  const step = (by: 1 | -1) => pick(CLIPS[(index + by + CLIPS.length) % CLIPS.length])
+  // Wraps at both ends — a tab's clips are a loop, not a line.
+  const step = (by: 1 | -1) => pick(clips[(index + by + clips.length) % clips.length])
+
+  /** Switching tab starts that tab at its first clip. */
+  const pickTab = (id: string) => {
+    if (id === tab) return
+    setTab(id)
+    setActive(clipsIn(id)[0])
+  }
 
   return (
     <Section id="videos" ref={ref}>
@@ -100,9 +116,46 @@ export default function SiteVideos() {
         </div>
         <SectionTitle className="mx-auto">{VIDEOS.title}</SectionTitle>
         <Lede className="mx-auto">{VIDEOS.lede}</Lede>
+
+        {/* One tab per kind of footage — a shed going up and a panel coming
+            off the line are two different things to watch. Centred with the
+            heading, and hidden when there is only one kind. */}
+        {TABS.length > 1 ? (
+          <div
+            role="tablist"
+            aria-label="Kind of footage"
+            className="reveal mt-7 flex flex-wrap justify-center gap-2"
+          >
+            {TABS.map((group) => {
+              const on = group.id === tab
+              return (
+                <button
+                  key={group.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={on}
+                  onClick={() => pickTab(group.id)}
+                  className={`rounded-full border px-4 py-2 text-[0.82rem] font-medium transition-all duration-300 ease-snap ${
+                    on
+                      ? 'border-accent bg-accent text-ground'
+                      : 'border-line text-body hover:border-accent/50 hover:text-accent'
+                  }`}
+                >
+                  {group.label}
+                  <span className="ml-2 text-[0.72rem] tabular-nums opacity-70">
+                    {clipsIn(group.id).length}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        ) : null}
       </div>
 
-      <div className="mx-auto mt-12 max-w-[64rem]">
+      {/* 64rem as before, but never taller than the screen: at 1024 wide the
+          stage is 576px, which on a short laptop window pushed its own caption
+          and the filmstrip under the fold. */}
+      <div className="mx-auto mt-10 max-w-[min(64rem,105svh)]">
         {/* ── The stage ─────────────────────────────────────────────────── */}
         <div className="reveal relative aspect-video overflow-hidden rounded-2xl bg-heading">
           {armed ? (
@@ -153,83 +206,89 @@ export default function SiteVideos() {
               {active.siteName}
             </p>
             <p className="tech-sm mt-1.5 text-body">
-              {active.place ? `${active.place} · ` : ''}
-              video {active.n} of {active.total}
+              {active.place}
+              {active.place && active.total > 1 ? ' · ' : ''}
+              {active.total > 1 ? `video ${active.n} of ${active.total}` : ''}
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="tech-sm mr-2 text-body tabular-nums">
-              {String(index + 1).padStart(2, '0')} / {String(CLIPS.length).padStart(2, '0')}
-            </span>
-            <StepButton dir="prev" onClick={() => step(-1)} />
-            <StepButton dir="next" onClick={() => step(1)} />
-          </div>
+          {/* A single clip has nowhere to step to, and no strip under it. */}
+          {clips.length > 1 ? (
+            <div className="flex items-center gap-2">
+              <span className="tech-sm mr-2 text-body tabular-nums">
+                {String(index + 1).padStart(2, '0')} / {String(clips.length).padStart(2, '0')}
+              </span>
+              <StepButton dir="prev" onClick={() => step(-1)} />
+              <StepButton dir="next" onClick={() => step(1)} />
+            </div>
+          ) : null}
         </div>
 
         {/* ── The filmstrip ─────────────────────────────────────────────── */}
-        <div className="relative">
-          <div
-            ref={stripRef}
-            className="reveal mt-8 flex snap-x gap-8 overflow-x-auto border-t border-line pt-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {VIDEOS.sites.map((site) => (
-              <div key={site.id} className="shrink-0 snap-start">
-                <p className="flex items-baseline gap-2">
-                  <span className="text-[0.95rem] font-semibold text-heading">{site.name}</span>
-                  {site.place ? (
-                    <span className="text-[0.8rem] text-body">{site.place}</span>
-                  ) : null}
-                </p>
-                <ul className="mt-3 flex gap-2.5">
-                  {site.videos.map((v, i) => {
-                    const clip = CLIPS.find((c) => c.youtubeId === v.youtubeId)!
-                    const isActive = active.youtubeId === v.youtubeId
-                    return (
-                      <li key={v.youtubeId}>
-                        <button
-                          type="button"
-                          onClick={() => pick(clip)}
-                          aria-current={isActive ? 'true' : undefined}
-                          aria-label={`Play ${site.name}, video ${i + 1} of ${site.videos.length}`}
-                          className="group/tile block w-40 text-left sm:w-44"
-                        >
-                          <span
-                            className={`relative block aspect-video overflow-hidden rounded-lg transition-all duration-300 ease-micro ${
-                              isActive
-                                ? 'ring-2 ring-accent ring-offset-2 ring-offset-ground'
-                                : 'ring-1 ring-line group-hover/tile:ring-2 group-hover/tile:ring-accent/60'
-                            }`}
+        {clips.length > 1 ? (
+          <div className="relative">
+            <div
+              ref={stripRef}
+              className="reveal mt-8 flex snap-x gap-8 overflow-x-auto border-t border-line pt-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {sites.map((site) => (
+                <div key={site.id} className="shrink-0 snap-start">
+                  <p className="flex items-baseline gap-2">
+                    <span className="text-[0.95rem] font-semibold text-heading">{site.name}</span>
+                    {site.place ? (
+                      <span className="text-[0.8rem] text-body">{site.place}</span>
+                    ) : null}
+                  </p>
+                  <ul className="mt-3 flex gap-2.5">
+                    {site.videos.map((v, i) => {
+                      const clip = clips.find((c) => c.youtubeId === v.youtubeId)!
+                      const isActive = active.youtubeId === v.youtubeId
+                      return (
+                        <li key={v.youtubeId}>
+                          <button
+                            type="button"
+                            onClick={() => pick(clip)}
+                            aria-current={isActive ? 'true' : undefined}
+                            aria-label={`Play ${site.name}, video ${i + 1} of ${site.videos.length}`}
+                            className="group/tile block w-40 text-left sm:w-44"
                           >
-                            <img
-                              src={`https://i.ytimg.com/vi/${v.youtubeId}/mqdefault.jpg`}
-                              alt=""
-                              loading="lazy"
-                              decoding="async"
-                              className="absolute inset-0 size-full object-cover"
-                            />
-                            {isActive && armed ? (
-                              <span
-                                className="absolute right-1.5 bottom-1.5 flex items-end gap-[2px] rounded bg-accent px-1 py-0.5"
-                                aria-hidden
-                              >
-                                <span className="eq-bar h-2 w-[2px] bg-white" />
-                                <span className="eq-bar h-3 w-[2px] bg-white [animation-delay:120ms]" />
-                                <span className="eq-bar h-1.5 w-[2px] bg-white [animation-delay:240ms]" />
-                              </span>
-                            ) : null}
-                          </span>
-                        </button>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            ))}
-          </div>
+                            <span
+                              className={`relative block aspect-video overflow-hidden rounded-lg transition-all duration-300 ease-micro ${
+                                isActive
+                                  ? 'ring-2 ring-accent ring-offset-2 ring-offset-ground'
+                                  : 'ring-1 ring-line group-hover/tile:ring-2 group-hover/tile:ring-accent/60'
+                              }`}
+                            >
+                              <img
+                                src={`https://i.ytimg.com/vi/${v.youtubeId}/mqdefault.jpg`}
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                                className="absolute inset-0 size-full object-cover"
+                              />
+                              {isActive && armed ? (
+                                <span
+                                  className="absolute right-1.5 bottom-1.5 flex items-end gap-[2px] rounded bg-accent px-1 py-0.5"
+                                  aria-hidden
+                                >
+                                  <span className="eq-bar h-2 w-[2px] bg-white" />
+                                  <span className="eq-bar h-3 w-[2px] bg-white [animation-delay:120ms]" />
+                                  <span className="eq-bar h-1.5 w-[2px] bg-white [animation-delay:240ms]" />
+                                </span>
+                              ) : null}
+                            </span>
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
 
-          <StripArrow dir="prev" visible={edges.left} onClick={() => scrollStrip(-1)} />
-          <StripArrow dir="next" visible={edges.right} onClick={() => scrollStrip(1)} />
-        </div>
+            <StripArrow dir="prev" visible={edges.left} onClick={() => scrollStrip(-1)} />
+            <StripArrow dir="next" visible={edges.right} onClick={() => scrollStrip(1)} />
+          </div>
+        ) : null}
       </div>
     </Section>
   )

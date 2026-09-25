@@ -45,7 +45,7 @@ export default function Partners() {
           in the section allowed to. Width and offset are the viewport, not
           the shell, so no gutter is left at either side. */}
       <div className="partners-fade partners-marquee reveal relative left-1/2 mt-16 w-screen -translate-x-1/2 overflow-hidden py-4 sm:mt-20">
-        <div className="partners-track flex w-max items-stretch gap-6 sm:gap-8">
+        <div className="partners-track flex w-max items-stretch gap-4 sm:gap-6 lg:gap-8">
           {loop.map((item, i) => (
             <figure
               key={`${item.id}-${i}`}
@@ -55,11 +55,11 @@ export default function Partners() {
               // that box shows up as a pale rectangle around the logo. On a
               // white card it disappears, so the border and the shadow — not a
               // fill — are what separate the card from the page.
-              className={`flex w-[17rem] shrink-0 flex-col items-center justify-between rounded-3xl border border-line bg-ground px-8 pt-9 pb-7 shadow-[0_12px_32px_-18px_rgba(13,33,54,0.28)] transition-transform duration-300 ease-micro hover:-translate-y-1.5 sm:w-[20rem] sm:px-10 sm:pt-11 sm:pb-8 ${
+              className={`flex w-[13.5rem] shrink-0 flex-col items-center justify-between rounded-2xl border border-line bg-ground px-5 pt-6 pb-5 shadow-[0_12px_32px_-18px_rgba(13,33,54,0.28)] transition-transform duration-300 ease-micro hover:-translate-y-1.5 sm:w-[16rem] sm:rounded-3xl sm:px-7 sm:pt-8 sm:pb-6 lg:w-[18rem] lg:px-8 lg:pt-9 lg:pb-7 ${
                 i >= PARTNERS.items.length ? 'partners-track-dup' : ''
               }`}
             >
-              <div className="flex h-24 w-full items-center justify-center sm:h-28">
+              <div className="flex h-16 w-full items-center justify-center sm:h-20 lg:h-24">
                 <img
                   src={item.logo}
                   alt={item.logoAlt}
@@ -67,9 +67,13 @@ export default function Partners() {
                   className="max-h-full w-auto max-w-full object-contain"
                 />
               </div>
-              <figcaption className="mt-7 w-full border-t border-line pt-5 text-center">
-                <p className="text-[0.92rem] leading-snug font-medium text-heading">{item.name}</p>
-                <p className="tech-sm mt-2 text-body">{item.sector}</p>
+              <figcaption className="mt-5 w-full border-t border-line pt-4 text-center sm:mt-6 sm:pt-5">
+                <p className="text-[0.82rem] leading-snug font-medium text-heading sm:text-[0.9rem]">
+                  {item.name}
+                </p>
+                <p className="tech-sm mt-1.5 text-[0.58rem] text-body sm:mt-2 sm:text-[0.62rem]">
+                  {item.sector}
+                </p>
               </figcaption>
             </figure>
           ))}
