@@ -25,6 +25,7 @@ export type Page =
   | 'contact'
   | 'applications'
   | 'roofing'
+  | 'imports'
   | 'missing'
 
 const PAGES: Record<string, Page> = {
@@ -34,6 +35,7 @@ const PAGES: Record<string, Page> = {
   '/contact': 'contact',
   '/what-we-build': 'applications',
   '/roofing-range': 'roofing',
+  '/imports': 'imports',
 }
 
 /** "/about/" and "/about" are the same page. */

@@ -407,10 +407,14 @@ html.js [data-entrance][data-entered] {
    padding would only repeat the gap. Unlayered, so it wins over the
    utilities. */
 .page-hero + section {
-  padding-top: 2.5rem;
+  padding-top: 1.5rem;
 }
 @media (min-width: 48rem) {
   .page-hero + section {
-    padding-top: 3rem;
+    /* Back to its content's own height: a section keeps a screen of height
+       and centres inside it, which under a page heading left half a screen of
+       white between the heading and the thing it introduces. */
+    min-height: 0;
+    padding-top: 2rem;
   }
 }

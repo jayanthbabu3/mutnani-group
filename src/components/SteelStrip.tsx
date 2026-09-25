@@ -22,7 +22,7 @@ export default function SteelStrip() {
       >
         <div>
           <p className="reveal tech-sm text-accent">{steel.eyebrow}</p>
-          <h2 className="reveal display-opsz mt-3 font-display text-[1.45rem] leading-tight font-semibold text-heading">
+          <h2 className="reveal display-opsz mt-3 font-display text-[1.3rem] leading-tight font-semibold text-heading">
             <TwoTone text={steel.title} />
           </h2>
           <p className="reveal mt-4 max-w-md text-[0.9rem] leading-[1.7] text-body">{steel.lede}</p>

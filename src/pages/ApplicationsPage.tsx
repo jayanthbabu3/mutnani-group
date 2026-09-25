@@ -1,15 +1,18 @@
 import ContactCta from '../components/ContactCta'
 import SteelStrip from '../components/SteelStrip'
 import PageHero from '../components/PageHero'
+import PrefabSolutions from '../components/PrefabSolutions'
+import VideoGrid from '../components/VideoGrid'
 import { APPLICATION_ICONS } from '../components/applicationIcons'
-import { Section } from '../components/ui'
+import { Divider, Section } from '../components/ui'
 import { APPLICATIONS, PAGES } from '../data/site'
 import { useReveal } from '../lib/motion'
 import { usePageMeta } from '../lib/meta'
 
 /**
  * What Balaji Prefab builds — thirteen building types, in the client's own
- * four markets, reached from "View more" on the company's card.
+ * four markets, reached from "View more" on the company's card, and then the
+ * company's own signature section.
  *
  * ── Why bands, and not one long grid ─────────────────────────────────────
  * Thirteen cards in a row of three is a keyword dump: the visitor reads it as
@@ -46,6 +49,13 @@ export default function ApplicationsPage() {
       </Section>
 
       <SteelStrip />
+      <Divider />
+
+      {/* The company's own signature — what it makes and how fast — moved off
+          the home page so each company's detail lives on its own page. */}
+      <PrefabSolutions />
+      <Divider />
+      <VideoGrid group="prefab" />
 
       <ContactCta />
     </>

@@ -12,6 +12,7 @@ import CompaniesPage from './pages/CompaniesPage'
 import ContactPage from './pages/ContactPage'
 import RoofingRangePage from './pages/RoofingRangePage'
 import HomePage from './pages/HomePage'
+import ImportsPage from './pages/ImportsPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 const PAGE_COMPONENTS = {
@@ -21,6 +22,7 @@ const PAGE_COMPONENTS = {
   contact: ContactPage,
   applications: ApplicationsPage,
   roofing: RoofingRangePage,
+  imports: ImportsPage,
   missing: NotFoundPage,
 }
 
