@@ -34,7 +34,7 @@ export default function PageHero({
   const ref = useEntrance<HTMLElement>(0.05)
 
   return (
-    <header ref={ref} className="page-hero relative isolate overflow-hidden pt-28 pb-5 lg:pt-36 lg:pb-6">
+    <header ref={ref} className="page-hero relative isolate overflow-hidden pt-24 pb-4 lg:pt-28 lg:pb-5">
       <div
         aria-hidden
         className="blueprint absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,transparent_0%,#000_30%,rgba(0,0,0,0.45)_65%,transparent_100%)]"
@@ -52,21 +52,21 @@ export default function PageHero({
           </span>
         </nav>
 
-        <p data-entrance className="tech mt-8 flex items-center gap-3 text-accent/85">
+        <p data-entrance className="tech mt-6 flex items-center gap-3 text-accent/85">
           <span className="h-px w-6 bg-accent/50" />
           {eyebrow}
         </p>
 
         <h1
           data-entrance="lines"
-          className="mt-5 max-w-5xl font-display text-[clamp(1.7rem,3.2vw,2.75rem)] leading-[1.12] font-bold tracking-tight text-heading"
+          className="mt-4 max-w-5xl font-display text-[clamp(1.7rem,3.2vw,2.75rem)] leading-[1.12] font-bold tracking-tight text-heading"
         >
           <TwoTone text={title} />
         </h1>
 
         <p
           data-entrance="rise"
-          className="mt-6 max-w-2xl text-[1rem] leading-[1.75] text-body lg:text-[1.05rem]"
+          className="mt-4 max-w-3xl text-[0.98rem] leading-[1.7] text-body"
         >
           {lede}
         </p>
