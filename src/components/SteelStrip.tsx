@@ -15,7 +15,7 @@ export default function SteelStrip() {
   const ref = useReveal<HTMLDivElement>({ stagger: 0.06 })
 
   return (
-    <Section className="!min-h-0 !pt-2 !pb-16 md:!block lg:!pb-20">
+    <Section className="!min-h-0 md:!block">
       <div
         ref={ref}
         className="grid gap-8 rounded-2xl border border-line/70 bg-raised/40 p-7 sm:p-9 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-14"

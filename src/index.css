@@ -406,6 +406,23 @@ html.js [data-entrance][data-entered] {
    page heading already introduces what follows, so the section's own top
    padding would only repeat the gap. Unlayered, so it wins over the
    utilities. */
+/* Inner pages run tighter than home. A home section reserves a screen of
+   height and pads 6-8rem either side, which is the right rhythm for one long
+   scroll and the wrong one for a page of short bands — it left 250px and more
+   of white between them. Unlayered, so it beats the utilities, but any `!`
+   utility on a section still wins over it. */
+.page-inner section {
+  min-height: 0;
+  padding-top: 3.25rem;
+  padding-bottom: 3.25rem;
+}
+@media (min-width: 48rem) {
+  .page-inner section {
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
+  }
+}
+
 .page-hero + section {
   padding-top: 1rem;
 }

@@ -36,7 +36,7 @@ export default function ApplicationsPage() {
     <>
       <PageHero crumb="What we build" eyebrow={page.eyebrow} title={page.title} lede={page.lede} />
 
-      <Section className="!min-h-0 !py-14 md:!block lg:!py-16">
+      <Section className="!min-h-0 md:!block">
         <p className="reveal tech-sm border-t border-line pt-5 text-body">
           {total} building types · {APPLICATIONS.groups.length} markets
         </p>

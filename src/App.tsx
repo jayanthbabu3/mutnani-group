@@ -40,7 +40,8 @@ const PAGE_COMPONENTS = {
 export default function App() {
   const [showFonts, setShowFonts] = useState(false)
   const path = usePath()
-  const Page = PAGE_COMPONENTS[pageFor(path)]
+  const page = pageFor(path)
+  const Page = PAGE_COMPONENTS[page]
 
   useSmoothScroll()
   useLinkInterception()
@@ -66,8 +67,13 @@ export default function App() {
       <Header />
 
       {/* Keyed by path, so every section's reveal and scroll triggers are
-          built fresh for the page they are on. */}
-      <main key={path}>
+          built fresh for the page they are on.
+
+          `page-inner` gives every page but home a tighter rhythm (index.css):
+          a home section reserves a screen so the page reads one band at a
+          time, which on an inner page left 250px+ of white between short
+          bands. */}
+      <main key={path} className={page === 'home' ? undefined : 'page-inner'}>
         <Page />
       </main>
 

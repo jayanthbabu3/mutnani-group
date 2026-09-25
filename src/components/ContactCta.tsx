@@ -14,9 +14,9 @@ export default function ContactCta() {
   const ref = useReveal<HTMLElement>({ stagger: 0.08 })
 
   return (
-    <section ref={ref} className="py-20 md:py-28">
+    <section ref={ref} className="py-12 md:py-14">
       <Shell>
-        <div className="relative isolate overflow-hidden rounded-3xl border border-line bg-raised/40 px-6 py-12 sm:px-12 sm:py-16">
+        <div className="relative isolate overflow-hidden rounded-3xl border border-line bg-raised/40 px-6 py-8 sm:px-10 sm:py-10">
           <div
             aria-hidden
             className="blueprint absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_top_right,#000_0%,transparent_70%)]"
@@ -25,14 +25,16 @@ export default function ContactCta() {
             <span className="h-px w-6 bg-accent/50" />
             {CONTENT.contact.eyebrow}
           </p>
-          <h2 className="reveal mt-4 max-w-2xl font-display text-[clamp(1.55rem,2.5vw,2.1rem)] leading-[1.18] font-semibold tracking-[-0.015em] text-heading">
-            <TwoTone text={CONTENT.contact.title} />
-          </h2>
-          <div className="reveal mt-8 flex flex-wrap items-center gap-3">
-            <CtaLink href="/contact">Contact us</CtaLink>
-            <CtaLink href={`tel:${SITE.phone}`} variant="ghost">
-              {SITE.phoneDisplay}
-            </CtaLink>
+          <div className="mt-3 flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
+            <h2 className="reveal max-w-xl font-display text-[clamp(1.4rem,2.1vw,1.85rem)] leading-[1.18] font-semibold tracking-[-0.015em] text-heading">
+              <TwoTone text={CONTENT.contact.title} />
+            </h2>
+            <div className="reveal flex flex-wrap items-center gap-3">
+              <CtaLink href="/contact">Contact us</CtaLink>
+              <CtaLink href={`tel:${SITE.phone}`} variant="ghost">
+                {SITE.phoneDisplay}
+              </CtaLink>
+            </div>
           </div>
         </div>
       </Shell>

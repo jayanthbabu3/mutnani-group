@@ -25,7 +25,7 @@ export default function ImportsPage() {
     <>
       <PageHero crumb="Imports" eyebrow={page.eyebrow} title={page.title} lede={page.lede} />
 
-      <Section className="!min-h-0 !py-14 md:!block lg:!py-16">
+      <Section className="!min-h-0 md:!block">
         <div ref={ref}>
           <p className="reveal tech-sm border-t border-line pt-5 text-body">What the desk handles</p>
 

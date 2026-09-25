@@ -60,7 +60,7 @@ export default function VideoGrid({ group }: { group: string }) {
   if (!meta || clips.length === 0) return null
 
   return (
-    <Section className="!min-h-0 !py-14 md:!block lg:!py-16" ref={ref}>
+    <Section className="!min-h-0 md:!block" ref={ref}>
       <Eyebrow>{VIDEOS.eyebrow}</Eyebrow>
       <SectionTitle>{meta.heading}</SectionTitle>
 
