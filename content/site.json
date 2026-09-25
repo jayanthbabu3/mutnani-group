@@ -7,8 +7,8 @@
     "phoneDisplay": "+91 78310 12345",
     "phoneAlt": "",
     "phoneAltDisplay": "",
-    "email": "info@balajiprefab.com",
-    "emailAlt": "balajiprefab@gmail.com",
+    "email": "info@mutnanigroup.com",
+    "emailAlt": "",
     "instagram": "https://instagram.com/balaji_prefab_official",
     "linkedin": "https://www.linkedin.com/",
     "whatsappMessage": "Hi Mutnani Group, I'd like to talk about a prefab / roofing requirement.",
@@ -77,15 +77,26 @@
       "title": "What comes off | our roofing line",
       "lede": "Pre-painted coil goes in one end and a finished, cut-to-length sheet or insulated panel comes out the other. This is the range, and the sizes it is made to.",
       "meta": "Roofing profile sheets, PUF insulated wall and roof panels, flashings, gutters and custom profiles, manufactured by Balaji Roofing Industries on its own line."
+    },
+    "imports": {
+      "eyebrow": "Mutnani IMEX Infra",
+      "title": "Sourced worldwide, | cleared by us",
+      "lede": "The import desk buys what the market here does not make, through a procurement network across the globe, and clears it through our own Mumbai desk into the works at Hyderabad.",
+      "meta": "Mutnani IMEX Infra Private Limited — import of building materials, global sourcing, logistics and supply chain, from China, Vietnam, the UAE and beyond."
     }
   },
   "hero": {
     "eyebrow": "",
     "headline": {
-      "line1": "Design, Manufacture,",
-      "line2": "Deliver"
+      "line1": "From Structure to Finish",
+      "line2": "One Group, Every Solution."
     },
-    "sub": "Three companies under one group: Prefabrication Construction — **Roofing, Aerocon Walls, False Ceilings, PUF Panels, PEB (Pre-Engineered Buildings)** and **Modular Buildings**; **Precision-Engineered Roofing Profile Manufacturing**; and Imports of **False Ceiling Tiles & Grid**, and **Modern Interior Equipment**.",
+    "sub": "Three companies under one group:",
+    "points": [
+      "Prefabrication Construction — **Roofing, Aerocon Walls, False Ceilings, PUF Panels, PEB (Pre-Engineered Buildings) & Modular Buildings**",
+      "**Precision-Engineered Roofing Profile Manufacturing**",
+      "Imports — **False Ceiling Tiles, Grid & Modern Interior Equipment**"
+    ],
     "primaryCta": "Get a quote",
     "secondaryCta": "See how it goes up",
     "stats": [
@@ -160,7 +171,15 @@
       }
     ],
     "cta": "Talk to the group",
+    "portrait": {
+      "src": "/about/founder.jpg",
+      "alt": "Mutnani Madhu Sudhan, founder and managing director of Mutnani Group of Companies.",
+      "name": "Mutnani Madhu Sudhan",
+      "role": "Founder & Managing Director"
+    },
     "awardsEyebrow": "Recognition",
+    "awardsTitle": "Awards and | recognition",
+    "awardsLede": "Presented to the group and its founder between 2018 and 2026, by the forums and chambers named on each.",
     "awards": [
       {
         "id": "excellence-2026",
@@ -313,16 +332,19 @@
         "Logistics & supply chain",
         "Exports — coming soon"
       ],
+      "more": {
+        "label": "View more",
+        "href": "/imports"
+      },
       "image": "/divisions/trade.webp",
       "imageAlt": "A container ship loaded with stacked shipping containers at sea.",
-      "imagePlaceholder": true,
-      "more": null
+      "imagePlaceholder": true
     }
   ],
   "appreciation": {
     "eyebrow": "Client appreciation",
     "title": "Letters from the companies | we build for",
-    "lede": "Written on the letterheads of the contractors whose sites the group builds on.",
+    "lede": "Written on the letterheads of the clients whose sites the group builds on.",
     "items": [
       {
         "id": "meil",
@@ -620,7 +642,19 @@
   "videos": {
     "eyebrow": "From the sites",
     "title": "Watch it | go up",
-    "lede": "Straight from the group’s own sites — frames landing, panels going on, sheds closing in. Shot by the crews, not a production house.",
+    "lede": "Straight from the group’s own sites and its own line — shot by the crews, not a production house.",
+    "groups": [
+      {
+        "id": "prefab",
+        "label": "Prefab & site work",
+        "heading": "Prefab sites | on video"
+      },
+      {
+        "id": "roofing",
+        "label": "Roofing line",
+        "heading": "The roofing line | on video"
+      }
+    ],
     "sites": [
       {
         "id": "belgaum",
@@ -636,7 +670,8 @@
           {
             "youtubeId": "JnVep5K1r0E"
           }
-        ]
+        ],
+        "group": "prefab"
       },
       {
         "id": "kodangal",
@@ -646,7 +681,8 @@
           {
             "youtubeId": "bXKoRgWXr-8"
           }
-        ]
+        ],
+        "group": "prefab"
       },
       {
         "id": "mp-ncc",
@@ -659,7 +695,8 @@
           {
             "youtubeId": "Xv6S9UB18mk"
           }
-        ]
+        ],
+        "group": "prefab"
       },
       {
         "id": "sileru",
@@ -672,7 +709,8 @@
           {
             "youtubeId": "k3lI7RrQ7Tk"
           }
-        ]
+        ],
+        "group": "prefab"
       },
       {
         "id": "shimla",
@@ -685,7 +723,8 @@
           {
             "youtubeId": "OT13TxRJOUg"
           }
-        ]
+        ],
+        "group": "prefab"
       },
       {
         "id": "site-footage",
@@ -698,7 +737,8 @@
           {
             "youtubeId": "TZ_NSsdJUcg"
           }
-        ]
+        ],
+        "group": "prefab"
       },
       {
         "id": "yerpedu",
@@ -707,6 +747,18 @@
         "videos": [
           {
             "youtubeId": "mAUMmFEYp74"
+          }
+        ],
+        "group": "prefab"
+      },
+      {
+        "id": "roofing-line",
+        "name": "Roofing profile line",
+        "place": "",
+        "group": "roofing",
+        "videos": [
+          {
+            "youtubeId": "0k1pM6AkV3g"
           }
         ]
       }

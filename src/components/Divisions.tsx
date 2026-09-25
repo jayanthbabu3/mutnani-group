@@ -49,7 +49,9 @@ export default function Divisions() {
       */}
       <Eyebrow>{GROUP.eyebrow}</Eyebrow>
       <SectionTitle>{GROUP.title}</SectionTitle>
-      <Lede>{GROUP.lede}</Lede>
+      {/* Wider than the standard lede measure: this sentence is one thought
+          and the default 3xl broke it with "Delivery." alone on line two. */}
+      <Lede className="max-w-5xl">{GROUP.lede}</Lede>
 
       {/*
         The same card as the order list further down the page.

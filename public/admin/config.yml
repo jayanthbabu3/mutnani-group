@@ -143,6 +143,12 @@ collections:
                       widget: string,
                     }
               - { name: sub, label: "Intro paragraph (wrap service names in **double asterisks** to highlight them)", widget: text }
+              - name: points
+                label: What the three companies do (one line each)
+                widget: list
+                min: 1
+                max: 4
+                field: { name: point, label: Line, widget: string }
               - { name: primaryCta, label: Main button, widget: string }
               - { name: secondaryCta, label: Second button, widget: string }
               - name: stats

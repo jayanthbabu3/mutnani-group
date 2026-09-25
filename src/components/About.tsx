@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { ABOUT, whatsappHref } from '../data/site'
 import { useReveal } from '../lib/motion'
-import { CtaLink, Eyebrow, Section, SectionTitle } from './ui'
+import { CtaLink, Eyebrow, Lede, Section, SectionTitle } from './ui'
 
 /**
  * Who the group is, told through what it has been given.
@@ -42,6 +42,123 @@ import { CtaLink, Eyebrow, Section, SectionTitle } from './ui'
  */
 
 /**
+ * Who the group is: the story, the figures and the way in to a conversation.
+ *
+ * The awards used to sit beside this copy. They are their own section now
+ * (`Awards`, below) because the client wants them second on the home page,
+ * straight under the hero, while this stays where a visitor looks for it —
+ * once they have seen the work.
+ */
+export default function About() {
+  const ref = useReveal<HTMLElement>({ stagger: 0.08 })
+
+  return (
+    <Section id="about" ref={ref}>
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-center lg:gap-16">
+        <div>
+          <Eyebrow>{ABOUT.eyebrow}</Eyebrow>
+          <SectionTitle>{ABOUT.title}</SectionTitle>
+
+          <div className="reveal mt-6 space-y-4">
+            {ABOUT.body.map((para) => (
+              <p key={para} className="text-[0.95rem] leading-[1.75] text-body">
+                {para}
+              </p>
+            ))}
+          </div>
+
+          <dl className="reveal mt-9 grid grid-cols-3 gap-6 border-t border-line/60 pt-7 sm:max-w-xl">
+            {ABOUT.figures.map((figure) => (
+              <div key={figure.label}>
+                <dt className="sr-only">{figure.label}</dt>
+                <dd>
+                  <span className="block font-display text-[1.7rem] leading-none font-semibold text-heading tabular-nums">
+                    {figure.value}
+                  </span>
+                  <span className="tech-sm mt-2.5 block text-body">{figure.label}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <CtaLink href={whatsappHref()} external className="reveal mt-8">
+            {ABOUT.cta}
+          </CtaLink>
+        </div>
+
+        {/* ── The founder ─────────────────────────────────────────────── */}
+        {/*
+          A circle, not a rectangle: the photograph is a posed portrait with a
+          busy garden behind it, and the circle crops to the man and drops the
+          background at the edges. The ring and the blueprint disc behind it
+          are the page's own hairline vocabulary, so it reads as part of the
+          site rather than as a pasted-in headshot.
+        */}
+        {/*
+          A circle, not a rectangle: the photograph is a posed portrait with a
+          busy garden behind it, and the circle crops to the man and drops the
+          background at the edges. The outer ring is set off from the photo by
+          its own gap — a quarter-arc riding the edge read as a stray line
+          rather than as a flourish.
+        */}
+        <figure className="reveal mx-auto w-full max-w-[21rem]">
+          <div className="relative rounded-full p-3 ring-1 ring-accent/30">
+            <div
+              aria-hidden
+              className="blueprint absolute inset-0 -z-10 rounded-full [mask-image:radial-gradient(circle,#000_50%,transparent_75%)]"
+            />
+            <div className="relative aspect-square overflow-hidden rounded-full shadow-[0_18px_40px_-24px_rgba(13,33,54,0.5)]">
+              <img
+                src={ABOUT.portrait.src}
+                alt={ABOUT.portrait.alt}
+                loading="lazy"
+                decoding="async"
+                className="size-full object-cover object-[50%_18%]"
+              />
+            </div>
+          </div>
+          <figcaption className="mt-6 text-center">
+            <p className="display-opsz font-display text-[1.15rem] leading-tight text-heading">
+              {ABOUT.portrait.name}
+            </p>
+            <p className="tech-sm mt-2 text-body">{ABOUT.portrait.role}</p>
+          </figcaption>
+        </figure>
+      </div>
+    </Section>
+  )
+}
+
+/**
+ * What the group has been given.
+ *
+ * Six awards, real and dated, from Birla Aerocon in 2018 to two Global India
+ * Business Forum awards in 2026, one presented by the Governor of Telangana.
+ * A certificate handed over on a stage is third-party proof: nobody has to
+ * take the group's word for anything, which is why it comes early.
+ *
+ * ── Why a justified gallery, and not a grid ─────────────────────────────
+ * The six files are wildly different shapes — two 3:2 landscapes off a DSLR,
+ * two phone portraits, a 16:9 video. Any layout with fixed tile heights has
+ * to `object-cover` them, and on photographs whose entire subject is WHO is
+ * standing on the stage, cover cuts people's faces in half.
+ *
+ * So nothing is cropped here at all. Items are packed into rows whose widths
+ * are proportional to each item's own aspect ratio — the newspaper/Flickr
+ * trick: give every child `flex-grow: aspect` off a zero basis and set
+ * `aspect-ratio` on the media, and every item in a row lands on exactly the
+ * same height while keeping its true proportions.
+ *
+ * Row breaks are computed, not hand-placed, so the client can add or remove
+ * an award in the CMS without anyone re-composing a grid.
+ *
+ * ── The lightbox ─────────────────────────────────────────────────────────
+ * The certificate in `excellence` is only legible at full size, and the video
+ * has to play somewhere. Escape and the arrow keys work, the backdrop closes
+ * it, and focus is put on the dialog so a keyboard is never stranded behind
+ * it.
+ */
+/**
  * Target aspect-sum for one row — effectively "how many landscape photos wide
  * a row should be". The container is ~950px in this column, so 3.9 puts rows
  * near 240px tall, which is enough to recognise a face and small enough that
@@ -80,7 +197,7 @@ function packRows(items: readonly Award[]) {
 
 const ROWS = packRows(ABOUT.awards)
 
-export default function About() {
+export function Awards() {
   const ref = useReveal<HTMLElement>({ stagger: 0.06 })
   const [open, setOpen] = useState<number | null>(null)
 
@@ -109,125 +226,90 @@ export default function About() {
   }, [open, step])
 
   return (
-    <Section id="about" ref={ref}>
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-16">
-        {/* ── The story ───────────────────────────────────────────────── */}
-        <div>
-          <Eyebrow>{ABOUT.eyebrow}</Eyebrow>
-          <SectionTitle>{ABOUT.title}</SectionTitle>
+    <Section id="awards" ref={ref}>
+      <Eyebrow>{ABOUT.awardsEyebrow}</Eyebrow>
+      <SectionTitle>{ABOUT.awardsTitle}</SectionTitle>
+      <Lede>{ABOUT.awardsLede}</Lede>
 
-          <div className="reveal mt-6 space-y-4">
-            {ABOUT.body.map((para) => (
-              <p key={para} className="max-w-xl text-[0.92rem] leading-[1.75] text-body">
-                {para}
-              </p>
-            ))}
-          </div>
-
-          <dl className="reveal mt-9 grid max-w-xl grid-cols-3 gap-6 border-t border-line/60 pt-7">
-            {ABOUT.figures.map((figure) => (
-              <div key={figure.label}>
-                <dt className="sr-only">{figure.label}</dt>
-                <dd>
-                  <span className="block font-display text-[1.7rem] leading-none font-semibold text-heading tabular-nums">
-                    {figure.value}
-                  </span>
-                  <span className="tech-sm mt-2.5 block text-body">{figure.label}</span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-
-          <CtaLink href={whatsappHref()} external className="reveal mt-8">
-            {ABOUT.cta}
-          </CtaLink>
+      <div className="mt-10">
+        {/* The count only: the section's own eyebrow already says Recognition,
+            and the wall carried a second one when it sat inside About. */}
+        <div className="reveal flex items-baseline justify-end border-b border-line/60 pb-3">
+          <p className="tech-sm text-body tabular-nums">{ABOUT.awards.length} awards · 2018–2026</p>
         </div>
 
-        {/* ── The wall ────────────────────────────────────────────────── */}
-        <div>
-          <div className="reveal flex items-baseline justify-between gap-4 border-b border-line/60 pb-3">
-            <p className="tech flex items-center gap-3 text-accent/85">
-              <span className="h-px w-6 bg-accent/50" />
-              {ABOUT.awardsEyebrow}
-            </p>
-            <p className="tech-sm text-body tabular-nums">
-              {ABOUT.awards.length} awards · 2018–2026
-            </p>
-          </div>
+        <div className="reveal mt-5 flex flex-col gap-3 sm:gap-4">
+          {ROWS.map((row, r) => (
+            <div key={r} className="flex flex-col gap-2.5 sm:flex-row sm:gap-3">
+              {row.map((award) => {
+                const i = ABOUT.awards.indexOf(award)
+                const aspect = award.width / award.height
+                return (
+                  <button
+                    key={award.id}
+                    type="button"
+                    onClick={() => setOpen(i)}
+                    aria-label={`${award.title}, ${award.body}, ${award.date}. Open larger.`}
+                    // The two arbitrary properties are what justify the row:
+                    // width proportional to aspect off a zero basis, which
+                    // lands every item in the row on one height.
+                    style={{ ['--aspect' as string]: aspect }}
+                    className="group relative block w-full overflow-hidden rounded-lg border border-line/50 bg-raised transition-colors duration-300 ease-micro hover:border-accent/60 sm:w-auto sm:[flex-basis:0] sm:[flex-grow:var(--aspect)]"
+                  >
+                    {award.kind === 'video' ? (
+                      <video
+                        src={award.src}
+                        muted
+                        playsInline
+                        preload="metadata"
+                        aria-label={award.alt}
+                        style={{ aspectRatio: aspect }}
+                        className="block w-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={award.src}
+                        alt={award.alt}
+                        width={award.width}
+                        height={award.height}
+                        loading="lazy"
+                        decoding="async"
+                        style={{ aspectRatio: aspect }}
+                        className="block w-full object-cover brightness-[0.92] transition-[filter] duration-500 ease-micro group-hover:brightness-100"
+                      />
+                    )}
 
-          <div className="reveal mt-5 flex flex-col gap-3 sm:gap-4">
-            {ROWS.map((row, r) => (
-              <div key={r} className="flex flex-col gap-2.5 sm:flex-row sm:gap-3">
-                {row.map((award) => {
-                  const i = ABOUT.awards.indexOf(award)
-                  const aspect = award.width / award.height
-                  return (
-                    <button
-                      key={award.id}
-                      type="button"
-                      onClick={() => setOpen(i)}
-                      aria-label={`${award.title}, ${award.body}, ${award.date}. Open larger.`}
-                      // The two arbitrary properties are what justify the row:
-                      // width proportional to aspect off a zero basis, which
-                      // lands every item in the row on one height.
-                      style={{ ['--aspect' as string]: aspect }}
-                      className="group relative block w-full overflow-hidden rounded-lg border border-line/50 bg-raised transition-colors duration-300 ease-micro hover:border-accent/60 sm:w-auto sm:[flex-basis:0] sm:[flex-grow:var(--aspect)]"
-                    >
-                      {award.kind === 'video' ? (
-                        <video
-                          src={award.src}
-                          muted
-                          playsInline
-                          preload="metadata"
-                          aria-label={award.alt}
-                          style={{ aspectRatio: aspect }}
-                          className="block w-full object-cover"
-                        />
-                      ) : (
-                        <img
-                          src={award.src}
-                          alt={award.alt}
-                          width={award.width}
-                          height={award.height}
-                          loading="lazy"
-                          decoding="async"
-                          style={{ aspectRatio: aspect }}
-                          className="block w-full object-cover brightness-[0.92] transition-[filter] duration-500 ease-micro group-hover:brightness-100"
-                        />
-                      )}
+                    {/* Shallow, and only over the bottom third: a full-height
+                    wash on an uncropped photograph hides the faces the
+                    crop was removed to protect. */}
+                    <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0b1c30]/88 via-[#0b1c30]/35 to-transparent" />
 
-                      {/* Shallow, and only over the bottom third: a full-height
-                          wash on an uncropped photograph hides the faces the
-                          crop was removed to protect. */}
-                      <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0b1c30]/88 via-[#0b1c30]/35 to-transparent" />
-
-                      <span className="absolute inset-x-0 bottom-0 p-2.5 text-left sm:p-3">
-                        <span className="tech-sm block text-brand-lime">{award.date}</span>
-                        <span className="mt-1 line-clamp-2 block text-[0.78rem] leading-tight font-medium text-white">
-                          {award.title}
-                        </span>
+                    <span className="absolute inset-x-0 bottom-0 p-2.5 text-left sm:p-3">
+                      <span className="tech-sm block text-brand-lime">{award.date}</span>
+                      <span className="mt-1 line-clamp-2 block text-[0.78rem] leading-tight font-medium text-white">
+                        {award.title}
                       </span>
+                    </span>
 
-                      {award.kind === 'video' ? (
-                        <span
-                          aria-hidden
-                          className="absolute top-2 right-2 grid size-7 place-items-center rounded-full border border-white/50 bg-[#0b1c30]/55 text-white backdrop-blur-sm transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+                    {award.kind === 'video' ? (
+                      <span
+                        aria-hidden
+                        className="absolute top-2 right-2 grid size-7 place-items-center rounded-full border border-white/50 bg-[#0b1c30]/55 text-white backdrop-blur-sm transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="size-3 translate-x-px"
+                          fill="currentColor"
                         >
-                          <svg
-                            viewBox="0 0 24 24"
-                            className="size-3 translate-x-px"
-                            fill="currentColor"
-                          >
-                            <path d="M8 5.5v13l11-6.5z" />
-                          </svg>
-                        </span>
-                      ) : null}
-                    </button>
-                  )
-                })}
-              </div>
-            ))}
-          </div>
+                          <path d="M8 5.5v13l11-6.5z" />
+                        </svg>
+                      </span>
+                    ) : null}
+                  </button>
+                )
+              })}
+            </div>
+          ))}
         </div>
       </div>
 

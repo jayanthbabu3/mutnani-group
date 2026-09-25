@@ -1,4 +1,4 @@
-import About from '../components/About'
+import About, { Awards } from '../components/About'
 import ContactCta from '../components/ContactCta'
 import PageHero from '../components/PageHero'
 import Partners from '../components/Partners'
@@ -16,6 +16,8 @@ export default function AboutPage() {
     <>
       <PageHero crumb="About" eyebrow={page.eyebrow} title={page.title} lede={page.lede} />
       <About />
+      <Divider />
+      <Awards />
       <Divider />
       <Trust />
       <Partners />

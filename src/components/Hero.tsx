@@ -70,6 +70,25 @@ export default function Hero() {
               <Highlighted text={HERO.sub} />
             </p>
 
+            {/*
+              One line per company, each behind its own rule, rather than the
+              three run together in a paragraph — which is how the client sets
+              them out, and the only way the list is read rather than skipped.
+            */}
+            <ul data-entrance="rise" className="mt-4 max-w-xl space-y-2.5">
+              {HERO.points.map((point) => (
+                <li
+                  key={point}
+                  className="flex gap-3 border-t border-line/70 pt-2.5 text-[0.9rem] leading-[1.6] text-body"
+                >
+                  <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-accent/70" />
+                  <span>
+                    <Highlighted text={point} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+
             <div data-entrance="rise" className="mt-9 flex flex-wrap items-center gap-3">
               <CtaLink href="#contact">{HERO.primaryCta}</CtaLink>
               <CtaLink href="#build" variant="ghost">

@@ -64,7 +64,10 @@ export default function Enquiry() {
               />
             ) : null}
             <Direct label="Email" value={SITE.email} href={`mailto:${SITE.email}`} />
-            <Direct label="Email (alt)" value={SITE.emailAlt} href={`mailto:${SITE.emailAlt}`} />
+            {/* Second address only while there is one, like the second phone line. */}
+            {SITE.emailAlt ? (
+              <Direct label="Email (alt)" value={SITE.emailAlt} href={`mailto:${SITE.emailAlt}`} />
+            ) : null}
           </dl>
         </div>
 

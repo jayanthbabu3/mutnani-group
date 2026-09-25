@@ -34,7 +34,8 @@ const schema = z.object({
     /** CLIENT */
     email: z.string().email(),
     /** CLIENT · second inbox, kept live in the enquiry section */
-    emailAlt: z.string().email(),
+    /** Optional second address — empty hides the line. */
+    emailAlt: z.union([z.string().email(), z.literal('')]),
     instagram: z.string().url(),
     linkedin: z.string().url(),
     whatsappMessage: z.string(),
@@ -56,6 +57,7 @@ const schema = z.object({
     contact: pageHead,
     applications: pageHead,
     roofing: pageHead,
+    imports: pageHead,
   }),
   hero: z.object({
     /** CLIENT */
@@ -73,6 +75,13 @@ const schema = z.object({
     headline: z.object({ line1: z.string(), line2: z.string() }),
     /** Plain text; **double asterisks** mark the service names, set in the heading colour. */
     sub: z.string(),
+    /**
+     * What the three companies do, one line each, under `sub`. A list rather
+     * than one long sentence: the client's own note sets them out as three
+     * lines, and at 37 words in a paragraph nobody read past the first
+     * semicolon. Same `**bold**` marking as `sub`.
+     */
+    points: z.array(z.string()).min(1).max(4),
     primaryCta: z.string(),
     secondaryCta: z.string(),
     stats: z.array(z.object({ value: z.number(), suffix: z.string(), label: z.string() })).max(4),
@@ -105,7 +114,17 @@ const schema = z.object({
       .min(2)
       .max(4),
     cta: z.string(),
+    /** CLIENT · the founder's photograph, beside the story. */
+    portrait: z.object({
+      src: z.string().startsWith('/'),
+      alt: z.string().min(1),
+      name: z.string(),
+      role: z.string(),
+    }),
     awardsEyebrow: z.string(),
+    /** The awards section's own heading and line, now that it stands alone. */
+    awardsTitle: z.string(),
+    awardsLede: z.string(),
     /**
      * Newest first — the mosaic reads top-left to bottom-right and the most
      * recent award should be the one the eye lands on.
@@ -487,12 +506,30 @@ const schema = z.object({
     eyebrow: z.string(),
     title: z.string(),
     lede: z.string(),
+    /**
+     * The tabs over the player. Footage of a shed going up and footage of the
+     * roofing line are two different things to watch, and mixing them in one
+     * filmstrip asked the visitor to sort them out themselves.
+     */
+    groups: z
+      .array(
+        z.object({
+          id: z.string(),
+          /** The tab's label on the home page. */
+          label: z.string(),
+          /** The heading over this group's grid on the company's own page. */
+          heading: z.string(),
+        }),
+      )
+      .min(1),
     sites: z
       .array(
         z.object({
           id: z.string(),
           name: z.string(),
           place: z.string(),
+          /** Which tab this site's clips sit under — a `groups` id. */
+          group: z.string(),
           videos: z
             .array(
               z.object({
@@ -502,7 +539,11 @@ const schema = z.object({
             .min(1),
         }),
       )
-      .min(1),
+      .min(1)
+      .refine(
+        (sites) => sites.every((site) => site.group.length > 0),
+        'every site needs a group id from `groups`',
+      ),
   }),
   trust: z.object({
     eyebrow: z.string(),
