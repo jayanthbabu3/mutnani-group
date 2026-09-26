@@ -76,6 +76,17 @@ export function Section({
   )
 }
 
+/**
+ * The page's one `h1`, for search engines and screen readers.
+ *
+ * The inner pages carry no heading block any more — the client wanted the
+ * content to start straight away — but a page still needs an h1, and the tab
+ * title alone is not one.
+ */
+export function PageTitle({ children }: { children: string }) {
+  return <h1 className="sr-only">{children}</h1>
+}
+
 /** Small wide-tracked label with a hairline marker. */
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (

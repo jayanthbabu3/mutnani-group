@@ -433,3 +433,4 @@ collections:
               - { name: eyebrow, label: Small line, widget: string }
               - { name: title, label: "Heading (text after \" | \" turns green)", widget: string }
               - { name: lede, label: Intro, widget: text }
+              - { name: ctaLine, label: Line in the closing band on the inner pages, widget: text }

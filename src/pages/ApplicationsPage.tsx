@@ -1,18 +1,17 @@
 import ContactCta from '../components/ContactCta'
-import SteelStrip from '../components/SteelStrip'
-import PageHero from '../components/PageHero'
 import PrefabSolutions from '../components/PrefabSolutions'
 import VideoGrid from '../components/VideoGrid'
 import { APPLICATION_ICONS } from '../components/applicationIcons'
-import { Divider, Section } from '../components/ui'
+import { Divider, PageTitle, Section } from '../components/ui'
 import { APPLICATIONS, PAGES } from '../data/site'
 import { useReveal } from '../lib/motion'
 import { usePageMeta } from '../lib/meta'
 
 /**
  * What Balaji Prefab builds — thirteen building types, in the client's own
- * four markets, reached from "View more" on the company's card, and then the
- * company's own signature section.
+ * Balaji Prefab's own page, reached from "View more" on its card: the company
+ * itself, then the thirteen building types in the client's own four markets,
+ * then footage from the sites.
  *
  * ── Why bands, and not one long grid ─────────────────────────────────────
  * Thirteen cards in a row of three is a keyword dump: the visitor reads it as
@@ -34,7 +33,12 @@ export default function ApplicationsPage() {
 
   return (
     <>
-      <PageHero crumb="What we build" eyebrow={page.eyebrow} title={page.title} lede={page.lede} />
+      <PageTitle>{page.title.replace(' | ', ' ')}</PageTitle>
+
+      {/* The company first, then what it builds, then the footage of it going
+          up — the order the client asked for. */}
+      <PrefabSolutions />
+      <Divider />
 
       <Section className="!min-h-0 md:!block">
         <p className="reveal tech-sm border-t border-line pt-5 text-body">
@@ -48,12 +52,6 @@ export default function ApplicationsPage() {
         </div>
       </Section>
 
-      <SteelStrip />
-      <Divider />
-
-      {/* The company's own signature — what it makes and how fast — moved off
-          the home page so each company's detail lives on its own page. */}
-      <PrefabSolutions />
       <Divider />
       <VideoGrid group="prefab" />
 

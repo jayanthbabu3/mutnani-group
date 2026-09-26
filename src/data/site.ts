@@ -568,7 +568,13 @@ const schema = z.object({
       }),
     )
     .min(1),
-  contact: z.object({ eyebrow: z.string(), title: z.string(), lede: z.string() }),
+  contact: z.object({
+    eyebrow: z.string(),
+    title: z.string(),
+    lede: z.string(),
+    /** The one line in the closing band on the inner pages. */
+    ctaLine: z.string(),
+  }),
 })
 
 export const CONTENT = schema.parse(raw)

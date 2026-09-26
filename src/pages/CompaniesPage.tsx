@@ -1,6 +1,6 @@
 import ContactCta from '../components/ContactCta'
 import Divisions from '../components/Divisions'
-import PageHero from '../components/PageHero'
+import { PageTitle } from '../components/ui'
 import { PAGES } from '../data/site'
 import { usePageMeta } from '../lib/meta'
 
@@ -15,7 +15,8 @@ export default function CompaniesPage() {
 
   return (
     <>
-      <PageHero crumb="Companies" eyebrow={page.eyebrow} title={page.title} lede={page.lede} />
+      <PageTitle>{page.title.replace(' | ', ' ')}</PageTitle>
+
       <Divisions />
       <ContactCta />
     </>

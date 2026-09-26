@@ -1,8 +1,8 @@
 import ContactCta from '../components/ContactCta'
-import PageHero from '../components/PageHero'
 import RoofingLine from '../components/RoofingLine'
 import SteelStrip from '../components/SteelStrip'
 import VideoGrid from '../components/VideoGrid'
+import { PageTitle } from '../components/ui'
 import { PAGES } from '../data/site'
 import { usePageMeta } from '../lib/meta'
 
@@ -20,7 +20,7 @@ export default function RoofingRangePage() {
 
   return (
     <>
-      <PageHero crumb="Roofing range" eyebrow={page.eyebrow} title={page.title} lede={page.lede} />
+      <PageTitle>{page.title.replace(' | ', ' ')}</PageTitle>
 
       <RoofingLine />
       <SteelStrip />

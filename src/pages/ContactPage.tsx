@@ -1,7 +1,6 @@
 import Enquiry from '../components/Enquiry'
 import { OfficeCard } from '../components/Offices'
-import PageHero from '../components/PageHero'
-import { Eyebrow, Section, SectionTitle } from '../components/ui'
+import { Eyebrow, PageTitle, Section, SectionTitle } from '../components/ui'
 import { OFFICES, PAGES } from '../data/site'
 import { useReveal } from '../lib/motion'
 import { usePageMeta } from '../lib/meta'
@@ -14,7 +13,8 @@ export default function ContactPage() {
 
   return (
     <>
-      <PageHero crumb="Contact" eyebrow={page.eyebrow} title={page.title} lede={page.lede} />
+      <PageTitle>{page.title.replace(' | ', ' ')}</PageTitle>
+
       <Enquiry />
       <Section id="offices" ref={ref}>
         <Eyebrow>Offices</Eyebrow>

@@ -151,7 +151,7 @@
   ],
   "about": {
     "eyebrow": "About us",
-    "title": "A Trusted Partner in | Corporate Prefab Infrastructure Projects",
+    "title": "A Trusted Partner for Prefab Construction, | Precision-Engineered Roofing and Global Sourcing Solutions",
     "body": [
       "Balaji Agencies was established in 2009 by Mutnani Madhu Sudhan. Since its inception it has handled corporate projects across Andhra Pradesh, Telangana and other parts of India.",
       "The group has had the opportunity to work with well-established names in Indian infrastructure — Navyug Engineering Company Ltd, Megha Engineering & Infrastructures Ltd and the NTPC power plant among them."
@@ -259,7 +259,7 @@
       "id": "prefab",
       "company": "Balaji Prefab Private Limited",
       "kind": "Prefabricated construction",
-      "lede": "We design the building, make it in our shop, and put it up on your site.",
+      "lede": "We design, manufacture and install prefabricated buildings at your site.",
       "offers": [
         "Pre-engineered buildings (PEB)",
         "Industrial sheds & workshops",
@@ -607,7 +607,7 @@
   "partners": {
     "eyebrow": "Strategic partners",
     "title": "Trusted by | industry leaders",
-    "lede": "Executed with and for infrastructure companies across India — site buildings, sheds, panels and stores.",
+    "lede": "We have delivered site buildings, industrial sheds, panels and storage facilities for infrastructure companies across India.",
     "items": [
       {
         "id": "meil",
@@ -774,11 +774,11 @@
       },
       {
         "title": "We make what we fit",
-        "body": "The panels on your wall came off our own line. There is no supplier in the middle to blame for a slipped date."
+        "body": "Our integrated manufacturing model gives us better control over quality, supply and project timelines."
       },
       {
         "title": "One team, drawing to handover",
-        "body": "Design, fabrication, transport and erection sit inside the group. You sign one contract and call one number."
+        "body": "Design, fabrication, transport and installation are managed within the group. You have one contract and one point of contact."
       },
       {
         "title": "Two offices, one schedule",
@@ -812,8 +812,9 @@
   ],
   "contact": {
     "eyebrow": "Get in touch",
-    "title": "Tell us the span | and the use",
-    "lede": "Those two facts are enough for a first number. Fill this in and it opens WhatsApp with your details already written out — or call the Hyderabad desk directly."
+    "title": "Share your project | requirements",
+    "lede": "The span, the area and what the building is for are enough for a first number. Fill this in and it opens WhatsApp with your details already written out — or call the Hyderabad desk directly.",
+    "ctaLine": ""
   },
   "line": {
     "eyebrow": "Vertical 02 · Balaji Roofing Industries",

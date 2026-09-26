@@ -1,7 +1,6 @@
 import ContactCta from '../components/ContactCta'
-import PageHero from '../components/PageHero'
 import TradeRoutes from '../components/TradeRoutes'
-import { Section } from '../components/ui'
+import { PageTitle, Section } from '../components/ui'
 import { DIVISIONS, PAGES } from '../data/site'
 import { useReveal } from '../lib/motion'
 import { usePageMeta } from '../lib/meta'
@@ -23,11 +22,13 @@ export default function ImportsPage() {
 
   return (
     <>
-      <PageHero crumb="Imports" eyebrow={page.eyebrow} title={page.title} lede={page.lede} />
+      <PageTitle>{page.title.replace(' | ', ' ')}</PageTitle>
 
       <Section className="!min-h-0 md:!block">
         <div ref={ref}>
-          <p className="reveal tech-sm border-t border-line pt-5 text-body">What the desk handles</p>
+          <p className="reveal tech-sm border-t border-line pt-5 text-body">
+            What the desk handles
+          </p>
 
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {trade.offers.map((offer, i) => (

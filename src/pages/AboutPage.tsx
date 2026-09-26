@@ -1,9 +1,8 @@
 import About, { Awards } from '../components/About'
 import ContactCta from '../components/ContactCta'
-import PageHero from '../components/PageHero'
 import Partners from '../components/Partners'
 import Trust from '../components/Trust'
-import { Divider } from '../components/ui'
+import { Divider, PageTitle } from '../components/ui'
 import { PAGES } from '../data/site'
 import { usePageMeta } from '../lib/meta'
 
@@ -14,7 +13,8 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageHero crumb="About" eyebrow={page.eyebrow} title={page.title} lede={page.lede} />
+      <PageTitle>{page.title.replace(' | ', ' ')}</PageTitle>
+
       <About />
       <Divider />
       <Awards />

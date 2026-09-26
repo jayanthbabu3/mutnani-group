@@ -1,6 +1,6 @@
 import { CONTENT, SITE } from '../data/site'
 import { useReveal } from '../lib/motion'
-import { CtaLink, Shell, TwoTone } from './ui'
+import { Shell } from './ui'
 
 /**
  * The close of an inner page: one band that hands the visitor to Contact.
@@ -16,28 +16,64 @@ export default function ContactCta() {
   return (
     <section ref={ref} className="py-12 md:py-14">
       <Shell>
-        <div className="relative isolate overflow-hidden rounded-3xl border border-line bg-raised/40 px-6 py-8 sm:px-10 sm:py-10">
+        {/*
+          Filled, not outlined. As a bordered card on a white page this band
+          was a wide empty rectangle with a heading in one corner and two
+          buttons in the other — the last thing on the page and the quietest.
+          In the brand blue it closes the page, and the line under the heading
+          gives the buttons something to follow.
+        */}
+        <div className="relative isolate overflow-hidden rounded-3xl bg-accent px-6 py-10 text-ground sm:px-12 sm:py-12">
           <div
             aria-hidden
-            className="blueprint absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_top_right,#000_0%,transparent_70%)]"
+            className="blueprint absolute inset-0 -z-10 opacity-[0.18] [mask-image:radial-gradient(ellipse_at_top_right,#000_0%,transparent_72%)]"
           />
-          <p className="reveal tech flex items-center gap-3 text-accent/85">
-            <span className="h-px w-6 bg-accent/50" />
-            {CONTENT.contact.eyebrow}
-          </p>
-          <div className="mt-3 flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
-            <h2 className="reveal max-w-xl font-display text-[clamp(1.4rem,2.1vw,1.85rem)] leading-[1.18] font-semibold tracking-[-0.015em] text-heading">
-              <TwoTone text={CONTENT.contact.title} />
-            </h2>
+
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
+            <div>
+              <p className="reveal tech flex items-center gap-3 text-ground/70">
+                <span className="h-px w-6 bg-ground/45" />
+                {CONTENT.contact.eyebrow}
+              </p>
+              <h2 className="reveal mt-4 max-w-2xl font-display text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] font-semibold tracking-[-0.015em]">
+                {CONTENT.contact.title.split(' | ').join(' ')}
+              </h2>
+              {/* Optional: an empty `contact.ctaLine` leaves the heading to
+                  carry the band on its own. */}
+              {CONTENT.contact.ctaLine ? (
+                <p className="reveal mt-3 max-w-xl text-[0.92rem] leading-[1.7] text-ground/80">
+                  {CONTENT.contact.ctaLine}
+                </p>
+              ) : null}
+            </div>
+
             <div className="reveal flex flex-wrap items-center gap-3">
-              <CtaLink href="/contact">Contact us</CtaLink>
-              <CtaLink href={`tel:${SITE.phone}`} variant="ghost">
+              <a
+                href="/contact"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-ground px-6 py-3.5 text-[0.82rem] font-semibold tracking-[0.04em] text-accent transition-all duration-300 ease-micro hover:shadow-[0_10px_24px_-10px_rgba(0,0,0,0.45)]"
+              >
+                Contact us
+                <Arrow />
+              </a>
+              <a
+                href={`tel:${SITE.phone}`}
+                className="group inline-flex items-center gap-2.5 rounded-full border border-ground/45 px-6 py-3.5 text-[0.82rem] font-medium tracking-[0.04em] text-ground transition-colors duration-300 ease-micro hover:border-ground hover:bg-ground/10"
+              >
                 {SITE.phoneDisplay}
-              </CtaLink>
+                <Arrow />
+              </a>
             </div>
           </div>
         </div>
       </Shell>
     </section>
+  )
+}
+
+function Arrow() {
+  return (
+    <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" aria-hidden>
+      <path d="M4 12h15m0 0-6-6m6 6-6 6" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
   )
 }

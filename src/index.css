@@ -426,6 +426,17 @@ html.js [data-entrance][data-entered] {
 .page-hero + section {
   padding-top: 1rem;
 }
+
+/* No heading block on the inner pages, so the first band carries the space
+   that clears the fixed header. */
+.page-inner > section:first-of-type {
+  padding-top: 7rem;
+}
+@media (min-width: 48rem) {
+  .page-inner > section:first-of-type {
+    padding-top: 7.5rem;
+  }
+}
 @media (min-width: 48rem) {
   .page-hero + section {
     /* Back to its content's own height: a section keeps a screen of height
