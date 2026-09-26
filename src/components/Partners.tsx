@@ -55,11 +55,11 @@ export default function Partners() {
               // that box shows up as a pale rectangle around the logo. On a
               // white card it disappears, so the border and the shadow — not a
               // fill — are what separate the card from the page.
-              className={`flex w-[13.5rem] shrink-0 flex-col items-center justify-between rounded-2xl border border-line bg-ground px-5 pt-6 pb-5 shadow-[0_12px_32px_-18px_rgba(13,33,54,0.28)] transition-transform duration-300 ease-micro hover:-translate-y-1.5 sm:w-[16rem] sm:rounded-3xl sm:px-7 sm:pt-8 sm:pb-6 lg:w-[18rem] lg:px-8 lg:pt-9 lg:pb-7 ${
+              className={`flex w-[11.5rem] shrink-0 flex-col items-center justify-between rounded-2xl border border-line bg-ground px-4 pt-5 pb-4 shadow-[0_12px_32px_-18px_rgba(13,33,54,0.28)] transition-transform duration-300 ease-micro hover:-translate-y-1.5 sm:w-[13.5rem] sm:rounded-3xl sm:px-5 sm:pt-6 sm:pb-5 lg:w-[15rem] lg:px-6 lg:pt-7 lg:pb-6 ${
                 i >= PARTNERS.items.length ? 'partners-track-dup' : ''
               }`}
             >
-              <div className="flex h-16 w-full items-center justify-center sm:h-20 lg:h-24">
+              <div className="flex h-14 w-full items-center justify-center sm:h-16 lg:h-20">
                 <img
                   src={item.logo}
                   alt={item.logoAlt}
@@ -67,7 +67,7 @@ export default function Partners() {
                   className="max-h-full w-auto max-w-full object-contain"
                 />
               </div>
-              <figcaption className="mt-5 w-full border-t border-line pt-4 text-center sm:mt-6 sm:pt-5">
+              <figcaption className="mt-4 w-full border-t border-line pt-3.5 text-center sm:mt-5 sm:pt-4">
                 <p className="text-[0.82rem] leading-snug font-medium text-heading sm:text-[0.9rem]">
                   {item.name}
                 </p>

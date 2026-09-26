@@ -356,7 +356,7 @@ html.js [data-entrance][data-entered] {
    stops every time a cursor drifts near it reads as broken, not helpful.
    Slow: cards this wide at 60s per copy is a walk, not a scroll. */
 .partners-track {
-  animation: marquee 60s linear infinite;
+  animation: marquee 38s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   /* The global rule above collapses the animation to ~0s but leaves it
