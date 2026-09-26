@@ -12,8 +12,7 @@ export default function Footer() {
           <div>
             <Logo />
             <p className="mt-5 max-w-sm text-[0.88rem] leading-[1.7] text-body">
-              Prefabricated construction, PUF panel manufacturing and international trade, under one
-              group since {SITE.founded}.
+              {SITE.footerLine}
             </p>
             <div className="mt-6 flex flex-col gap-1.5">
               <a

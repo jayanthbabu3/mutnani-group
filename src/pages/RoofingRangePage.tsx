@@ -1,14 +1,14 @@
 import ContactCta from '../components/ContactCta'
 import RoofingLine from '../components/RoofingLine'
-import SteelStrip from '../components/SteelStrip'
 import VideoGrid from '../components/VideoGrid'
 import { PageTitle } from '../components/ui'
 import { PAGES } from '../data/site'
 import { usePageMeta } from '../lib/meta'
 
 /**
- * What Balaji Roofing rolls: the line that makes it, and the mills the coil
- * comes from.
+ * What Balaji Roofing rolls: the line that makes it, which names the mills
+ * its coil comes from on its own — a second card repeating Tata, Jindal and
+ * AMNS said the same thing twice on one page.
  *
  * The line is the section that used to sit on the home page, unchanged, so
  * the drawing of the process lives in one place and every page that shows it
@@ -23,7 +23,6 @@ export default function RoofingRangePage() {
       <PageTitle>{page.title.replace(' | ', ' ')}</PageTitle>
 
       <RoofingLine />
-      <SteelStrip />
       <VideoGrid group="roofing" />
       <ContactCta />
     </>

@@ -22,6 +22,8 @@ const schema = z.object({
   site: z.object({
     name: z.string().min(1),
     role: z.string(),
+    /** The line under the logo in the footer. */
+    footerLine: z.string(),
     city: z.string(),
     /** CLIENT · international form, drives every wa.me and tel: link */
     phone: z.string().regex(/^\+\d{10,15}$/, 'phone must be international, e.g. +919000000000'),

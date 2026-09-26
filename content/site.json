@@ -2,6 +2,7 @@
   "site": {
     "name": "Mutnani",
     "role": "Group of Companies",
+    "footerLine": "A Trusted Partner for Prefab Construction, Precision-Engineered Roofing and Global Sourcing Solutions.",
     "city": "Hyderabad",
     "phone": "+917831012345",
     "phoneDisplay": "+91 78310 12345",
@@ -383,12 +384,12 @@
         "height": 2062
       }
     ],
-    "cta": "Open full letter"
+    "cta": "View client letter"
   },
   "build": {
     "eyebrow": "How a building goes up",
     "title": "Six steps, | two at the same time",
-    "lede": "Your slab cures on site while our shop fabricates the structure.",
+    "lede": "While the foundation cures on site, we fabricate the structure at our facility.",
     "steps": [
       {
         "n": "01",
@@ -642,7 +643,7 @@
   "videos": {
     "eyebrow": "From the sites",
     "title": "Watch it | go up",
-    "lede": "Straight from the group’s own sites and its own line — shot by the crews, not a production house.",
+    "lede": "Real footage from our project sites and manufacturing facility.",
     "groups": [
       {
         "id": "prefab",
@@ -813,7 +814,7 @@
   "contact": {
     "eyebrow": "Get in touch",
     "title": "Share your project | requirements",
-    "lede": "The span, the area and what the building is for are enough for a first number. Fill this in and it opens WhatsApp with your details already written out — or call the Hyderabad desk directly.",
+    "lede": "Share your requirement — span, area and the purpose of the building. Our team will get in touch shortly.",
     "ctaLine": ""
   },
   "line": {

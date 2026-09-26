@@ -141,11 +141,6 @@ export default function Enquiry() {
               <path d="M4 12h15m0 0-6-6m6 6-6 6" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
-
-          <p className="mt-4 text-[0.78rem] leading-relaxed text-body">
-            Nothing is stored in the browser. The button opens WhatsApp with these details written
-            out, so you can read them before sending.
-          </p>
         </form>
       </div>
     </Section>
