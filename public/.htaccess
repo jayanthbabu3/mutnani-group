@@ -7,11 +7,12 @@
   RewriteBase /
 
   # ── HTTPS ────────────────────────────────────────────────────────────────
-  # ONLY after the SSL certificate is installed and https:// loads the site.
-  # Enable it before that and every visitor hits a redirect loop into a page
-  # the browser refuses to show. Delete the two # below to turn it on.
-  # RewriteCond %{HTTPS} !=on
-  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # On since 10 Oct 2026, when the certificate was issued for
+  # mutnanigroup.com and www.mutnanigroup.com. Comment these two lines out
+  # again if the certificate ever lapses, or every visitor is redirected into
+  # a page the browser refuses to show.
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
   # A real file is served as-is: assets, images, robots.txt. So is a folder
   # that has its own index, which means /admin.
