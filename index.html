@@ -36,6 +36,12 @@
       script below arms it and carries a 3.5s failsafe, so a bundle that never
       loads cannot leave the page shut.
     -->
+    <!--
+      The hero stage's first frame. It is what the visitor sees while the
+      timelapse behind it buffers, so it is fetched at the same priority as
+      the logo rather than waiting for the bundle to mount the <video>.
+    -->
+    <link rel="preload" as="image" href="/hero-poster.jpg" fetchpriority="high" />
     <link rel="preload" as="image" href="/brand/logo-mark.webp" />
     <link rel="preload" as="image" href="/brand/logo-name.webp" />
     <script>

@@ -111,6 +111,16 @@ export default function Hero() {
           {/* ── Stage ─────────────────────────────────────────────────── */}
           <div data-entrance data-entrance-at="+=0.3" className="order-1 lg:order-2 lg:pl-4">
             <div className="relative mx-auto aspect-[4/3] w-full sm:aspect-[16/11]">
+              {/*
+                The poster is the video's own first frame, so there is no jump
+                when playback starts — it simply begins to move. Without it the
+                stage was an empty hole for as long as the 6.5MB clip took to
+                buffer, which on a phone is the whole first impression.
+
+                `preload="auto"` because this is the one thing above the fold
+                worth spending bandwidth on, and the poster carries the view
+                until it arrives.
+              */}
               <video
                 className="absolute inset-0 size-full object-cover object-center"
                 style={{
@@ -120,6 +130,8 @@ export default function Hero() {
                   maskComposite: 'intersect',
                 }}
                 src="/hero-timelapse.mp4"
+                poster="/hero-poster.jpg"
+                preload="auto"
                 autoPlay
                 muted
                 loop
