@@ -1,0 +1,40 @@
+# Apache (GoDaddy cPanel) — the same job vercel.json does on Vercel.
+#
+# The site is one page that paints its own routes, so /about and /contact are
+# not files on disk. Without this, Apache 404s on a refresh or a shared link.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # ── HTTPS ────────────────────────────────────────────────────────────────
+  # ONLY after the SSL certificate is installed and https:// loads the site.
+  # Enable it before that and every visitor hits a redirect loop into a page
+  # the browser refuses to show. Delete the two # below to turn it on.
+  # RewriteCond %{HTTPS} !=on
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # A real file or folder is served as-is: assets, images, /admin, robots.txt.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  # Everything else is the app.
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Hashed asset filenames change on every build, so they can be cached hard;
+# index.html never can, or a visitor keeps the old app after a deploy.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 1 year"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>

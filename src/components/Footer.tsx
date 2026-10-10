@@ -83,6 +83,18 @@ export default function Footer() {
         <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-line/60 pt-7">
           <p className="tech-sm text-body">
             © {year} {SITE.name} {SITE.role}
+            <span className="mx-2.5 text-line" aria-hidden>
+              ·
+            </span>
+            {SITE.credit.label}{' '}
+            <a
+              href={SITE.credit.href}
+              target="_blank"
+              rel="noreferrer"
+              className="text-body underline-offset-4 transition-colors duration-200 ease-micro hover:text-accent hover:underline"
+            >
+              {SITE.credit.name}
+            </a>
           </p>
           <div className="flex items-center gap-6">
             <a

@@ -64,6 +64,13 @@ collections:
               - { name: email, label: Email, widget: string }
               - { name: instagram, label: Instagram URL, widget: string }
               - { name: linkedin, label: LinkedIn URL, widget: string }
+              - name: credit
+                label: Who built the site (footer credit)
+                widget: object
+                fields:
+                  - { name: label, label: 'Prefix, e.g. Developed by', widget: string }
+                  - { name: name, label: Company name, widget: string }
+                  - { name: href, label: Link, widget: string }
               - { name: whatsappMessage, label: Default WhatsApp message, widget: text }
               - { name: founded, label: Year founded, widget: number, value_type: int }
               - { name: founder, label: Founder, widget: string }

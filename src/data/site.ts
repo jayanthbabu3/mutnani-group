@@ -40,6 +40,8 @@ const schema = z.object({
     emailAlt: z.union([z.string().email(), z.literal('')]),
     instagram: z.string().url(),
     linkedin: z.string().url(),
+    /** Who built the site, credited in the footer. */
+    credit: z.object({ label: z.string(), name: z.string(), href: z.string().url() }),
     whatsappMessage: z.string(),
     founded: z.number().int().min(1900).max(2100),
     founder: z.string(),
