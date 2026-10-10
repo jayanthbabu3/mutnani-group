@@ -13,9 +13,22 @@
   # RewriteCond %{HTTPS} !=on
   # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-  # A real file or folder is served as-is: assets, images, /admin, robots.txt.
+  # A real file is served as-is: assets, images, robots.txt. So is a folder
+  # that has its own index, which means /admin.
+  #
+  # A folder WITHOUT an index must not be served, or it shadows the page route
+  # of the same name: /about is a page, and about/ is also where the founder
+  # portrait lives. Matching -d there sent /about to Apache, which redirected
+  # to /about/ and then refused to list it — a 403 on a real page.
+  # ...and Apache must stop redirecting a folder to its trailing-slash form
+  # before the rules below get a say, or /about is a 301 to /about/ again.
+  # /admin keeps its slash explicitly, because the CMS there loads its own
+  # files by relative path.
+  DirectorySlash Off
+  RewriteRule ^admin$ /admin/ [R=301,L]
+
   RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_FILENAME}/index.html -f
   RewriteRule ^ - [L]
   # Everything else is the app.
   RewriteRule . /index.html [L]
