@@ -42,6 +42,34 @@
       the logo rather than waiting for the bundle to mount the <video>.
     -->
     <link rel="preload" as="image" href="/hero-poster.jpg" fetchpriority="high" />
+
+    <!--
+      The hero clip starts downloading HERE, not when React mounts the <video>.
+      The logo preloader holds the page for ~2.3s; on a phone the bundle can
+      still be arriving at that point, so the clip was only requested once the
+      screen had already cleared — the visitor watched it buffer.
+
+      A detached element is enough to start the fetch. Browsers give media a
+      lower priority than scripts, so this rides alongside the bundle rather
+      than in front of it, and the response is cached for a year, so the real
+      <video> is served from cache rather than fetched again.
+
+      The reference on `window` is load-bearing: a collected element cancels
+      its own download.
+    -->
+    <script>
+      (function () {
+        if (location.pathname !== '/') return
+        var net = navigator.connection
+        // Somebody on 2G or with Data Saver on gets the poster and nothing else.
+        if (net && (net.saveData || /(^|-)2g$/.test(net.effectiveType || ''))) return
+        var clip = document.createElement('video')
+        clip.preload = 'auto'
+        clip.muted = true
+        clip.src = '/hero-timelapse.mp4'
+        window.__heroClip = clip
+      })()
+    </script>
     <link rel="preload" as="image" href="/brand/logo-mark.webp" />
     <link rel="preload" as="image" href="/brand/logo-name.webp" />
     <script>
